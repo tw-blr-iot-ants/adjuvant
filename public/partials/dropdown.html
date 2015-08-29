@@ -1,12 +1,10 @@
 <div>
-
+    Select a Juice  :
     <select ng-model="selected"
             ng-options="item for item in list">
     </select>
-           <span class="dropdown">{{selectedItem}}</span>
-    <div ng-if="selectedItem == 'others'" class="col-sm-8 col-sm-offset-2 text-center">
-        <input type="text" class="input-lg text-center" placeholder="enter the juice name" ng-model="formData.text">
-    </div>
+    <div id="other-text-box" ng-if="selectedItem == 'others'" >
+                <input placeholder="Juice name" type="text" name="NewValue" ng-model="newValue"/>
+                <button ng-click="add(newValue)">Add</button>
 </div>
-
-
+</div>

@@ -9,7 +9,7 @@ angular.module('todoController', [])
         }).error(function(data, status, headers, config) {
     });
 
-        	$scope.selected = "none";
+//        	$scope.selected = "none";
         	$scope.employeeId = "16305";
         	$scope.name = "dixith";
 

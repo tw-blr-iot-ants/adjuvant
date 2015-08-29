@@ -5,19 +5,18 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
 
-	<title>Node/Angular Todo App</title>
+	<title>Adjuvant</title>
 
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<style>
 		html 					{ overflow-y:scroll; }
 		body 					{ padding-top:50px; }
-		#details 				{ margin-bottom:30px; }
 	</style>
 
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
 	<script type="application/json" src="data.json"></script>
-	<script type="text/css" src="styles/style.css"></script>
+	<link rel="stylesheet" type="text/css" href="styles/style.css">
 	<script src="js/controllers/main.js"></script>
 	<script src="js/services/todos.js"></script>
 	<script src="js/core.js"></script>
@@ -32,17 +31,16 @@
 		</div>
 
 		<div id="details" class="row">
-
 			<p class="col-sm-4 col-sm-offset-4">
-				{{employeeId}}
+				EmployeeID : {{employeeId}}
 			</p>
 
 			<p class="col-sm-4 col-sm-offset-4">
-				{{name}}
+				Name : {{name}}
 			</p>
 			<dropdown class="col-sm-4 col-sm-offset-4" placeholder="select a juice " list="colours" selected="selected" property="name"></dropdown>
 		</div>
-		<button type="submit" class="btn btn-primary btn-lg" ng-click="placeOrder()">Order</button>
+		<button type="submit" class="col-sm-4 col-sm-offset-4 btn btn-primary btn-lg" ng-click="placeOrder()">Order</button>
 	</div>
 </body>
 </html>
