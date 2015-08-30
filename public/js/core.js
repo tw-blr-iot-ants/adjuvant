@@ -1,1 +1,1 @@
-var app = angular.module('adjuvant', ['todoController', 'todoService'])
+var app = angular.module('adjuvant', ['todoController', 'googleService', 'flash'])

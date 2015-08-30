@@ -5,26 +5,30 @@ const CLIENT_ID = '130327654647-2i9su4eumpi2jpgae7bee7u7lntqu5r6.apps.googleuser
 const CLIENT_SECRET = 'C9KIh6U4eLjZGwjwOVqgvcoS';
 const FILE_ID = '1-aZwba8WVGTVAurXlZzOl66Wi0mfcuhiSOEawmYhs-g';
 
-var spreadsheetSetup = function(order) {
-    Spreadsheet.load({
-                debug: true,
-                spreadsheetName: 'demo log',
-                worksheetName: 'Sheet1',
+var getSpreadSheetInfo = function() {
+
+           var spreadSheetData ;
+           var deferredResult = q.defer();
+           Spreadsheet.load(spreadsheetSetup() , function sheetReady(err, spreadsheet) {
+
+                                 spreadsheet.receive(function(err, rows, info) {
+                                     if(err) throw err;
+                                     spreadSheetData = rows;
+                                     console.log("in load")
+                                     deferredResult.resolve({"rows" : rows})
+                                 });
+                           });
+
+           return deferredResult.promise;;
+}
 
 
-                 oauth2: {
-                      client_id: CLIENT_ID,
-                      client_secret: CLIENT_SECRET,
-                      refresh_token: REFRESH_TOKEN
-                    }
-
-                    }, function sheetReady(err, spreadsheet) {
+var updateSpreadSheet = function(order) {
+    Spreadsheet.load(spreadsheetSetup() , function sheetReady(err, spreadsheet) {
                           var existingsRows ;
                           var datObject = {}
 
-                           var metaDataPromise = function() {
-                                return q({});
-                           }
+
 
                           var addRowToSheet = function() {
                             var transformOrder = {};
@@ -32,38 +36,42 @@ var spreadsheetSetup = function(order) {
                             transformOrder["2"] =order.employeeId;
                             transformOrder["3"] =order.order;
 
-                            console.log("add", order)
-                            console.log("add", transformOrder)
-
                             datObject[existingsRows] = transformOrder;
                             spreadsheet.add(datObject);
                             return q({})
                           }
                           var sendDataToSheet = function() {
-                               console.log("send")
                               spreadsheet.send(function(err) {
                                 if(err) throw err;
-                                console.log("Updated Cell at row 3, column 5 to 'hello!'");
                               });
                           }
 
                           spreadsheet.receive(function(err, rows, info) {
-                                                                 console.log("meta")
-                                                                 if(err) throw err;
-                                                                 console.log(info.totalRows)
-                                                                 existingsRows = info.totalRows + 1;
-                                                                 metaDataPromise()
-                                                                    .then(addRowToSheet)
-                                                                    .then(sendDataToSheet)
-                                                               });
-
-
+                              console.log("meta")
+                              if(err) throw err;
+                              existingsRows = info.totalRows + 1;
+                              metaDataPromise()
+                                 .then(addRowToSheet)
+                                 .then(sendDataToSheet)
+                          });
                     });
-
 }
+    var spreadsheetSetup = function() {
+      return {
+          debug: true,
+          spreadsheetName: 'demo log',
+          worksheetName: 'Sheet1',
 
+          oauth2: {
+                client_id: CLIENT_ID,
+                client_secret: CLIENT_SECRET,
+                refresh_token: REFRESH_TOKEN
+          }
+      }
+    }
 
 module.exports = {
-    writeData : spreadsheetSetup
+    getSpreadSheetInfo : getSpreadSheetInfo,
+    updateSpreadSheet : updateSpreadSheet
 }
 
