@@ -50,7 +50,7 @@ var updateSpreadSheet = function(order) {
                               console.log("meta")
                               if(err) throw err;
                               existingsRows = info.totalRows + 1;
-                              metaDataPromise()
+                              q({})
                                  .then(addRowToSheet)
                                  .then(sendDataToSheet)
                           });
