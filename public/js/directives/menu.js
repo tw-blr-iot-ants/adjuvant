@@ -9,27 +9,20 @@ angular.module('adjuvant').directive('dropdown', function() {
         			list: "=",
         			selected: "=",
         			property: "@"
-        		},
-         link: function(scope) {
+        },
+        link: function(scope) {
 
-          			scope.listVisible = true;
-          			scope.isPlaceholder = true;
+          	scope.add = function (newValue) {
+                   scope.list.push(newValue);
+                   scope.selected = newValue
+            }
 
-//                    scope.example = {
-//                            word: /^[a-z]+[@+!+#][a-z]*$/
-//                     };
-
-          			scope.add = function (newValue) {
-                            scope.list.push(newValue);
-                            scope.selected = newValue
-                    }
-
-          			scope.$watch("selected", function(value) {
-          				scope.selectedItem = value;
-          				scope.display = scope.selected;
-          			});
-          		}
-         }
+          	scope.$watch("selected", function(value) {
+          			scope.selectedItem = value;
+          			scope.display = scope.selected;
+          	});
+        }
+    }
 
   });
 
