@@ -1,5 +1,4 @@
-var app = angular.module('adjuvant', ['ngRoute', 'orderController', 'statsController', 'googleService',  'statsDisplayService', 'flash'])
-
+var app = angular.module('adjuvant', ['ngRoute', 'orderController', 'statsController', 'detailsController', 'googleService',  'statsDisplayService', 'flash'])
 
 app.config(function($routeProvider) {
     $routeProvider
@@ -10,6 +9,10 @@ app.config(function($routeProvider) {
         .when('/stats', {
             templateUrl: 'stats.html',
             controller: 'statsController'
+        })
+        .when('/details', {
+            templateUrl: 'details.html',
+            controller: 'detailsController'
         })
         .otherwise({
             redirectTo: '/home'

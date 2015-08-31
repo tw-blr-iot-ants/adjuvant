@@ -11,3 +11,9 @@
     bottom: 0;
     width: 100%;
 }
+
+.stats {
+    position: fixed;
+    bottom: 30px;
+    width: 100%;
+}

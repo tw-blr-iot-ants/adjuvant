@@ -16,17 +16,17 @@
 
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>
     <script src="angular-flash.js"></script>
     <script src="https://rawgit.com/nnnick/Chart.js/master/Chart.min.js"></script>
     <script src="https://rawgit.com/jtblin/angular-chart.js/master/dist/angular-chart.min.js"></script>
-    <!--<script src="charts.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 	<script type="application/json" src="data.json"></script>
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
 	<link rel="stylesheet" type="text/css" href="angular-flash.css">
-	<!--<link rel="stylesheet" type="text/css" href="angular-chart.css">-->
 	<script src="js/controllers/main.js"></script>
 	<script src="js/controllers/stats.js"></script>
+	<script src="js/controllers/details.js"></script>
 	<script src="js/services/googleService.js"></script>
 	<script src="js/services/statsDisplayService.js"></script>
 	<script src="js/core.js"></script>
@@ -35,5 +35,7 @@
 
 <body>
     <ng-view></ng-view>
+    <a href="#/stats" class="stats">Stats</a>
+    <a href="#/details" class="footer"> Details </a>
 </body>
 </html>

@@ -4,12 +4,11 @@ angular.module('statsController', ["chart.js"])
 
         googleService.getStats()
             .then(function(response) {
-                      var graphData = statsDisplayService.getSamples(response.data);
+                      var graphData = statsDisplayService.extractSamples(response.data);
                       delete graphData["order"]
                       delete graphData["undefined"]
                       $scope.labels = _.keys(graphData);
                       $scope.data = [_.values(graphData)];
                       $scope.displayStats = true;
             })
-
 }])

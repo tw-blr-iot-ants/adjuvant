@@ -35,10 +35,11 @@ angular.module('statsDisplayService', [])
           _.each(rows, function(k) {
                  details.push([k["1"], k["2"], k["3"]])
           })
-          _openInNewTab("http://localhost:8082", details)
+          return constructHtmlDom(details);
+//          _openInNewTab("http://localhost:8082", details)
 		}
 
-		var getSamples = function(data){
+		var extractSamples = function(data){
           var rows = _.values(data.rows);
           var juiceChoice = [];
           _.each(rows, function(k) {
@@ -49,6 +50,7 @@ angular.module('statsDisplayService', [])
 		}
 
 		return {
-		    getSamples : getSamples
+		    extractSamples: extractSamples,
+		    displayDetails: displayDetails
 		}
 });
