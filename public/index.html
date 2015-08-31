@@ -15,6 +15,7 @@
 	</style>
 
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
     <script src="angular-flash.js"></script>
     <script src="https://rawgit.com/nnnick/Chart.js/master/Chart.min.js"></script>
     <script src="https://rawgit.com/jtblin/angular-chart.js/master/dist/angular-chart.min.js"></script>
@@ -25,42 +26,13 @@
 	<link rel="stylesheet" type="text/css" href="angular-flash.css">
 	<!--<link rel="stylesheet" type="text/css" href="angular-chart.css">-->
 	<script src="js/controllers/main.js"></script>
+	<script src="js/controllers/stats.js"></script>
 	<script src="js/services/googleService.js"></script>
 	<script src="js/core.js"></script>
 	<script src="js/directives/menu.js"></script>
 </head>
 
-<body ng-controller="mainController">
-	<div class="container">
-
-		<div class="jumbotron text-center">
-			<h1> Juice Counter </span></h1>
-		</div>
-
-		<div id="details" class="row">
-			<p class="col-sm-4 col-sm-offset-4">
-				EmployeeID : {{employeeId}}
-			</p>
-
-			<p class="col-sm-4 col-sm-offset-4">
-				Name : {{name}}
-			</p>
-			<dropdown class="col-sm-4 col-sm-offset-4" placeholder="select a juice " list="colours" selected="selected" property="name"></dropdown>
-		</div>
-
-		<p ng-if="successMessage">
-            <div flash-message="5000" ></div>
-		</p>
-		<button type="submit" class="col-sm-4 col-sm-offset-4 btn btn-primary btn-lg" ng-click="placeOrder()">Order</button>
-
-        <a class="footer" ng-click="getStats()">Stats</a>
-
-        <!--<canvas id="line" class="chart chart-line" data="data" labels="labels"-->
-                <!--legend="true" series="series" click="onClick"></canvas>-->
-
-        <canvas ng-if="displayStats" id="bar" class="chart chart-bar"
-                chart-data="data" chart-labels="labels">
-        </canvas>
-    </div>
+<body>
+    <ng-view></ng-view>
 </body>
 </html>

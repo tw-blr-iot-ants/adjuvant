@@ -1,6 +1,6 @@
-  angular.module('todoController', ["chart.js"])
+  angular.module('orderController', ["chart.js"])
 
-      .controller('mainController', ['$scope','$http','googleService',  'Flash',
+      .controller('orderController', ['$scope','$http','googleService',  'Flash',
             function($scope, $http, googleService, Flash) {
 
           $http({method: 'GET', url: '/data.json'}).

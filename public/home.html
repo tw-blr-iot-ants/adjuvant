@@ -1,0 +1,27 @@
+<div class="container">
+
+    <div class="jumbotron text-center">
+        <h1> Juice Counter </span></h1>
+    </div>
+
+    <div id="details" class="row">
+        <p class="col-sm-4 col-sm-offset-4">
+            EmployeeID : {{employeeId}}
+        </p>
+
+        <p class="col-sm-4 col-sm-offset-4">
+            Name : {{name}}
+        </p>
+        <dropdown class="col-sm-4 col-sm-offset-4" placeholder="select a juice " list="colours" selected="selected" property="name"></dropdown>
+    </div>
+
+    <p ng-if="successMessage">
+    <div flash-message="5000" ></div>
+    </p>
+    <button type="submit" class="col-sm-4 col-sm-offset-4 btn btn-primary btn-lg" ng-click="placeOrder()">Order</button>
+
+    <a class="footer" ng-click="getStats()">Stats</a>
+
+    <!--<canvas id="line" class="chart chart-line" data="data" labels="labels"-->
+    <!--legend="true" series="series" click="onClick"></canvas>-->
+</div>
