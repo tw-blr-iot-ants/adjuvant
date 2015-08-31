@@ -1,4 +1,4 @@
-var app = angular.module('adjuvant', ['ngRoute', 'orderController', 'statsController', 'googleService', 'flash'])
+var app = angular.module('adjuvant', ['ngRoute', 'orderController', 'statsController', 'googleService',  'statsDisplayService', 'flash'])
 
 
 app.config(function($routeProvider) {

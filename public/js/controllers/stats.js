@@ -1,6 +1,15 @@
 angular.module('statsController', ["chart.js"])
-                .controller('statsController', ['$scope', function($scope) {
+                .controller('statsController', ['$scope', 'statsDisplayService', 'googleService',
+                                                function($scope, statsDisplayService, googleService) {
 
-      $scope.data = [[65, 59, 80, 81]];
-      $scope.labels = ["1", "2", "3", "4"]
+        googleService.getStats()
+            .then(function(response) {
+                      var graphData = statsDisplayService.getSamples(response.data);
+                      delete graphData["order"]
+                      delete graphData["undefined"]
+                      $scope.labels = _.keys(graphData);
+                      $scope.data = [_.values(graphData)];
+                      $scope.displayStats = true;
+            })
+
 }])
