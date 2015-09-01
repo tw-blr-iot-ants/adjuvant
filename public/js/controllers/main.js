@@ -1,5 +1,4 @@
   angular.module('orderController', ["chart.js"])
-
       .controller('orderController', ['$scope', '$http', 'googleService', 'Flash',
             function($scope, $http, googleService, Flash) {
 
@@ -10,10 +9,14 @@
 
           $scope.employeeId = "16305";
           $scope.name = "dixith";
+          $scope.successMessage = false;
+          $scope.placedOrder = false;
+
+
 
           $scope.placeOrder = function() {
+              $scope.placedOrder = true;
               var order = _constructOrder();
-              console.log("gg", googleService)
               googleService.create(order)
                       .success(_notifySuccess);
           };
@@ -30,7 +33,6 @@
              var message = '<strong>Thank you!</strong> We successfully placed your Order';
              Flash.create('success', message, 'col-sm-4 col-sm-offset-4');
              $scope.successMessage = true;
-
+             $scope.placedOrder = false;
           }
-
   }]);

@@ -10,8 +10,10 @@ module.exports = function(app) {
 	});
 
 	app.post('/api/postOrder', function(req, res) {
-		googleSpreadsheet.updateSpreadSheet(req.body)
-		return res.json();
+        return googleSpreadsheet.updateSpreadSheet(req.body)
+			.then(function(data) {
+				res.json(data)
+			})
 	});
 
 //	app.get('*', function(req, res) {

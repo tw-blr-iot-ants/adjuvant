@@ -17,7 +17,9 @@
                   selected="selected" property="name"></dropdown>
     </div>
 
-    <div ng-if="successMessage" flash-message="5000" ></div>
+    <div ng-if="successMessage" flash-message="3000" ></div>
+    <div ng-if="placedOrder" class="col-sm-4 col-sm-offset-4  bar" ></div>
+
 
     <button type="submit" class="col-sm-4 col-sm-offset-4 btn btn-primary btn-lg"
             ng-click="placeOrder()">Order</button>

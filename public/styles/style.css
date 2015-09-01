@@ -19,7 +19,7 @@
 }
 
 .bar {
-  width: 100%;
+  margin-bottom: 13px;
   height: 20px;
   border: 1px solid #2980b9;
   border-radius: 3px;
@@ -42,4 +42,14 @@
   100% {
     background-position: 28px 0;
   }
+}
+
+
+table, td, th {
+    border: 1px solid green;
+}
+
+th {
+    background-color: green;
+    color: white;
 }
