@@ -5,5 +5,6 @@ angular.module('detailsController', ['ngSanitize'])
         googleService.getStats()
             .then(function(response) {
                  $scope.generatedTable =  statsDisplayService.displayDetails(response.data);
+                 $scope.displayDetails = true;
              })
 }])

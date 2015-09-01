@@ -1,3 +1,4 @@
-<div class="container">
-    <p ng-bind-html="generatedTable"></p>
+<div>
+    <div class="details-table" ng-if="displayDetails" ng-bind-html="generatedTable"></div>
+    <div  ng-if="!displayDetails" class="bar"></div>
 </div>

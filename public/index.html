@@ -14,6 +14,12 @@
 		body 					{ padding-top:50px; }
 	</style>
 
+    <script type="text/javascript">
+      function navigationUrl(url) {
+                window.open(window.location.origin  + url , '_blank');
+      };
+    </script>
+
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>
@@ -35,7 +41,8 @@
 
 <body>
     <ng-view></ng-view>
-    <a href="#/stats" class="stats">Stats</a>
-    <a href="#/details" class="footer"> Details </a>
+    <div id="lines"></div>
+    <a  class="stats" onclick="navigationUrl('#/stats')">Stats</a>
+    <a  class="footer" onclick="navigationUrl('#/details')"> Details </a>
 </body>
 </html>

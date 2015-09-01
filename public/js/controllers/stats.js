@@ -9,6 +9,7 @@ angular.module('statsController', ["chart.js"])
                       delete graphData["undefined"]
                       $scope.labels = _.keys(graphData);
                       $scope.data = [_.values(graphData)];
+                      $scope.totalCount = _.size(response.data.rows)
                       $scope.displayStats = true;
             })
 }])

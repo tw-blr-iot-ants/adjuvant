@@ -13,6 +13,7 @@
 
           $scope.placeOrder = function() {
               var order = _constructOrder();
+              console.log("gg", googleService)
               googleService.create(order)
                       .success(_notifySuccess);
           };
@@ -26,9 +27,10 @@
           }
 
           var _notifySuccess = function(data) {
-             $scope.successMessage = true;
              var message = '<strong>Thank you!</strong> We successfully placed your Order';
              Flash.create('success', message, 'col-sm-4 col-sm-offset-4');
+             $scope.successMessage = true;
+
           }
 
   }]);
