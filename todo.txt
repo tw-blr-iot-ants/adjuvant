@@ -1,7 +1,8 @@
 =====
 convert cdn to local dependencies
-add spinners
-handle others text boxnode s
+    chart
+    angular
+    underscore
 
 delete the first element in json
 

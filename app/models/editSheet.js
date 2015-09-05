@@ -17,7 +17,7 @@ var updateSpreadSheet = function(order) {
 
     var deferredResult = q.defer();
     Spreadsheet.load(spreadsheetSetup() , function sheetReady(err, spreadsheet) {
-                          var existingsRows ;
+                          var nextRow ;
                           var datObject = {}
 
                           var addRowToSheet = function() {
@@ -27,24 +27,28 @@ var updateSpreadSheet = function(order) {
                             transformOrder["3"] =order.EmployeeId;
                             transformOrder["4"] =order.Order;
 
-                            datObject[existingsRows] = transformOrder;
+                            datObject[nextRow] = transformOrder;
                             spreadsheet.add(datObject);
                             return q({})
                           }
                           var sendDataToSheet = function() {
                               spreadsheet.send(function(err) {
                                 if(err) throw err;
-                              });
                               deferredResult.resolve({"result": metaInfo})
+                              });
                           }
+
+                          var errorCallback =function(err) {
+                            console.log("error while updating contents of sheet", err)
+                          };
 
                           spreadsheet.receive(function(err, rows, info) {
                               metaInfo = info;
                               if(err) throw err;
-                              existingsRows = info.totalRows + 1;
+                              nextRow = info.totalRows + 1;
                               q({})
                                  .then(addRowToSheet)
-                                 .then(sendDataToSheet)
+                                 .then(sendDataToSheet, errorCallback)
                           });
                     });
     return deferredResult.promise;
@@ -66,8 +70,12 @@ var deleteContents = function(order) {
                           var sendDataToSheet = function() {
                               spreadsheet.send(function(err) {
                                 if(err) throw err;
-                              });
                               deferredResult.resolve({"result": "SUCCESS"})
+                              });
+                          }
+
+                          var errorCallback =function(err) {
+                            console.log("error while deleting contents of sheet", err)
                           }
 
                           spreadsheet.receive(function(err, rows, info) {
@@ -75,10 +83,8 @@ var deleteContents = function(order) {
                               existingsRows = info.totalRows + 1;
                               q({})
                                  .then(addRowToSheet)
-                                 .then(sendDataToSheet)
-                                 .then(undefined, function(err){
-                                        console.log(error)
-                                    })
+                                 .then(sendDataToSheet, errorCallback)
+
                           });
     });
     return deferredResult.promise;

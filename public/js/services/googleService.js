@@ -8,8 +8,8 @@ angular.module('googleService', [])
 			create : function(request) {
 				return $http.post('/api/postOrder', request);
 			},
-			deleteContents : function(todoData) {
-				return $http.post('/api/cleanSheet', todoData);
+			deleteContents : function() {
+				return $http.post('/api/cleanSheet');
 			}
 		}
 }]);

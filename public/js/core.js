@@ -1,20 +1,20 @@
 var app = angular.module('adjuvant', ['ngRoute',
                                        'orderController', 'statsController', 'detailsController',
-                                       'googleService',  'statsDisplayService', 'mongooseService',
+                                       'googleService',  'statsService', 'mongooseService',
                                        'flash'])
 
 app.config(function($routeProvider) {
     $routeProvider
         .when('/home', {
-            templateUrl: 'home.html',
+            templateUrl: 'partials/home.html',
             controller: 'orderController'
         })
         .when('/stats', {
-            templateUrl: 'stats.html',
+            templateUrl: 'partials/stats.html',
             controller: 'statsController'
         })
         .when('/details', {
-            templateUrl: 'details.html',
+            templateUrl: 'partials/details.html',
             controller: 'detailsController'
         })
         .otherwise({

@@ -1,4 +1,4 @@
-var googleSpreadsheet = require('./models/editGoogle')
+var googleSpreadsheet = require('./models/editSheet')
 var Register = require('./models/mongooseDB')
 
 
@@ -39,7 +39,6 @@ module.exports = function(app) {
 	  return Register.create(req.body, function(error, register) {
 	                if(error)
 	                    res.send(err);
-
 	              	getDetails(res);
 	  })
 	})

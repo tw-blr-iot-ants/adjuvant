@@ -1,10 +1,10 @@
 angular.module('detailsController', ['ngSanitize'])
-                .controller('detailsController', ['$scope', 'statsDisplayService', 'googleService',
-                                                function($scope, statsDisplayService, googleService) {
+                .controller('detailsController', ['$scope', 'statsService', 'googleService',
+                                                function($scope, statsService, googleService) {
 
         googleService.getStats()
             .then(function(response) {
-                 $scope.generatedTable =  statsDisplayService.displayDetails(response.data);
+                 $scope.generatedTable =  statsService.displayDetails(response.data);
                  $scope.displayDetails = true;
              })
 }])

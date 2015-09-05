@@ -1,8 +1,8 @@
   angular.module('orderController', ["chart.js"])
       .controller('orderController', ['$scope', '$http', '$interval' , 'googleService',
-                                       'mongooseService', 'statsDisplayService', 'Flash',
+                                       'mongooseService', 'statsService', 'Flash',
             function($scope, $http, $interval, googleService,
-                        mongooseService, statsDisplayService, Flash) {
+                        mongooseService, statsService, Flash) {
 
           $http({method: 'GET', url: '/data.json'}).
               success(function(data) {
@@ -14,17 +14,19 @@
           $scope.successMessage = false;
           $scope.placedOrder = false;
 
+          var dayInMilliseconds = 86400000;
+
 
           $interval(function() {
                 googleService.getStats()
-                             .then(_updateMongoAndCleanSpreadSheet)
-           }, 86400000);
+                             .then(_updateMongo)
+                             .then(_cleanSpreadSheet)
+           }, dayInMilliseconds);
 
           $scope.placeOrder = function() {
               $scope.placedOrder = true;
               googleService.create(_constructOrder())
                       .then(_notifySuccess);
-
           };
 
           var _constructOrder = function() {
@@ -51,7 +53,10 @@
 
           var _updateMongoAndCleanSpreadSheet = function(response) {
                   mongooseService
-                          .update(statsDisplayService.getDetails(response.data).shift())
-                          .then(googleService.deleteContents);
+                          .update(statsService.getDetails(response.data).shift())
+          }
+
+          var _cleanSpreadSheet = function() {
+            googleService.deleteContents();
           }
   }]);

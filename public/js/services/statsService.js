@@ -1,5 +1,5 @@
-angular.module('statsDisplayService', [])
-	.service('statsDisplayService', function() {
+angular.module('statsService', [])
+	.service('statsService', function() {
 
 
         var getDetails = function(data) {
@@ -28,11 +28,10 @@ angular.module('statsDisplayService', [])
 		var extractSamples = function(data){
           var rows = _.values(data.rows);
           var juiceChoice = [];
-          _.each(rows, function(k) {
-                 juiceChoice.push(k["4"])
+          _.each(rows, function(row) {
+                 juiceChoice.push(row["4"])
           })
-		  var dataObject = _.countBy(juiceChoice , _.identity)
-          return dataObject;
+          return _.countBy(juiceChoice , _.identity);
 		}
 
 

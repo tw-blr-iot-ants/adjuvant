@@ -1,11 +1,11 @@
 angular.module('statsController', ["chart.js"])
-                .controller('statsController', ['$scope', 'statsDisplayService', 'googleService',
-                                                function($scope, statsDisplayService, googleService) {
+                .controller('statsController', ['$scope', 'statsService', 'googleService',
+                                                function($scope, statsService, googleService) {
 
         googleService.getStats()
             .then(function(response) {
-                      var graphData = statsDisplayService.extractSamples(response.data);
-                      delete graphData["order"]
+                      var graphData = statsService.extractSamples(response.data);
+                      delete graphData["Order"]
                       delete graphData["undefined"]
                       $scope.labels = _.keys(graphData);
                       $scope.data = [_.values(graphData)];
