@@ -1,4 +1,16 @@
 var googleSpreadsheet = require('./models/editGoogle')
+var Register = require('./models/mongooseDB')
+
+
+var getDetails= function(res){
+	Register.find(function(err, register) {
+
+			if (err)
+				res.send(err)
+            console.log("register", register)
+			res.json(register); // return all register in JSON format
+		});
+};
 
 module.exports = function(app) {
 
@@ -16,7 +28,21 @@ module.exports = function(app) {
 			})
 	});
 
-//	app.get('*', function(req, res) {
-//		res.sendfile('./public/index.html');
-//	});
+    app.post('/api/cleanSheet', function(req, res) {
+        return googleSpreadsheet.deleteContents()
+			.then(function(data) {
+			     res.json(data)
+			})
+	});
+
+	app.post('/api/updateDB', function(req, res) {
+	  return Register.create(req.body, function(error, register) {
+	                if(error)
+	                    res.send(err);
+
+	              	getDetails(res);
+	  })
+	})
+
 };
+

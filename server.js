@@ -3,6 +3,10 @@ var app      = express();
 var port  	 = process.env.PORT || 8082;
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var mongoose = require('mongoose');
+var database = require('./config/database');
+
+
 
 
 app.use(express.static(__dirname + '/public'));

@@ -2,3 +2,9 @@
 convert cdn to local dependencies
 add spinners
 handle others text boxnode s
+
+delete the first element in json
+
+check for error handling in editGooglejs
+
+mongo dont add first row (column names)

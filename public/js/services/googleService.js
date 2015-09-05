@@ -5,8 +5,11 @@ angular.module('googleService', [])
 			  return $http.get('/api/getOrders');
 
 			},
-			create : function(todoData) {
-				return $http.post('/api/postOrder', todoData);
+			create : function(request) {
+				return $http.post('/api/postOrder', request);
+			},
+			deleteContents : function(todoData) {
+				return $http.post('/api/cleanSheet', todoData);
 			}
 		}
 }]);
