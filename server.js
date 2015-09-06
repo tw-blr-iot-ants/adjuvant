@@ -1,5 +1,6 @@
 var express  = require('express');
 var app      = express();
+var SerialPort = require("serialport").SerialPort;
 var port  	 = process.env.PORT || 8082;
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -23,5 +24,25 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 
 require('./app/routes.js')(app);
 
-app.listen(port);
+var server = app.listen(port);
 console.log("App listening on port " + port);
+
+var io = require('socket.io').listen(server);
+
+var serialport = new SerialPort("/dev/tty.usbmodem1411", {
+       baudrate: 9600,
+       parser: require("serialport").parsers.readline("\n")
+});
+
+serialport.on('open', function(){
+	console.log('Serial Port Opened');
+
+	io.sockets.on('connection', function (socket) {
+		console.log('Socket connected');
+		serialport.on('data', function(data){
+				socket.emit('data', {msg: data});
+		});
+	});
+});
+
+

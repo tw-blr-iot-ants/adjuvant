@@ -17,7 +17,26 @@ app.config(function($routeProvider) {
             templateUrl: 'partials/details.html',
             controller: 'detailsController'
         })
-        .otherwise({
+       .otherwise({
             redirectTo: '/home'
         });
 });
+
+app.factory('socket', ['$rootScope', function ($rootScope) {
+    return {
+        on: function (eventName, callback) {
+            function wrapper() {
+                var args = arguments;
+                $rootScope.$apply(function () {
+                    callback.apply(socket, args);
+                });
+            }
+
+            socket.on(eventName, wrapper);
+
+            return function () {
+                socket.removeListener(eventName, wrapper);
+            };
+        },
+    };
+}]);
