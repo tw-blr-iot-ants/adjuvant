@@ -8,4 +8,3 @@ var registerSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Register', registerSchema);
-

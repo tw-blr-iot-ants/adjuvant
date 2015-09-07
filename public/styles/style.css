@@ -53,3 +53,7 @@ th {
     background-color: green;
     color: white;
 }
+
+.boxed {
+  border: 1px solid red ;
+}

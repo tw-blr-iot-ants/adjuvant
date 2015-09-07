@@ -36,9 +36,14 @@
            }, dayInMilliseconds);
 
           $scope.placeOrder = function() {
+            if(_validateOrder()) {
               $scope.placedOrder = true;
+              $scope.missingFields = false;
               googleService.create(_constructOrder())
                       .then(_notifySuccess);
+            } else {
+              _notifyError();
+            }
           };
 
 
@@ -80,8 +85,25 @@
              Flash.create('success', message, 'col-sm-4 col-sm-offset-4');
              $scope.successMessage = true;
              $scope.placedOrder = false;
+             resetDefaults();
+          }
+
+          var _notifyError = function(response) {
+             $scope.successMessage = false;
+             var message = '<strong>Error!</strong> Mandatory fields are missing';
+             Flash.create('danger', message, 'col-sm-4 col-sm-offset-4');
+             $scope.missingFields = true;
+
+          }
+
+          var resetDefaults = function() {
              $scope.name  = "";
              $scope.employeeId = "";
+             $scope.selected = "";
+          }
+
+          var _validateOrder = function() {
+            return  $scope.selected  && $scope.name && $scope.employeeId ;
           }
 
           var _getTodayDate = function() {
