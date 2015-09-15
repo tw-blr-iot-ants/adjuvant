@@ -1,5 +1,5 @@
 var Spreadsheet = require('edit-google-spreadsheet');
-var q = require('q')
+var q = require('q');
 
 var getSpreadSheetInfo = function() {
            var deferredResult = q.defer();
@@ -94,7 +94,7 @@ var spreadsheetSetup = function() {
       return {
           debug: true,
           spreadsheetName: 'demo log',
-          worksheetName: 'Sheet2',
+          worksheetName: 'Sheet1',
 
           oauth2: {
                 client_id: CLIENT_ID,
