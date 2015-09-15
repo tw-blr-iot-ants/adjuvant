@@ -41,7 +41,8 @@
           };
 
           socket.on('data', function(data) {
-                $scope.idCardDetails = parseInt(data.msg);
+                console.log("data", data);
+                $scope.idCardDetails = data.msg.trim();
                 var user = users[$scope.idCardDetails];
                 $scope.name  = user && user.Name;
                 $scope.employeeId = user && user.EmployeeId;

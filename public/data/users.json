@@ -1,18 +1,3 @@
-{
-  "526748486565505554576556" : {
-    "Name": "Dixith",
-    "EmployeeId": "16305"
-  },
-  "526748486565505554566557": {
-    "Name": "Deepthi",
-    "EmployeeId": "12345"
-  },
-  "546648485155495657526848": {
-    "Name": "ManiKasturi",
-    "EmployeeId": "74568"
-  },
-  "120724": {
-    "Name": "Dixith",
-    "EmployeeId": "16305"
-  }
+{ "120724": { "Name": "Dixith", "EmployeeId": "16305" },
+  "FA6248": { "Name": "Thote", "EmployeeId": "15932" }
 }
