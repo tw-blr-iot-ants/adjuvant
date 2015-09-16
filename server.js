@@ -34,6 +34,11 @@ var serialport = new SerialPort("/dev/tty.usbmodem1411", {
        parser: require("serialport").parsers.readline("\n")
 });
 
+
+serialport.on("error", function(err) {
+	console.log("error in opening serial connection err: ", err);
+});
+
 serialport.on('open', function(){
 	console.log('Serial Port Opened');
 

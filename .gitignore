@@ -3,3 +3,4 @@ node_modules/*
 secret.txt
 a.log
 npm-debug.log
+public/node_modules/*
