@@ -22,6 +22,15 @@
             $('input').ftext();
         });
     </script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+	$("#balloon").keypress(function(event) {
+		return /\d/.test(String.fromCharCode(event.keyCode));
+	});
+});
+
+    </script>
     <![endif]-->
 </head>
 <body>
@@ -34,8 +43,8 @@
 <div class="pn2">
     <ul class="list clearfix">
         <li>
-            <input type="text" data-animation="flip" id="balloon" data-label="Employee ID" data-label-bg="#82cff0"
-                   data-label-color="#fff" data-mask="" />
+            <input type="text" style="font-size: 22pt" data-animation="flip" id="balloon" data-label="Employee ID" data-label-bg="#82cff0"
+                   data-label-color="#fff" maxlength="5" data-mask="" />
         </li>
     </ul>
 </div>
