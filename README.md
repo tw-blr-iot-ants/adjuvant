@@ -1,8 +1,12 @@
-# adjuvant
-
-Run the server using 
-  node server.js
-
-npm install all the required packages
+# Adjuvant
+### Steps to start the app.
+Install dependencies:
+```sh
+$ npm install
+```
+Start the server:
+```sh
+$ node server.js
+```
 
 
