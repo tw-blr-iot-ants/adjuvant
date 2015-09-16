@@ -48,6 +48,14 @@
     </script>
 
     <script>
+        $(document).ready(function() {
+     $('#bttnsubmit').attr('disabled','disabled');
+     $("#balloon").change(function(){
+        $("#bttnsubmit").removeAttr("disabled");
+    });
+ });
+    </script>
+    <script>
            $.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
 			$.fn.numpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
 			$.fn.numpad.defaults.displayTpl = '<input type="text" class="form-control" />';
@@ -74,6 +82,10 @@
         <li>
             <input type="text" class="form-control" style="font-size: 18pt" data-animation="flip" id="balloon" data-label="Employee ID" data-label-bg="#82cff0"
                    data-label-color="#fff" maxlength="5" data-mask="" />
+
+                <button name="button" value="Order" type="button" class="" style="font-size: 18pt"  data-label-bg="#82cff0" id="bttnsubmit"
+                        data-label-color="#fff">Proceed to Order</button>
+
         </li>
     </ul>
 </div>
