@@ -5,7 +5,7 @@ body {
     text-align: center;
     font: 1em/1.5 Georgia, serif;
     color: #333;
-    background-image: url("../images/bg_2.jpg");
+    background-image: url("../images/bg.jpg");
     background-size:cover;
     background-repeat: no-repeat;
 }
@@ -21,7 +21,7 @@ img {
 
 h1 {
     font-family: Bitter, Georgia, serif;
-    font-size: 2.00em;
+    font-size: xx-large;
     padding: 0 1em;
 }
 
@@ -38,16 +38,16 @@ h1 {
     @include border-radius(75px); // half the avatar size
     width: 150px;
     height: 150px;
-    margin-top: -10px;
+    margin-top: -25px;
 }
 
 h2
 {
     font-weight: 100;
-    font-size: 20px;
+    font-size: medium;
     text-align: center;
     color: rgba(10, 9, 9, 0.6);
-    margin-top: 60px;
+    margin-top: 20px;
 }
 
 .background{
