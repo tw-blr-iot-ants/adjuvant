@@ -6,8 +6,14 @@ body {
     font: 1em/1.5 Georgia, serif;
     color: #333;
     background-image: url("../images/bg.jpg");
-    background-size:cover;
+
     background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 a {
@@ -20,9 +26,9 @@ img {
 }
 
 h1 {
-    font-family: Bitter, Georgia, serif;
-    font-size: xx-large;
-    padding: 0 1em;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: xx-large !important;
+    padding: 0 1em !important;
 }
 
 .header {
@@ -43,10 +49,11 @@ h1 {
 
 h2
 {
-    font-weight: 100;
+    font-family: 'Open Sans', sans-serif !important;
+    font-weight: 100 !important;
     font-size: medium;
-    text-align: center;
-    color: rgba(10, 9, 9, 0.6);
+    text-align: center !important;
+    color: rgba(10, 9, 9, 0.6) !important;
     margin-top: 20px;
 }
 
