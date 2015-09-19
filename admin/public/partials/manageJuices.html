@@ -1,0 +1,27 @@
+<div class="col-sm-4 col-sm-offset-4">
+        <table class="gridtable col-sm-6 col-sm-offset-2 generate-invoice"
+               border="1" cellspacing="1" cellpadding="5">
+            <tr>
+                <th>Juice Name</th>
+                <th>Unit Cost</th>
+                <th>Delete Juice</th>
+            </tr>
+            <tr ng-repeat="juice in juices">
+                <td>{{juice.Juice}}</td>
+                <td>{{juice.Cost}}</td>
+                <td>
+                    <input  type="submit"  value="Delete" ng-click="deleteJuice(juice.Juice)">
+                </td>
+            </tr>
+        </table>
+
+
+
+    <p class="text-center" ng-show="loading">
+        <span class="fa fa-spinner fa-spin fa-3x"></span>
+    </p>
+
+    <input type="text" class="form-control input-lg text-center generate-invoice"  ng-model="juiceName">
+    <button type="submit" class="col-sm-6 col-sm-offset-4" ng-click="updateJuices()">Add</button>
+
+</div>
