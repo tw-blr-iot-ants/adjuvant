@@ -4,9 +4,14 @@ Install dependencies:
 ```sh
 $ npm install
 ```
-Start the server:
+Start the client:
 ```sh
-$ node server.js
+$ cd client     &&      node client-server.js
+```
+
+Start the admin app:
+```sh
+$ cd admin     &&       node admin-server.js
 ```
 
 
