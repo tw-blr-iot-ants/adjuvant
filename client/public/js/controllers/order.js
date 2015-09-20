@@ -12,7 +12,13 @@
           $scope.idCardDetails = "";
 
           mongooseService.getJuices()
-                               .then(_loadJuices)
+                               .then(function(response) {
+                                    $scope.juices = [];
+                                    _.each(response.data, function(menu){
+                                        $scope.juices.push(menu["Juice"])
+                                    })
+                               })
+
 
           $http({method: 'GET', url: 'data/users.json'}).
                         success(function(data) {
@@ -82,10 +88,4 @@
              return today.getDate() + '/' + today.getMonth() + '/' + today.getFullYear();
           }
 
-          var _loadJuices = function(response) {
-             $scope.juices = [];
-             _.each(response.data, function(menu){
-                  $scope.juices.push(menu["Juice"])
-             })
-          }
   }]);

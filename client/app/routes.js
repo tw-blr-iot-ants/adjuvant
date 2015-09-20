@@ -7,7 +7,6 @@ var getDetails= function(res){
 
 			if (err)
 				res.send(err)
-            console.log("register", register)
 			res.json(register); // return all register in JSON format
 		});
 };
