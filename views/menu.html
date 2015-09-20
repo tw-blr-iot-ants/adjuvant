@@ -20,7 +20,7 @@
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 </head>
-<body>
+<body style="background-image: url('../images/bg.png');">
 <header class="header">
     <h1 style="margin-top: -70px; font-size: x-large !important;">Time to be healthy!</h1>
     <h2 style="margin-top: -40px; font-size: large;">Place your order</h2>
@@ -31,6 +31,21 @@
 <div id="demo">
     <div id="owl-demo" class="owl-carousel">
 
+        <div class="item" style="background-image: url('images/apple.jpg');">
+            <div>
+                <ul class="list clearfix">
+                    <li>
+                        <h1 align="center">Apple</h1>
+                    </li>
+
+                    <li class="info">
+                        <input type="text" style="font-size: 12pt; width: 50px;" data-label="quantity" data-label-bg="#82cff0"
+                               data-label-color="#fff" maxlength="5" data-mask="" />
+                    </li>
+
+                </ul>
+                </div>
+        </div>
         <div class="item orange" style="background-image: url('images/orange.jpg');">
             <div>
                 <ul class="list clearfix">
@@ -38,6 +53,9 @@
                         <h1>Orange</h1>
                     </li>
 
+                    <li class="info">
+                        Test
+                    </li>
                     <!--<li>-->
                         <!--<input type="text" style="font-size: 12pt; width: 100px;" data-animation="flip" id="balloon" data-label="Employee ID" data-label-bg="#82cff0"-->
                                <!--data-label-color="#fff" maxlength="5" data-mask="" />-->
@@ -45,7 +63,7 @@
                 </ul>
             </div>
         </div>
-        <div class="item" style="background-image: url('images/apple.jpg');"><h1 align="center">Apple</h1></div>
+
         <div class="item" style="background-image: url('images/strawberry.jpg');"><h1>Strawberry</h1></div>
         <div class="item" style="background-image: url('images/lemon.jpg');"><h1>Lemon</h1></div>
         <div class="item" style="background-image: url('images/mosambi.jpg');"><h1>Mosambi</h1></div>
@@ -69,7 +87,23 @@
     text-align: center;
     height: 320px;
     background-repeat: no-repeat;
+    opacity: 0.7;
+    padding-right: 24px;
     }
+
+    #owl-demo .item .info{
+    background: rgba(255, 254, 254, 0.17);
+    padding: 30px 0px;
+    margin: 5px;
+    color: #FFF;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 10px;
+    text-align: center;
+    height: 170px;
+    width: 164px;
+    }
+
 </style>
 
 
