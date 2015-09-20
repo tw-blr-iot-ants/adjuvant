@@ -17,6 +17,7 @@ angular.module('juiceController', [])
                            .then(function(response) {
                                  $scope.juices = response.data;
                                  $scope.loading = false;
+                                 $scope.juiceName = "";
                            })
     }
 
