@@ -1,6 +1,11 @@
+*~
 .idea/*
-node_modules/*
+node_modules
 secret.txt
 a.log
 npm-debug.log
 public/node_modules/*
+client/public/node_modules/*
+client/node_modules/*
+client/.idea/*
+admin/public/node_modules/*

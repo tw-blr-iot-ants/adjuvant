@@ -1,0 +1,46 @@
+<div>
+    <div ng-if="!cardSwiped" class="header">
+        <img src="views/images/avatar.jpg" width="236" height="435" class="avatar" />
+        <h1>Swipe Card To Place Order</h1>
+        <h2>Or <p>Just input your ThoughtWorks Employee ID below</p></h2>
+
+        <div class="pn2">
+            <ul class="list clearfix">
+                <li>
+                    <input type="text" style="font-size: 22pt" data-animation="flip" id="balloon" data-label="Employee ID" data-label-bg="#82cff0"
+                           data-label-color="#fff" maxlength="5" data-mask="" />
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div ng-show="cardSwiped" class="container">
+
+        <div class="jumbotron text-center">
+            <h1> Juice Counter </span></h1>
+        </div>
+
+        <div id="details" class="row">
+            <p class="col-sm-4 col-sm-offset-4">
+                EmployeeID : {{employeeId}}
+            </p>
+
+            <p class="col-sm-4 col-sm-offset-4">
+                Name : {{name}}
+            </p>
+            <dropdown class="col-sm-4 col-sm-offset-4"
+                      placeholder="select a juice " list="juices"
+                      selected="selected" property="name">
+            </dropdown>
+        </div>
+
+        <div ng-if="successMessage" flash-message="30000" ></div>
+        <div ng-if="placedOrder" class="col-sm-4 col-sm-offset-4  bar" ></div>
+        <div ng-if="missingFields" flash-message="30000" ></div>
+
+        <button type="submit" class="col-sm-4 col-sm-offset-4 btn btn-primary btn-lg"
+                ng-click="placeOrder()">Order</button>
+    </div>
+
+</div>
+

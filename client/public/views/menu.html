@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <link href="stylesheets/style.css" type="text/css" rel="stylesheet" >
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link href="stylesheets/demo.css" rel="stylesheet" type="text/css" />
+
+    <link href="stylesheets/bootstrapTheme.css" rel="stylesheet">
+    <link href="stylesheets/custom.css" rel="stylesheet">
+
+    <link href="stylesheets/owl.carousel.css" rel="stylesheet">
+    <link href="stylesheets/owl.theme.css" rel="stylesheet">
+
+
+    <title>Juice Menu</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<header class="header">
+    <h1 style="margin-top: -70px; font-size: x-large !important;">Time to be healthy!</h1>
+    <h2 style="margin-top: -40px; font-size: large;">Place your order</h2>
+</header>
+
+
+
+<div id="demo">
+    <div id="owl-demo" class="owl-carousel">
+
+        <div class="item orange" style="background-image: url('images/orange.jpg');">
+            <div>
+                <ul class="list clearfix">
+                    <li>
+                        <h1>Orange</h1>
+                    </li>
+
+                    <!--<li>-->
+                        <!--<input type="text" style="font-size: 12pt; width: 100px;" data-animation="flip" id="balloon" data-label="Employee ID" data-label-bg="#82cff0"-->
+                               <!--data-label-color="#fff" maxlength="5" data-mask="" />-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </div>
+        <div class="item" style="background-image: url('images/apple.jpg');"><h1 align="center">Apple</h1></div>
+        <div class="item" style="background-image: url('images/strawberry.jpg');"><h1>Strawberry</h1></div>
+        <div class="item" style="background-image: url('images/lemon.jpg');"><h1>Lemon</h1></div>
+        <div class="item" style="background-image: url('images/mosambi.jpg');"><h1>Mosambi</h1></div>
+        <div class="item" style="background-image: url('images/grapes.jpg');"><h1>Grape</h1></div>
+
+
+    </div>
+</div>
+
+<script src="javascripts/jquery-1.10.2.min.js"></script>
+<script src="javascripts/owl.carousel.js"></script>
+<style>
+    #owl-demo .item{
+    background: rgba(162, 190, 22, 0.53);
+    padding: 30px 0px;
+    margin: 5px;
+    color: #FFF;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 10px;
+    text-align: center;
+    height: 320px;
+    background-repeat: no-repeat;
+    }
+</style>
+
+
+<script>
+    $(document).ready(function() {
+
+      var owl = $("#owl-demo");
+
+      owl.owlCarousel({
+
+        // Define custom and unlimited items depending from the width
+        // If this option is set, itemsDeskop, itemsDesktopSmall, itemsTablet, itemsMobile etc. are disabled
+        // For better preview, order the arrays by screen size, but it's not mandatory
+        // Don't forget to include the lowest available screen size, otherwise it will take the default one for screens lower than lowest available.
+        // In the example there is dimension with 0 with which cover screens between 0 and 450px
+
+        itemsCustom : [
+          [0, 2],
+          [300, 1],
+          [600, 3],
+          [700, 3],
+          [1000, 10],
+          [1200, 12],
+          [1400, 3],
+          [1600, 15]
+        ],
+        navigation : true
+
+      });
+
+
+
+    });
+</script>
+
+<script src="javascripts/bootstrap-collapse.js"></script>
+<script src="javascripts/bootstrap-transition.js"></script>
+<script src="javascripts/bootstrap-tab.js"></script>
+
+</body>
+</html>
