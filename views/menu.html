@@ -39,8 +39,18 @@
                     </li>
 
                     <li class="info">
-                        <input type="text" style="font-size: 12pt; width: 50px;" data-label="quantity" data-label-bg="#82cff0"
-                               data-label-color="#fff" maxlength="5" data-mask="" />
+                        <label>Select Quantity</label>
+                        <div class="styled-select">
+                            <select>
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <span></span>
+                        </div>
                     </li>
 
                 </ul>
@@ -54,20 +64,119 @@
                     </li>
 
                     <li class="info">
-                        Test
+                        <label>Select Quantity</label>
+                        <div class="styled-select">
+                            <select>
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <span></span>
+                        </div>
                     </li>
-                    <!--<li>-->
-                        <!--<input type="text" style="font-size: 12pt; width: 100px;" data-animation="flip" id="balloon" data-label="Employee ID" data-label-bg="#82cff0"-->
-                               <!--data-label-color="#fff" maxlength="5" data-mask="" />-->
-                    <!--</li>-->
                 </ul>
             </div>
         </div>
 
-        <div class="item" style="background-image: url('images/strawberry.jpg');"><h1>Strawberry</h1></div>
-        <div class="item" style="background-image: url('images/lemon.jpg');"><h1>Lemon</h1></div>
-        <div class="item" style="background-image: url('images/mosambi.jpg');"><h1>Mosambi</h1></div>
-        <div class="item" style="background-image: url('images/grapes.jpg');"><h1>Grape</h1></div>
+        <div class="item" style="background-image: url('images/strawberry.jpg');">
+            <div>
+                <ul class="list clearfix">
+                    <li>
+                        <h1>Strawberry</h1>
+                    </li>
+
+                    <li class="info">
+                        <label>Select Quantity</label>
+                        <div class="styled-select">
+                            <select>
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <span></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="item" style="background-image: url('images/lemon.jpg');">
+            <div>
+                <ul class="list clearfix">
+                    <li>
+                        <h1>Lemon</h1>
+                    </li>
+
+                    <li class="info">
+                        <label>Select Quantity</label>
+                        <div class="styled-select">
+                            <select>
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <span></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="item" style="background-image: url('images/mosambi.jpg');">
+            <div>
+                <ul class="list clearfix">
+                    <li>
+                        <h1>Mosambi</h1>
+                    </li>
+
+                    <li class="info">
+                        <label>Select Quantity</label>
+                        <div class="styled-select">
+                            <select>
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <span></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="item" style="background-image: url('images/grapes.jpg');">
+            <div>
+                <ul class="list clearfix">
+                    <li>
+                        <h1>Grapes</h1>
+                    </li>
+
+                    <li class="info">
+                        <label>Select Quantity</label>
+                        <div class="styled-select">
+                            <select>
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <span></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
 
     </div>
@@ -103,6 +212,35 @@
     height: 170px;
     width: 164px;
     }
+
+    .styled-select {
+    width:60px;
+    overflow: hidden;
+    background: rgba(248, 248, 248, 0.2);
+    border: 1px solid #DDDDDD;
+    height: 30px;
+    border-radius:2px;
+    margin-left: 53px;
+    margin-top: 20px;
+    }
+
+    .styled-select select {
+    color: white !important;
+    width: 100%;
+    border: 0;
+    line-height: 1.5;
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+    appearance: none;
+    background: transparent url("/img/smart_arrows.png") no-repeat scroll 97% 8px;
+    @media (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi) {
+    background: transparent url("/img/smart_arrows@2x.png") no-repeat scroll 97% 8px;
+    background-size: 16px 144px;
+    }
+    }
+
 
 </style>
 
