@@ -1,4 +1,19 @@
 <div class="col-sm-4 col-sm-offset-4">
+
+    <div>
+
+    <p class="text-center" ng-show="loading">
+        <span class="fa fa-spinner fa-spin fa-3x"></span>
+    </p>
+
+    <div>
+        <p>Admin Portal</p>
+        <div>Juice Name: <input type="text" class="form-control input-lg text-center"  ng-model="juiceName"></div>
+        <div>Juice Price: <input type="text" class="form-control input-lg text-center"  ng-model="juicePrice"></div>
+        <button type="submit" class="col-sm-6 col-sm-offset-4 generate-invoice" ng-click="updateJuices()">Add</button>
+    </div>
+
+    <div>
         <table class="gridtable col-sm-6 col-sm-offset-2 generate-invoice"
                border="1" cellspacing="1" cellpadding="5">
             <tr>
@@ -14,14 +29,8 @@
                 </td>
             </tr>
         </table>
+    </div>
 
-
-
-    <p class="text-center" ng-show="loading">
-        <span class="fa fa-spinner fa-spin fa-3x"></span>
-    </p>
-
-    <input type="text" class="form-control input-lg text-center generate-invoice"  ng-model="juiceName">
-    <button type="submit" class="col-sm-6 col-sm-offset-4" ng-click="updateJuices()">Add</button>
+    </div>
 
 </div>

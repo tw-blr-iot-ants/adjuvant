@@ -11,13 +11,14 @@ angular.module('juiceController', [])
 
     $scope.updateJuices = function() {
         var juiceDetails = {};
-        juiceDetails.Juice = ($scope.juiceName).split("-")[0];
-        juiceDetails.Cost = ($scope.juiceName).split("-")[1];
+        juiceDetails.Juice = ($scope.juiceName);
+        juiceDetails.Cost = ($scope.juicePrice);
         mongooseService.setupJuices(juiceDetails)
                            .then(function(response) {
                                  $scope.juices = response.data;
                                  $scope.loading = false;
                                  $scope.juiceName = "";
+                                 $scope.juicePrice = "";
                            })
     }
 
