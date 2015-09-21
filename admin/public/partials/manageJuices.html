@@ -1,3 +1,4 @@
+
 <div class="col-sm-4 col-sm-offset-4">
 
     <div>
@@ -6,12 +7,15 @@
         <span class="fa fa-spinner fa-spin fa-3x"></span>
     </p>
 
+
     <div>
         <p>Admin Portal</p>
         <div>Juice Name: <input type="text" class="form-control input-lg text-center"  ng-model="juiceName"></div>
         <div>Juice Price: <input type="text" class="form-control input-lg text-center"  ng-model="juicePrice"></div>
         <button type="submit" class="col-sm-6 col-sm-offset-4 generate-invoice" ng-click="updateJuices()">Add</button>
     </div>
+
+        <a onclick="navigationUrl('#/invoice')"><button class="col-sm-6 col-sm-offset-4 generate-invoice">Generate Invoices</button></a>
 
     <div>
         <table class="gridtable col-sm-6 col-sm-offset-2 generate-invoice"
