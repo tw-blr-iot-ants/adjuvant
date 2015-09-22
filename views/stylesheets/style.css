@@ -54,6 +54,9 @@ q:before, q:after, blockquote:before, blockquote:after {
 }
 
 /* line 32, ../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
 
 /* line 116, ../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
@@ -72,10 +75,13 @@ body {
   webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
+  background-size: inherit;
 }
 
 /* line 19, ../sass/style.scss */
+a {
+  text-decoration: none;
+}
 
 /* line 23, ../sass/style.scss */
 img {
