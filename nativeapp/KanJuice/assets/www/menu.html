@@ -26,14 +26,8 @@
     <![endif]-->
 </head>
 <body style="background-image: url('images/bg.png');">
-<a href="#id" class="flipper-container">
-    <div id="id" class="flipper">
-        <div class="front-face" data-icon="&#x27a3;"><span data-hover="Clicked">Order</span></div>
-        <div class="back-face" data-icon="&#10003;">Thank You!</div>
-    </div>
-</a>
 <header class="header">
-    <h1 style="margin-top: -70px; font-size: x-large !important;">Time to be healthy!</h1>
+    <h1 style="margin-top: -160px; font-size: x-large !important;">Time to be healthy!</h1>
     <!--<button class="order">Place your order</button>-->
 </header>
 
@@ -49,19 +43,27 @@
                         <h1 align="center">Apple</h1>
                     </li>
 
-                    <li class="info">
-                        <label>Select Quantity</label>
-                        <div class="styled-select">
-                            <select>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                            <span></span>
+                    <li class="info-card">
+
+                        <div class="front">
+                            <a href="#" class="multi">Multi</a>
+                            <br>
+                            <a href="#" style="color: white">Just One?</a>
                         </div>
+                        <div class="back">
+                            <label>Select Quantity</label>
+                                <div class="styled-select">
+                                    <select>
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    </select>
+                                </div>
+                        </div>
+
                     </li>
 
                 </ul>
@@ -75,18 +77,19 @@
                     </li>
 
                     <li class="info">
-                        <label>Select Quantity</label>
-                        <div class="styled-select">
-                            <select>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                            <span></span>
-                        </div>
+                        <a href="#" class="multi-order">Multiple?</a>
+                        <!--<label>Select Quantity</label>-->
+                        <!--<div class="styled-select">-->
+                            <!--<select>-->
+                                <!--<option>0</option>-->
+                                <!--<option>1</option>-->
+                                <!--<option>2</option>-->
+                                <!--<option>3</option>-->
+                                <!--<option>4</option>-->
+                                <!--<option>5</option>-->
+                            <!--</select>-->
+                            <!--<span></span>-->
+                        <!--</div>-->
                     </li>
                 </ul>
             </div>
@@ -193,6 +196,12 @@
     </div>
 </div>
 
+<a href="#id" class="flipper-container">
+    <div id="id" class="flipper">
+        <div class="front-face"><span data-hover="Clicked">Order</span></div>
+        <div class="back-face">Thank You!</div>
+    </div>
+</a>
 <script src="javascripts/jquery-1.10.2.min.js"></script>
 <script src="javascripts/owl.carousel.js"></script>
 <link href="stylesheets/order-btn.css" rel="stylesheet">
@@ -253,8 +262,35 @@
     }
     }
 
-</style>
+    .front{
+        background: rgba(255, 254, 254, 0.17);
+        padding: 30px 0px;
+        margin: 5px;
+        color: #FFF;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 10px;
+        text-align: center;
+        height: 80px !important;
+        width: 164px;
+    }
 
+    .back{
+    background: rgba(255, 254, 254, 0.26);
+    padding: 30px 0px;
+    margin: 5px;
+    color: #FFF;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 10px;
+    text-align: center;
+    height: 170px !important;
+    width: 164px;
+    }
+
+
+</style>
+<script src="https://cdn.rawgit.com/nnattawat/flip/v1.0.16/dist/jquery.flip.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -282,10 +318,21 @@
         navigation : true
 
       });
-
-
-
     });
+
+
+
+    $(function(){
+        $(".info-card").flip({
+            trigger: 'manual'
+
+        });
+    });
+
+    $('.multi').click(function(){
+        $(".info-card").flip(true);
+    });
+
 </script>
 
 <script src="javascripts/bootstrap-collapse.js"></script>
