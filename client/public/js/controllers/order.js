@@ -2,9 +2,11 @@
       .controller('orderController', ['$scope', '$http', '$interval', 'mongooseService',  'socket', 'Flash',
             function($scope, $http, $interval, mongooseService, socket, Flash) {
 
+          var ENTER_KEY = 13;
           $scope.employeeId = "";
           $scope.name = "";
           $scope.idCard = "";
+          $scope.quantity = 0;
           $scope.successMessage = false;
           $scope.placedOrder = false;
           var users = {};
@@ -25,16 +27,30 @@
                             users = data;
           });
 
+          $http({method: 'GET', url: 'data/cardLessUsers.json'}).
+                        success(function(data) {
+                            cardLessUsers = data;
+          });
+
           $scope.placeOrder = function() {
             if(_validateOrder()) {
-              $scope.placedOrder = true;
               $scope.missingFields = false;
-              mongooseService.addJuice(_constructOrder())
+              mongooseService.placeOrder(constructOrder())
                                 .then(_notifySuccess);
+              $scope.placedOrder = true;
             } else {
               _notifyError();
             }
           };
+
+          $scope.placeCardlessOrder = function(keyEvent, employeeIdCardLess) {
+            if (keyEvent.which === ENTER_KEY){
+                $scope.employeeIdCardLess = employeeIdCardLess;
+                $scope.name = cardLessUsers[employeeIdCardLess].Name;
+                $scope.employeeId = employeeIdCardLess;
+                $scope.empIdVerified = true;
+            }
+          }
 
           socket.on('data', function(data) {
                 console.log("data", data);
@@ -47,13 +63,14 @@
           });
 
 
-          var _constructOrder = function() {
+          var constructOrder = function() {
              var date = _getTodayDate();
              return {
                   'Name' : $scope.name,
                   'EmployeeId': $scope.employeeId,
-                  'Order': $scope.selected,
-                  'Date': date
+                  'DrinkName': $scope.selected,
+                  'Date': date,
+                  'Quantity': $scope.quantity
              }
           }
 
@@ -85,7 +102,8 @@
 
           var _getTodayDate = function() {
              var today = new Date();
-             return today.getDate() + '/' + today.getMonth() + '/' + today.getFullYear();
+             return today;
+//             return today.getDate() + '/' + today.getMonth() + '/' + today.getFullYear();
           }
 
   }]);

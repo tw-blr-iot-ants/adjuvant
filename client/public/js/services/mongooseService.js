@@ -6,8 +6,8 @@ angular.module("mongooseService", [])
             return $http.post("/api/updateDB", data)
         },
 
-        addJuice: function(data) {
-            return $http.post("/api/addJuice", data)
+        placeOrder: function(data) {
+            return $http.post("/api/placeOrder", data)
         },
         getJuices: function() {
             return $http.get("/api/getJuices")

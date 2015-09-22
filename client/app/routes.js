@@ -1,21 +1,20 @@
-var Register = require('./models/registerDB')
+var orderDB = require('./models/orderDB')
 var Menu = require('./models/menuDB')
 
 
 var getDetails= function(res){
-	Register.find(function(err, register) {
-
+	orderDB.find(function(err, orderDB) {
 			if (err)
 				res.send(err)
-			res.json(register); // return all register in JSON format
+			res.json(orderDB); // return all orderDB in JSON format
 		});
 };
 
 module.exports = function(app) {
 
 
-	app.post('/api/addJuice', function(req, res) {
-	  return Register.create(req.body, function(error, register) {
+	app.post('/api/placeOrder', function(req, res) {
+	  return orderDB.create(req.body, function(error, orderDB) {
 	                if(error)
 	                    res.send(err);
 	              	getDetails(res);

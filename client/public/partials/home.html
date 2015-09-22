@@ -7,14 +7,14 @@
         <div class="pn2">
             <ul class="list clearfix">
                 <li>
-                    <input type="text" style="font-size: 22pt" data-animation="flip" id="balloon" data-label="Employee ID" data-label-bg="#82cff0"
-                           data-label-color="#fff" maxlength="5" data-mask="" />
+                    <input ng-keypress="placeCardlessOrder($event, employeeIdCardLess)" type="text" style="font-size: 22pt" data-animation="flip" id="balloon" data-label="Employee ID" data-label-bg="#82cff0"
+                           data-label-color="#fff" maxlength="5" data-mask="" ng-model="employeeIdCardLess"/>
                 </li>
             </ul>
         </div>
     </div>
 
-    <div ng-show="cardSwiped" class="container">
+    <div ng-show="cardSwiped || empIdVerified" class="container">
 
         <div class="jumbotron text-center">
             <h1> Juice Counter </span></h1>
