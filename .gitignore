@@ -5,3 +5,5 @@ secret.txt
 a.log
 npm-debug.log
 **/node_modules
+**/.DS_STORE
+views/.sass-cache
