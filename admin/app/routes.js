@@ -41,6 +41,12 @@ module.exports = function(app) {
 			res.json(beverages);
 		});
 	});
+	
+	app.get('/api/beverages/:id', function(req, res) {
+		Beverage.findOne({ _id: req.params.id }).exec(function (err, beverage) {
+			res.json(beverage);
+		});
+	});
 
 };
 
