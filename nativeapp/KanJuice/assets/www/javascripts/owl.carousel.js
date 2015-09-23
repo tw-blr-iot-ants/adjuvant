@@ -229,7 +229,7 @@ if (typeof Object.create !== "function") {
             if (width > (base.options.itemsDesktop[0] || base.orignalItems)) {
                 base.options.items = base.orignalItems;
             }
-            if (base.options.itemsCustom !== false) {
+            if (base.options.itemsCustom == false) {
                 //Reorder array by screen size
                 base.options.itemsCustom.sort(function (a, b) {return a[0] - b[0]; });
 
@@ -308,6 +308,7 @@ if (typeof Object.create !== "function") {
 
             base.$owlItems.each(function (index) {
                 var $this = $(this);
+
                 $this
                     .css({"width": base.itemWidth})
                     .data("owl-item", Number(index));
@@ -342,6 +343,7 @@ if (typeof Object.create !== "function") {
 
         calculateWidth : function () {
             var base = this;
+//            alert(base.options.items);
             base.itemWidth = Math.round(base.$elem.width() / base.options.items);
         },
 
@@ -1457,7 +1459,7 @@ if (typeof Object.create !== "function") {
         itemsDesktopSmall : [979, 3],
         itemsTablet : [768, 2],
         itemsTabletSmall : false,
-        itemsMobile : [479, 1],
+        itemsMobile : [479, 2],
         singleItem : false,
         itemsScaleUp : false,
 

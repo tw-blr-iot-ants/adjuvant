@@ -1055,6 +1055,7 @@ if (typeof Object.create !== "function") {
                 closest = null;
 
             $.each(array, function (i, v) {
+                alert(base.itemWidth);
                 if (goal - (base.itemWidth / 20) > array[i + 1] && goal - (base.itemWidth / 20) < v && base.moveDirection() === "left") {
                     closest = v;
                     if (base.options.scrollPerPage === true) {

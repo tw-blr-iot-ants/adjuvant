@@ -17,7 +17,7 @@ body {
 
 /* line 27, ../sass/order-btn.scss */
 .flipper {
-  display: inline-block;
+  display: none;
   position: relative;
   text-decoration: none;
   font-family: 'Montserrat', arial, sans-serif !important;
