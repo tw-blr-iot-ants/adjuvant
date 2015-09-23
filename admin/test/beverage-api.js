@@ -3,13 +3,13 @@ var express = require('express');
 var assert = require('chai').assert;
 var mongoose = require('mongoose');
 var databaseConfig = require('../app/config/database-test');
-var Beverage = require('../app/models/beverage.js');
+var Beverage = require('../app/models/beverage');
+var server = require('../app/server').app;
 
 before(function(done) {
     mongoose.connect(databaseConfig.url);
     for (var i in mongoose.connection.collections) {
       mongoose.connection.collections[i].drop( function(err) {
-        console.log('collection dropped');
       });
     }
     var beverage = new Beverage({
@@ -21,23 +21,29 @@ before(function(done) {
     return done();
 });
   
-describe('Sample Test Suite', function() {  
-  it('One beverage should be there in DB', function(done){
-    Beverage.find().exec(function(error, beverages) {
-			if(error) {
-				console.log("Error in reading beverages");
-				return;
-			}
-			assert.equal(beverages.length, 1);
-      done();
-		});
+describe('GET /api/beverages/', function() {
+  
+  it('should return list of beverages', function(done){
+    request(server)
+      .get('/api/beverages/')
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        if (err) return done(err);
+        
+        var response = res.body;
+        assert.equal(response[0].name, "Tea");
+        assert.equal(response.length, 1);
+        
+        done();
+      });
   });  
+  
 });
 
 after(function(done) {
   for (var i in mongoose.connection.collections) {
     mongoose.connection.collections[i].drop( function(err) {
-      console.log('collection dropped');
     });
   }
   mongoose.models = {};
