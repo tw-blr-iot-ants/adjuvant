@@ -1,2 +1,3 @@
 require('./app/database.js');
-require('./app/server.js');
+var server = require('./app/server.js');
+server.start();

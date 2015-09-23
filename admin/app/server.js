@@ -12,5 +12,11 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 
 require('./routes.js')(app);
 
-var server = app.listen(port);
-console.log("App listening on port " + port);
+function start() {
+	var server = app.listen(port);
+	console.log("App listening on port " + port);	
+}
+
+
+exports.start = start;
+exports.app = app;
