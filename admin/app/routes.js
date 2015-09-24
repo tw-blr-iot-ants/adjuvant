@@ -1,5 +1,5 @@
 var Register = require('./models/registerDB');
-var Beverage = require('./models/beverage.js');
+var Beverage = require('./models/beverage');
 
 module.exports = function(app) {
 	
@@ -45,6 +45,12 @@ module.exports = function(app) {
 	app.get('/api/beverages/:id', function(req, res) {
 		Beverage.findOne({ _id: req.params.id }).exec(function (err, beverage) {
 			res.json(beverage);
+		});
+	});
+	
+	app.delete('/api/beverages/:id', function(req, res) {
+		Beverage.findOneAndRemove({ _id: req.params.id }).exec(function (err, beverage) {
+			res.json("");
 		});
 	});
 
