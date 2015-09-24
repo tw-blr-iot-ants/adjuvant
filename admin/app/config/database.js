@@ -1,3 +1,3 @@
 module.exports = {
-	url : 'mongodb://localhost/kanjoos'
+	url : 'mongodb://localhost/adjuvant'
 }
