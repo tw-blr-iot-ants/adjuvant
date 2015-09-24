@@ -118,6 +118,14 @@ module.exports = function(app) {
     	                    res.send(error);
 						res.json(req.body);
     	  })
-    	})
+	})
+
+	app.get('/api/orders', function(req, res) {
+    	  return Order.find({}).exec(function(error, orders) {
+    	                if(error)
+    	                    res.send(error);
+						res.json(orders);
+    	  })
+	})
 };
 
