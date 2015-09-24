@@ -3,18 +3,21 @@
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "~1.4.3",
+    "edit-google-spreadsheet": "latest",
     "express": "~4.6.1",
+    "method-override": "~2.1.1",
     "mongoose": "~3.8.13",
     "morgan": "~1.1.1",
-    "body-parser": "~1.4.3",
-    "method-override": "~2.1.1",
-    "edit-google-spreadsheet": "latest",
+    "multer": "^1.0.5",
     "q": "latest",
+    "rimraf": "^2.4.3",
+    "root-path": "^0.2.0",
     "serialport": "^1.7.4",
-    "socket.io": "^1.3.6"
+    "socket.io": "^1.3.6",
+    "xlsx-to-json": "0.2.4"
   },
   "author": "resol",
   "license": "ISC",
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

@@ -1,5 +1,13 @@
 var Register = require('./models/registerDB');
 var Beverage = require('./models/beverage');
+var Users = require('./models/usersDB');
+var fs = require('fs');
+var rmdir = require('rimraf');
+var multer  = require('multer');
+var upload = multer({ dest: 'uploads/' });
+var xlsxj = require('xlsx-to-json');
+var xlsx = require('xlsx');
+var root = require('root-path');
 
 module.exports = function(app) {
 	
@@ -52,6 +60,47 @@ module.exports = function(app) {
 		Beverage.findOneAndRemove({ _id: req.params.id }).exec(function (err, beverage) {
 			res.json("");
 		});
+	});
+
+	app.post('/api/createUsers', upload.single('users'), function(req, res) {
+	    Users.remove({}, function(err) {
+	        if(err) return console.error(err);
+	    });
+
+	    var excelFilePath = root('admin', req.file.path);
+	    var resourcePath = root('admin', 'resources');
+	    var workbook = xlsx.readFile(excelFilePath);
+
+        fs.mkdir(resourcePath, function(err) {
+            if(err) return console.error(err);
+        });
+
+
+        workbook.SheetNames.forEach(function(sheetName, index) {
+            xlsxj({
+                    input: excelFilePath,
+                    output: resourcePath + "/output" + index + ".json",
+                    sheet: sheetName
+                  }, function(err, result) {
+                    if(err) {
+                      console.error(err);
+                    }
+                    Users.collection.insert(result, function(err, data) {
+                        if(err) return console.error(err);
+                    });
+
+                  });
+        });
+
+        rmdir(resourcePath, function(err) {
+            if(err) return console.error(err);
+        });
+        rmdir(root('admin', 'uploads'), function(err) {
+            if(err) return console.error(err);
+        });
+
+        res.send("success")
+
 	});
 
 };

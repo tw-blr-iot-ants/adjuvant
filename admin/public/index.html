@@ -32,6 +32,11 @@
 </head>
 
 <body>
+    <form action="api/createUsers" method="post" enctype="multipart/form-data">
+        <input type="file" name="users" accept=".xlsx">
+        <input type="submit">
+    </form>
+
     <ng-view></ng-view>
 </body>
 </html>
