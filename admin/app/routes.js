@@ -38,6 +38,17 @@ module.exports = function(app) {
 		res.json(beverage);
 	});
 	
+	app.put('/api/beverages/:id', function(req, res) {
+		
+		Beverage.findOneAndUpdate({ _id: req.params.id }, req.body).exec(function(err, beverage) {
+			if(err) {
+				console.log("Error in updating beverage", err);
+				return;
+			}
+			res.json(beverage);
+		});
+	});
+	
 	app.get('/api/beverages/', function(req, res) {
 		Beverage.find().exec(function(error, beverages) {
 			if(error) {

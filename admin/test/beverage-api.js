@@ -93,6 +93,25 @@ describe('GET /api/beverages/:id', function() {
   
 });
 
+describe('PUT /api/beverages/:id', function() {
+  
+  it('should update a single beverage', function(done){
+    request
+      .put('/api/beverages/' + beverage.id)
+      .send({ name: 'Updated Name', cost: 15, available: true})
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        if (err) return done(err);
+        Beverage.findOne({ _id: beverage.id }).exec(function (err, beverage) {
+            assert.equal(beverage.name, 'Updated Name');
+            done();
+		    });
+      });
+  });  
+  
+});
+
 describe('DELETE /api/beverages/:id', function() {
 
   it('should delete a single beverage', function(done){
