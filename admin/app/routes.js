@@ -1,4 +1,4 @@
-var Register = require('./models/registerDB');
+var Order = require('./models/order');
 var Beverage = require('./models/beverage');
 var Users = require('./models/usersDB');
 var fs = require('fs');
@@ -12,7 +12,7 @@ var root = require('root-path');
 module.exports = function(app) {
 	
 	app.post('/api/getInvoice', function(req, res) {
-	   return Register.find({"Date" : req.body.Date}, function(error, register) {
+	   return Order.find({"Date" : req.body.Date}, function(error, register) {
 	                if(error)
 	                    res.send(err);
 	                res.json(register)
@@ -103,5 +103,12 @@ module.exports = function(app) {
 
 	});
 
+	app.post('/api/orders', function(req, res) {
+    	  return Order.create(req.body, function(error) {
+    	                if(error)
+    	                    res.send(error);
+						res.json(req.body);
+    	  })
+    	})
 };
 
