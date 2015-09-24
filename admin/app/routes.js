@@ -20,7 +20,6 @@ module.exports = function(app) {
 	})
 
 	app.post('/api/beverages/', function(req, res) {
-		console.log(req.body.name);
 		
 		var beverage = new Beverage({
 			name: req.body.name,
@@ -34,7 +33,6 @@ module.exports = function(app) {
 				return;
 			}
 			
-			console.log("Beverage saved successfully");
 		});
 		
 		res.json(beverage);

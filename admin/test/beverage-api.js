@@ -51,6 +51,29 @@ describe('GET /api/beverages/', function() {
   
 });
 
+describe('POST /api/beverages/', function() {
+  
+  it('should create a beverage', function(done){
+    request
+      .post('/api/beverages/')
+      .send({ name: 'Lime Juice', cost: 15, available: true})
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        if (err) return done(err);
+        
+        var response = res.body;
+        assert.notEqual(response._id, undefined);
+        assert.equal(response.name, "Lime Juice");
+        Beverage.findOne({ _id: response._id }).exec(function (err, beverage) {
+            assert.notEqual(beverage, undefined);
+            done();
+		    });
+      });
+  });  
+  
+});
+
 describe('GET /api/beverages/:id', function() {
   
   it('should return a single beverage', function(done){
