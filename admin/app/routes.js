@@ -1,7 +1,6 @@
 var Order = require('./models/order');
 var Beverage = require('./models/beverage');
-var Users = require('./models/usersDB');
-var fs = require('fs');
+var Users = require('./models/users');
 var rmdir = require('rimraf');
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
@@ -80,15 +79,10 @@ module.exports = function(app) {
 	    var resourcePath = root('admin', 'resources');
 	    var workbook = xlsx.readFile(excelFilePath);
 
-        fs.mkdir(resourcePath, function(err) {
-            if(err) return console.error(err);
-        });
-
-
         workbook.SheetNames.forEach(function(sheetName, index) {
             xlsxj({
                     input: excelFilePath,
-                    output: resourcePath + "/output" + index + ".json",
+                    output: null,
                     sheet: sheetName
                   }, function(err, result) {
                     if(err) {
@@ -101,15 +95,22 @@ module.exports = function(app) {
                   });
         });
 
-        rmdir(resourcePath, function(err) {
-            if(err) return console.error(err);
-        });
         rmdir(root('admin', 'uploads'), function(err) {
             if(err) return console.error(err);
         });
 
         res.send("success")
 
+	});
+
+	app.get('/api/users/', function(req, res) {
+	    Users.find().exec(function(err, users) {
+            if(err) {
+                console.log("Error in reading users");
+                return;
+            }
+            res.json(users);
+        });
 	});
 
 	app.post('/api/orders', function(req, res) {
