@@ -10,7 +10,7 @@ var beverage, testBeverage;
 var request = require('supertest')(server);
 
 before(function(done) {
-    mongoose.connect(databaseConfig.url);
+    mongoose.createConnection(databaseConfig.url);
     for (var i in mongoose.connection.collections) {
       mongoose.connection.collections[i].drop( function(err) {
       });

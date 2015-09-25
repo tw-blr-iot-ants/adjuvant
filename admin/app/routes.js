@@ -19,7 +19,7 @@ module.exports = function(app) {
 	})
 
 	app.post('/api/beverages/', function(req, res) {
-		
+
 		var beverage = new Beverage({
 			name: req.body.name,
 			cost: req.body.cost,
@@ -112,6 +112,39 @@ module.exports = function(app) {
             res.json(users);
         });
 	});
+
+	app.get('/api/users/:empId/:internalNumber', function(req, res) {
+        Users.findOne({EmpId: req.params.empId, InternalNumber: req.params.internalNumber}).exec(function (err, user) {
+            res.json(user);
+        });
+    });
+
+	app.delete('/api/users/:empId/:internalNumber', function(req, res) {
+    		Users.findOneAndRemove({EmpId: req.params.empId, InternalNumber: req.params.internalNumber}).exec(function (err, user) {
+    			res.json("");
+    		});
+    	});
+
+    app.post('/api/users/', function(req, res) {
+        var user = new Users(req.body)
+
+        user.save(function(err) {
+            if(err)
+                res.send(err);
+        });
+        res.json(user);
+    });
+
+    app.put('/api/users/:empId/:internalNumber', function(req, res) {
+
+  		Users.findOneAndUpdate({EmpId: req.params.empId, InternalNumber: req.params.internalNumber}, req.body).exec(function(err, user) {
+  			if(err) {
+  				console.log("Error in updating user", err);
+  				return;
+  			}
+  			res.json(user);
+  		});
+  	});
 
 	app.post('/api/orders', function(req, res) {
     	  return Order.create(req.body, function(error) {
