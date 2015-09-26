@@ -1,9 +1,28 @@
 <div class="col-sm-4 col-sm-offset-4">
-    <input   type="date" ng-model="selectedDate">
-    <button type="submit" class="generate-invoice" ng-click="getInvoice()">Generate Invoice</button>
-    <div  ng-if="invoiceReady" ng-bind-html="generatedTable"></div>
-    <p  ng-if="invoiceReady">
-        Note : * implies Unit cost took a default value of  &#8377; 15
-    </p>
-    <div  ng-if="!invoiceReady" class="bar"></div>
+
+    <input type="radio" ng-checked="invoiceForDate" ng-click="setInvoiceForDate()"> Single Date
+    <input type="radio" ng-checked="invoiceForPeriod" ng-click="setInvoiceForPeriod()"> Select Period
+
+
+    <div ng-show="invoiceForDate">
+        <input   type="date" ng-model="selectedDate">
+        <button type="submit" class="generate-invoice" ng-click="getInvoice()">Generate Invoice</button>
+        <div  ng-if="invoiceReady" ng-bind-html="generatedTable"></div>
+        <p  ng-if="invoiceReady">
+            Note : * implies Unit cost took a default value of  &#8377; 15
+        </p>
+        <div  ng-if="!invoiceReady" class="bar"></div>
+    </div>
+
+    <div ng-show="invoiceForPeriod">
+        <input   type="date" ng-model="startDate">
+        <input   type="date" ng-model="endDate">
+        <button type="submit" class="generate-invoice" ng-click="getInvoiceWithInRange()">Generate Invoice</button>
+
+        <div  ng-if="invoiceReady" ng-bind-html="generatedTable"></div>
+        <p  ng-if="invoiceReady">
+            Note : * implies Unit cost took a default value of  &#8377; 15
+        </p>
+        <div  ng-if="!invoiceReady" class="bar"></div>
+    </div>
 </div>

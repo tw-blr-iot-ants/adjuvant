@@ -1,3 +1,16 @@
 .generate-invoice {
-    margin-top: 50px;
+    margin-top: 25px;
+}
+
+.div-center {
+    top: 100px;
+    left:15px;
+}
+
+.right-div {
+    float: right;
+}
+
+.left-div {
+    float: left;
 }

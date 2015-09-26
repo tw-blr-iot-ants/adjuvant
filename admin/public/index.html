@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="styles/style.css">
     <script src="js/controllers/manageJuices.js"></script>
     <script src="js/controllers/invoice.js"></script>
+    <script src="js/controllers/tabs.js"></script>
 	<script src="js/services/mongooseService.js"></script>
 	<script src="js/services/invoiceService.js"></script>
 	<script src="js/app.js"></script>
@@ -32,11 +33,17 @@
 </head>
 
 <body>
-    <form action="api/createUsers" method="post" enctype="multipart/form-data">
-        <input type="file" name="users" accept=".xlsx">
-        <input type="submit">
-    </form>
+    <!--<form action="api/createUsers" method="post" enctype="multipart/form-data">-->
+        <!--<input type="file" name="users" accept=".xlsx">-->
+        <!--<input type="submit">-->
+    <!--</form>-->
 
+    <ul class="nav nav-pills" ng-controller="tabsController">
+        <li ng-class="tabClass(tab)" ng-repeat="tab in tabs" tab="tab"><a href="{{tab.link}}" ng-click="setSelectedTab(tab)">{{tab.label}}</a></li>
+    </ul>
     <ng-view></ng-view>
+
+
+
 </body>
 </html>

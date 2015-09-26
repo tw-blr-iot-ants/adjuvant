@@ -1,40 +1,37 @@
 
-<div class="col-sm-4 col-sm-offset-4">
+<div>
+    <div class="left-div col-sm-3 col-sm-offset-4">
+        <div class="div-center">
+            <div>Juice Name: <input type="text" class="form-control input-lg text-center"  ng-model="Name"></div>
+            <div>Juice Price: <input type="text" class="form-control input-lg text-center"  ng-model="Cost"></div>
+            <div class="col-sm-3 col-sm-offset-4">
+                <p class="text-center" ng-show="loading">
+                    <span class="fa fa-spinner fa-spin fa-3x"></span>
+                </p>
+            </div>
+            <button type="submit" class="col-sm-3 col-sm-offset-4" ng-click="updateBeverage()">Add</button>
+        </div>
 
-    <div>
 
-    <p class="text-center" ng-show="loading">
-        <span class="fa fa-spinner fa-spin fa-3x"></span>
-    </p>
-
-
-    <div>
-        <p>Admin Portal</p>
-        <div>Juice Name: <input type="text" class="form-control input-lg text-center"  ng-model="juiceName"></div>
-        <div>Juice Price: <input type="text" class="form-control input-lg text-center"  ng-model="juicePrice"></div>
-        <button type="submit" class="col-sm-6 col-sm-offset-4 generate-invoice" ng-click="updateJuices()">Add</button>
     </div>
 
-        <a onclick="navigationUrl('#/invoice')"><button class="col-sm-6 col-sm-offset-4 generate-invoice">Generate Invoices</button></a>
-
-    <div>
-        <table class="gridtable col-sm-6 col-sm-offset-2 generate-invoice"
+    <div class="right-div">
+        <table class="gridtable div-center"
                border="1" cellspacing="1" cellpadding="5">
             <tr>
                 <th>Juice Name</th>
                 <th>Unit Cost</th>
-                <th>Delete Juice</th>
+                <th>Availability</th>
             </tr>
-            <tr ng-repeat="juice in juices">
-                <td>{{juice.Juice}}</td>
-                <td>{{juice.Cost}}</td>
+            <tr ng-repeat="beverage in beverages">
+                <td>{{beverage.Name}}</td>
+                <td>{{beverage.Cost}}</td>
                 <td>
-                    <input  type="submit"  value="Delete" ng-click="deleteJuice(juice.Juice)">
+                    <input type="checkbox" ng-checked="{{beverage.Available}}" ng-click="updateAvailability(beverage)">
                 </td>
             </tr>
         </table>
     </div>
 
-    </div>
 
 </div>

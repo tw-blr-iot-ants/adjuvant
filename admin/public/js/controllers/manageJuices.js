@@ -5,28 +5,34 @@ angular.module('juiceController', [])
     $scope.loading = true;
     mongooseService.getJuices()
                           .then(function(response) {
-                            $scope.juices = response.data;
+                            $scope.beverages = response.data;
                             $scope.loading = false;
                           })
 
-    $scope.updateJuices = function() {
-        var juiceDetails = {};
-        juiceDetails.Juice = ($scope.juiceName);
-        juiceDetails.Cost = ($scope.juicePrice);
-        mongooseService.setupJuices(juiceDetails)
+    $scope.updateBeverage = function() {
+        var beverage = {};
+        beverage.Name = ($scope.Name);
+        beverage.Cost = parseInt($scope.Cost);
+        beverage.Available = true;
+        mongooseService.updateBeverage(beverage)
                            .then(function(response) {
-                                 $scope.juices = response.data;
+                                 $scope.beverages = response.data;
                                  $scope.loading = false;
                                  $scope.juiceName = "";
                                  $scope.juicePrice = "";
-                           })
+                           }, _errorCallBack)
     }
 
-    $scope.deleteJuice = function(juiceToBeDeleted) {
-        mongooseService.deleteJuice({"juiceToBeDeleted": juiceToBeDeleted})
+    $scope.updateAvailability = function(beverage) {
+        beverage.Available = !beverage.Available;
+        mongooseService.updateBeverage(beverage)
                             .then(function(response) {
                                       $scope.juices = response.data;
                                       $scope.loading = false;
-                            })
+                            }, _errorCallBack)
+    }
+
+    var _errorCallBack = function(errorMessage) {
+        console.log(errorMessage)
     }
 }])

@@ -8,15 +8,26 @@ var xlsxj = require('xlsx-to-json');
 var xlsx = require('xlsx');
 var root = require('root-path');
 
+
+var getBeverages = function(res){
+	Beverage.find(function(err, beverages) {
+			if (err)
+				res.send(err)
+			res.json(beverages);
+		});
+};
+
 module.exports = function(app) {
-	
-	app.post('/api/getInvoice', function(req, res) {
-	   return Order.find({"Date" : req.body.Date}, function(error, register) {
-	                if(error)
-	                    res.send(err);
-	                res.json(register)
-	  })
-	})
+
+	app.post('/api/updateBeverage', function(req, res) {
+    	  var conditions = {};
+    	  conditions.Name = req.body.Name;
+    	  return Beverage.update(conditions, req.body, {"upsert": true}, function(error, beverage) {
+    	                if(error)
+    	                    res.send(error);
+    	                getBeverages(res);
+    	  })
+    })
 
 	app.post('/api/beverages/', function(req, res) {
 
@@ -154,12 +165,24 @@ module.exports = function(app) {
     	  })
 	})
 
-	app.get('/api/orders', function(req, res) {
-    	  return Order.find({}).exec(function(error, orders) {
+	app.put('/api/orders', function(req, res) {
+    	  return Order.find({"Date" : new Date(req.body.Date)}).exec(function(error, orders) {
     	                if(error)
     	                    res.send(error);
 						res.json(orders);
     	  })
 	})
+
+	app.put('/api/ordersWithInRange', function(req, res) {
+	      console.log("strat", req.body.startDate)
+	      console.log("strat", req.body.endDate)
+    	  return Order.find({"Date" : {$gte: new Date(req.body.startDate), $lt: new Date(req.body.endDate)}})
+    	                    .exec(function(error, orders) {
+    	                if(error)
+    	                    res.send(error);
+						res.json(orders);
+    	  })
+	})
+
 };
 

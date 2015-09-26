@@ -2,20 +2,18 @@ angular.module("mongooseService", [])
     .factory('mongooseService', ['$http', function($http) {
 
       return {
-        setupJuices: function(data) {
-            return $http.post("/api/setupJuices", data)
-        },
-        getRegisterEntries: function(data) {
-            return $http.post("/api/getInvoice", data)
+        updateBeverage: function(data) {
+            return $http.post("/api/updateBeverage", data)
         },
         getJuices: function() {
-                    return $http.get("/api/getJuices")
+            return $http.get("/api/beverages/")
         },
-        deleteJuice:function(data) {
-            console.log("data", data)
-            return $http.post("/api/deleteJuice", data)
+        getOrders: function(data) {
+            return $http.put("/api/orders", data)
+        },
+        getOrdersWithInRange: function(data) {
+            return $http.put("/api/ordersWithInRange", data)
         }
-
       }
     }
 ]);
