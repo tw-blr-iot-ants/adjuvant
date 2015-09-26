@@ -13,6 +13,12 @@ angular.module("mongooseService", [])
         },
         getOrdersWithInRange: function(data) {
             return $http.put("/api/ordersWithInRange", data)
+        },
+        addUser: function(data) {
+             return $http.post("/api/addUser", data)
+        },
+        deleteUser: function(data) {
+             return $http.post("/api/deleteUser", data)
         }
       }
     }

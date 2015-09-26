@@ -1,6 +1,6 @@
 var app = angular.module('adjuvant', ['ngRoute', 'tabsController', 'juiceController',
-                                      'invoiceController',
-                                      'mongooseService', 'invoiceService'])
+                                      'invoiceController', 'usersController',
+                                      'mongooseService', 'invoiceService', "flash"])
 
 app.config(function($routeProvider) {
     $routeProvider
@@ -11,6 +11,10 @@ app.config(function($routeProvider) {
         .when('/invoice', {
             templateUrl: 'partials/invoice.html',
             controller: 'invoiceController'
+        })
+        .when('/manageUsers', {
+            templateUrl: 'partials/manageUsers.html',
+            controller: 'usersController'
         })
        .otherwise({
             redirectTo: '/manageJuices'

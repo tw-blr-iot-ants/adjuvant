@@ -19,6 +19,7 @@ module.exports = function(config) {
         'node_modules/angular/angular.js',
         'node_modules/angular-route/angular-route.js',
         'node_modules/angular-mocks/angular-mocks.js',
+        'node_modules/angular-flash-alert/dist/angular-flash.js',
         'js/**/*.js',
         'test/unit/*.spec.js'
 

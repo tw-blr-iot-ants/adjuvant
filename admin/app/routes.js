@@ -157,6 +157,23 @@ module.exports = function(app) {
   		});
   	});
 
+	app.post('/api/addUser', function(req, res) {
+
+	  console.log("req.body", req.body)
+	  return Users.create(req.body, function(err, data) {
+                                     if(err) return res.send(err);
+                                     res.json(req.body)
+      });
+    })
+
+    app.post('/api/deleteUser', function(req, res) {
+      console.log("re", req.body.EmpId)
+	  return Users.remove({"EmpId": req.body.EmpId }, function(err, data) {
+                        if(err) return res.send(err);
+                        res.json(req.body)
+      });
+    })
+
 	app.post('/api/orders', function(req, res) {
     	  return Order.create(req.body, function(error) {
     	                if(error)
@@ -174,8 +191,6 @@ module.exports = function(app) {
 	})
 
 	app.put('/api/ordersWithInRange', function(req, res) {
-	      console.log("strat", req.body.startDate)
-	      console.log("strat", req.body.endDate)
     	  return Order.find({"Date" : {$gte: new Date(req.body.startDate), $lt: new Date(req.body.endDate)}})
     	                    .exec(function(error, orders) {
     	                if(error)

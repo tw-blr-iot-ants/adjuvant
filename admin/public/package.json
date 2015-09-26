@@ -10,7 +10,8 @@
     "angular": "^1.4.5",
     "underscore": "^1.8.3",
     "angular-route": "^1.4.5",
-    "path": "latest"
+    "path": "latest",
+    "angular-flash-alert": "latest"
   },
   "devDependencies": {
     "karma": "~0.12.0",
