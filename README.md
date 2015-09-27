@@ -2,16 +2,16 @@
 ### Steps to start the app.
 Install dependencies:
 ```sh
-$ npm install
+$ cd admin && npm install
 ```
-Start the client:
 ```sh
-$ cd client     &&      node client-server.js
+$ cd admin/public  && npm install
 ```
+
 
 Start the admin app:
 ```sh
-$ cd admin     &&       node admin-server.js
+$ cd admin     &&       node index.js
 ```
 
 

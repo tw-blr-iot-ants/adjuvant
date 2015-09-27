@@ -17,7 +17,7 @@ describe("invoiceControllerTest", function() {
     beforeEach(function() {
         var mockMongooseService = {getOrders: sinon.stub().returns(Q({data: orders})),
                                     getOrdersWithInRange: sinon.stub().returns(Q({})),
-                                    getJuices: sinon.stub().returns(Q({data: beverages}))
+                                    getBeverages: sinon.stub().returns(Q({data: beverages}))
                                    };
         var mockInvoiceService = {
                                   generateInvoice: sinon.stub().returns(generatedHtml)

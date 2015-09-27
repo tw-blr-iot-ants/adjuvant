@@ -3,7 +3,7 @@ angular.module('juiceController', [])
                 function($scope, mongooseService) {
 
     $scope.loading = true;
-    mongooseService.getJuices()
+    mongooseService.getBeverages()
                           .then(function(response) {
                             $scope.beverages = response.data;
                             $scope.loading = false;
@@ -18,8 +18,8 @@ angular.module('juiceController', [])
                            .then(function(response) {
                                  $scope.beverages = response.data;
                                  $scope.loading = false;
-                                 $scope.juiceName = "";
-                                 $scope.juicePrice = "";
+                                 $scope.Name = "";
+                                 $scope.Cost = "";
                            }, _errorCallBack)
     }
 

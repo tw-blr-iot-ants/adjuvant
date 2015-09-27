@@ -16,7 +16,7 @@ describe("manageJuiceController", function() {
         inject(function($q) {
             mockMongooseService.response = {data : beverages};
 
-            mockMongooseService.getJuices = function() {
+            mockMongooseService.getBeverages = function() {
                 var defer = $q.defer();
                 defer.resolve(this.response);
                 return defer.promise;
