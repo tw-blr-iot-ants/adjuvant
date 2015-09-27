@@ -10,7 +10,6 @@ angular.module('usersController', [])
             user["SerialNumber"] = $scope.serialNumber;
             user["ExternalNumber"] = $scope.externalNumber;
             user["InternalNumber"] = $scope.internalNumber;
-            console.log(mongooseService)
 
             mongooseService.addUser(user)
                                .then(_notifySuccess);

@@ -3,13 +3,21 @@ angular.module('tabsController', [])
                 function($scope, $location) {
 
      $scope.tabs = [
-           { link : '#/manageJuices', label : 'Juices' },
+           { link : '#/manageJuices', label : 'Beverages' },
            { link : '#/invoice', label : 'Invoices' },
            { link : '#/manageUsers', label : 'Users' }
      ];
 
+      var hashUrl = "#" + $location.path();
 
-      $scope.selectedTab = $scope.tabs[0];
+      _.each($scope.tabs, function(tab){
+        if(hashUrl == tab.link) {
+            $scope.selectedTab = tab;
+            return;
+        }
+      });
+
+
       $scope.setSelectedTab = function(tab) {
          $scope.selectedTab = tab;
       }

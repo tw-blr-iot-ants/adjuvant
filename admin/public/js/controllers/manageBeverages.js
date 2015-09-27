@@ -15,12 +15,7 @@ angular.module('juiceController', [])
         beverage.Cost = parseInt($scope.Cost);
         beverage.Available = true;
         mongooseService.updateBeverage(beverage)
-                           .then(function(response) {
-                                 $scope.beverages = response.data;
-                                 $scope.loading = false;
-                                 $scope.Name = "";
-                                 $scope.Cost = "";
-                           }, _errorCallBack)
+                           .then(_successCallback, _errorCallBack)
     }
 
     $scope.updateAvailability = function(beverage) {
@@ -34,5 +29,12 @@ angular.module('juiceController', [])
 
     var _errorCallBack = function(errorMessage) {
         console.log(errorMessage)
+    }
+
+    var _successCallback = function(response) {
+         $scope.beverages = response.data;
+         $scope.loading = false;
+         $scope.Name = "";
+         $scope.Cost = "";
     }
 }])

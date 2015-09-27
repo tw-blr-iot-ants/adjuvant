@@ -55,18 +55,18 @@ angular.module('invoiceController', [])
 
         var _getJuiceMenu = function() {
             return mongooseService.getBeverages()
-                                .then(function(response) {
-                                          console.log("res", response)
-                                          _.each(response.data, function(item) {
-                                                menu[item.Name] = item.Cost;
-                                          })
-                                          console.log("menuin", menu)
-                                })
+                                .then(_buildMenu)
         }
 
         var _constructInvoice = function() {
             $scope.generatedTable = $sce.trustAsHtml(invoiceService.generateInvoice(menu, orders));
             $scope.invoiceReady = true;
+        }
+
+        var _buildMenu = function(response) {
+             _.each(response.data, function(item) {
+                     menu[item.Name] = item.Cost;
+             })
         }
 
 }])
