@@ -32,11 +32,11 @@ module.exports = function(app) {
 	app.post('/api/beverages/', function(req, res) {
 
 		var beverage = new Beverage({
-			name: req.body.name,
-			cost: req.body.cost,
-			available: true
+			Name: req.body.Name,
+			Cost: req.body.Cost,
+			Available: true
 		});
-		
+
 		beverage.save(function(err){
 			if(err){
 				console.log("Error in saving the beverage", err);
@@ -44,7 +44,7 @@ module.exports = function(app) {
 			}
 			
 		});
-		
+
 		res.json(beverage);
 	});
 	

@@ -2,14 +2,13 @@
 var express = require('express');
 var assert = require('chai').assert;
 var mongoose = require('mongoose');
-var databaseConfig = require('../app/config/database-test');
 var Order = require('../app/models/order');
 var server = require('../app/server').app;
 
 var request = require('supertest')(server);
+require("../app/database");
 
 before(function(done) {
-    mongoose.createConnection(databaseConfig.url);
     for (var i in mongoose.connection.collections) {
       mongoose.connection.collections[i].drop( function(err) {
       });
@@ -19,7 +18,7 @@ before(function(done) {
 
 describe("GET /api/orders", function() {
 
-    it("should get all orders", function(done) {
+    it.skip("should get all orders", function(done) {
         var firstOrder = {
             Name:"Ravi",
             EmployeeId: 2748,
@@ -81,6 +80,5 @@ after(function(done) {
     mongoose.connection.collections[i].drop( function(err) {
     });
   }
-  mongoose.disconnect();
   return done();
 });

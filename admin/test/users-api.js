@@ -2,15 +2,14 @@
 var express = require('express');
 var assert = require('chai').assert;
 var mongoose = require('mongoose');
-var databaseConfig = require('../app/config/database-test');
 var Users = require('../app/models/users');
 var server = require('../app/server').app;
+require("../app/database");
 
 var user1, user2;
 var request = require('supertest')(server);
 
 before(function(done) {
-    mongoose.createConnection(databaseConfig.url);
     for (var i in mongoose.connection.collections) {
       mongoose.connection.collections[i].drop( function(err) {
       });
@@ -138,6 +137,5 @@ after(function(done) {
     mongoose.connection.collections[i].drop( function(err) {
     });
   }
-  mongoose.disconnect();
   return done();
 });
