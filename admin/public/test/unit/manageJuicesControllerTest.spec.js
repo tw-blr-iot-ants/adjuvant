@@ -1,6 +1,12 @@
 describe("manageJuiceController", function() {
     var scope, mongooseService;
 
+    var beverages = [
+            {"Name" : "strawberry", "Cost" : 27, "Available" : false },
+            {"Name" : "mango", "Cost" : 19, "Available" : false },
+            {  "Name" : "amla", "Cost" : 21, "Available" : false },
+            {  "Name" : "mosambi", "Cost" : 22, "Available" : false}]
+
     beforeEach(function() {
         var mockMongooseService = {};
         module('adjuvant', function($provide) {
@@ -8,12 +14,7 @@ describe("manageJuiceController", function() {
         })
 
         inject(function($q) {
-            mockMongooseService.response = {data : [
-                  {"Name" : "strawberry", "Cost" : 27, "Available" : false },
-                  {"Name" : "mango", "Cost" : 19, "Available" : false },
-                  {  "Name" : "amla", "Cost" : 21, "Available" : false },
-                  {  "Name" : "mosambi", "Cost" : 22, "Available" : false}
-            ]};
+            mockMongooseService.response = {data : beverages};
 
             mockMongooseService.getJuices = function() {
                 var defer = $q.defer();
@@ -44,8 +45,8 @@ describe("manageJuiceController", function() {
                                     { Name : 'mango', Cost : 19, Available : false },
                                     { Name : 'amla', Cost : 21, Available : false },
                                     { Name : 'mosambi', Cost : 22, Available : false } ]
-        expect(scope.beverages).toEqual(expectedBeverages)
-        expect(scope.loading).toEqual(false)
+        expect(scope.beverages).to.have.members(beverages);
+        expect(scope.loading).to.be.false;
     })
 
     it("should add a beverage", function() {
@@ -60,7 +61,8 @@ describe("manageJuiceController", function() {
 
         scope.updateBeverage();
 
-        expect(scope.beverages).toEqual(expectedBeverages)
+        expect(scope.beverages).to.have.members(beverages);
+
     })
 
     it("should be able to set availability", function() {
@@ -69,11 +71,10 @@ describe("manageJuiceController", function() {
                                     { Name : 'amla', Cost : 21, Available : false },
                                     { Name : 'mosambi', Cost : 22, Available : false },
                                     { Name : 'amla', Cost : 21, Available : true },]
-
         var beverageToBeUpdate = {Name : 'amla', Cost : 21, Available : false};
 
         scope.updateAvailability(beverageToBeUpdate);
 
-        expect(scope.beverages).toEqual(expectedBeverages)
+        expect(scope.beverages).to.have.members(beverages);
     })
 })

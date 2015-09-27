@@ -26,6 +26,7 @@ angular.module("invoiceService", [])
         })
         html += '<tr><th colspan="3">Grand Total</th><td>' + "&#8377; " + sum + '</td></tr>'
         html += '</table>';
+        console.log("table", html);
         return html;
     }
 

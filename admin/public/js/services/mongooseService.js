@@ -19,6 +19,9 @@ angular.module("mongooseService", [])
         },
         deleteUser: function(data) {
              return $http.post("/api/deleteUser", data)
+        },
+        flushAndUpdateDB: function() {
+             return $http.post("/api/flushAndUpdateDB")
         }
       }
     }

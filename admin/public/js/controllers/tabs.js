@@ -1,10 +1,11 @@
 angular.module('tabsController', [])
-                .controller('tabsController', ['$scope',
-                function($scope) {
+                .controller('tabsController', ['$scope', '$location',
+                function($scope, $location) {
 
      $scope.tabs = [
            { link : '#/manageJuices', label : 'Juices' },
-           { link : '#/invoice', label : 'Invoices' }
+           { link : '#/invoice', label : 'Invoices' },
+           { link : '#/manageUsers', label : 'Users' }
      ];
 
 

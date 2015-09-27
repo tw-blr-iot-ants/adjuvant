@@ -11,14 +11,20 @@
     "underscore": "^1.8.3",
     "angular-route": "^1.4.5",
     "path": "latest",
-    "angular-flash-alert": "latest"
+    "angular-flash-alert": "latest",
+    "q": "latest"
+
   },
   "devDependencies": {
     "karma": "~0.12.0",
     "karma-jasmine": "~0.1.0",
     "karma-chrome-launcher": "latest",
     "angular-mocks": "latest",
-    "karma-phantomjs-launcher": "~0.1"
+    "karma-phantomjs-launcher": "~0.1",
+    "sinon-chai": "latest",
+    "karma-coverage": "~0.2.4",
+    "karma-mocha": "~0.1.6",
+    "karma-sinon-chai": "~0.2.0"
   },
   "author": "resol",
   "license": "ISC"

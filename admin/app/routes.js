@@ -86,7 +86,7 @@ module.exports = function(app) {
 	        if(err) return console.error(err);
 	    });
 
-	    var excelFilePath = root('admin', req.file.path);
+	    var excelFilePath = root( req.file.path);
 	    var resourcePath = root('admin', 'resources');
 	    var workbook = xlsx.readFile(excelFilePath);
 
@@ -110,7 +110,7 @@ module.exports = function(app) {
             if(err) return console.error(err);
         });
 
-        res.send("success")
+        res.redirect('/#/manageUsers');
 
 	});
 

@@ -1,7 +1,10 @@
-<div class="col-sm-4 col-sm-offset-4">
+<div class="col-sm-4 col-sm-offset-4 gap">
 
     <input type="radio" ng-checked="invoiceForDate" ng-click="setInvoiceForDate()"> Single Date
-    <input type="radio" ng-checked="invoiceForPeriod" ng-click="setInvoiceForPeriod()"> Select Period
+    <div style="{display: inline-block}">
+
+        <input type="radio" ng-checked="invoiceForPeriod" ng-click="setInvoiceForPeriod()"> Select Period
+    </div>
 
 
     <div ng-show="invoiceForDate">

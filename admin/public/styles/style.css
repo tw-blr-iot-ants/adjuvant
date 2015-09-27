@@ -8,9 +8,13 @@
 }
 
 .right-div {
-    float: right;
+    float: inherit;
 }
 
 .left-div {
     float: left;
+}
+
+.gap {
+   padding-top:50px;
 }
