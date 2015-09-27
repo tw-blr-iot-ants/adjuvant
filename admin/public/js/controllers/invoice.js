@@ -56,9 +56,11 @@ angular.module('invoiceController', [])
         var _getJuiceMenu = function() {
             return mongooseService.getJuices()
                                 .then(function(response) {
+                                          console.log("res", response)
                                           _.each(response.data, function(item) {
-                                                menu[item.Juice] = item.Cost;
+                                                menu[item.Name] = item.Cost;
                                           })
+                                          console.log("menuin", menu)
                                 })
         }
 

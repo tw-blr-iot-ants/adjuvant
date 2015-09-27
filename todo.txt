@@ -1,13 +1,1 @@
-=====
-convert cdn to local dependencies
-    chart
-    angular
-    underscore
-
-delete the first element in json
-
-check for error handling in editGooglejs
-
-mongo dont add first row (column names)***
-
-
+check get juices in invoice.js

@@ -23,7 +23,7 @@ module.exports = function(config) {
         'node_modules/q/q.js',
         'node_modules/underscore/underscore.js',
         'js/**/*.js',
-        'test/unit/*.spec.js'
+        'test/**/*.spec.js'
 
     ],
 

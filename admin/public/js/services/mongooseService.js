@@ -5,7 +5,7 @@ angular.module("mongooseService", [])
         updateBeverage: function(data) {
             return $http.post("/api/updateBeverage", data)
         },
-        getJuices: function() {
+        getBeverages: function() {
             return $http.get("/api/beverages/")
         },
         getOrders: function(data) {
@@ -19,9 +19,6 @@ angular.module("mongooseService", [])
         },
         deleteUser: function(data) {
              return $http.post("/api/deleteUser", data)
-        },
-        flushAndUpdateDB: function() {
-             return $http.post("/api/flushAndUpdateDB")
         }
       }
     }

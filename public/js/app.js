@@ -1,6 +1,7 @@
 var app = angular.module('adjuvant', ['ngRoute',
                                        'orderController', 'statsController', 'detailsController',
                                        'googleService',  'statsService', 'mongooseService',
+                                       'fileReader',
                                        'flash'])
 
 app.config(function($routeProvider) {
