@@ -10,9 +10,9 @@ var getBeverages = function(res){
 
 module.exports.create = function(req, res) {
 	var beverage = new Beverage({
-		Name: req.body.Name,
-		Cost: req.body.Cost,
-		Available: true
+		name: req.body.name,
+		cost: req.body.cost,
+		available: true
 	});
 	
 	beverage.save(function(err){
@@ -65,7 +65,7 @@ module.exports.delete = function(req, res) {
 
 module.exports.updateWithUpsert = function(req, res) {
        var conditions = {};
-      conditions.Name = req.body.Name;
+      conditions.Name = req.body.name;
       return Beverage.update(conditions, req.body, {"upsert": true}, function(error, beverage) {
     	                if(error)
     	                    res.send(error);

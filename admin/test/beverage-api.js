@@ -15,16 +15,16 @@ before(function(done) {
       });
     }	
     beverage = new Beverage({
-			Name: "Tea",
-			Cost: 10,
-			Available: true
+			name: "Tea",
+			cost: 10,
+			available: true
 		});		
     beverage.save();	
     
     testBeverage = new Beverage({
-			Name: "TestBeverage",
-			Cost: 10,
-			Available: true
+			name: "TestBeverage",
+			cost: 10,
+			available: true
 		});
     testBeverage.save();	
     return done();
@@ -41,7 +41,7 @@ describe('GET /api/beverages/', function() {
         if (err) return done(err);
         
         var response = res.body;
-        assert.equal(response[0].Name, "Tea");
+        assert.equal(response[0].name, "Tea");
         assert.equal(response.length, 2);
         
         done();
@@ -55,7 +55,7 @@ describe('POST /api/beverages/', function() {
   it('should create a beverage', function(done){
     request
       .post('/api/beverages/')
-      .send({ Name: 'Lime Juice', Cost: 15, Available: true})
+      .send({ name: 'Lime Juice', cost: 15, available: true})
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
@@ -63,7 +63,7 @@ describe('POST /api/beverages/', function() {
         
         var response = res.body;
         assert.notEqual(response._id, undefined);
-        assert.equal(response.Name, "Lime Juice");
+        assert.equal(response.name, "Lime Juice");
         Beverage.findOne({ _id: response._id }).exec(function (err, beverage) {
             assert.notEqual(beverage, undefined);
             done();
@@ -84,7 +84,7 @@ describe('GET /api/beverages/:id', function() {
         if (err) return done(err);
         
         var response = res.body;
-        assert.equal(response.Name, "Tea");
+        assert.equal(response.name, "Tea");
         
         done();
       });
@@ -108,13 +108,13 @@ describe('PUT /api/beverages/:id', function() {
   it('should update a single beverage', function(done){
     request
       .put('/api/beverages/' + beverage.id)
-      .send({ Name: 'Updated Name', Cost: 15, Available: true})
+      .send({ name: 'Updated Name', cost: 15, available: true})
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
         if (err) return done(err);
         Beverage.findOne({ _id: beverage.id }).exec(function (err, beverage) {
-            assert.equal(beverage.Name, 'Updated Name');
+            assert.equal(beverage.name, 'Updated Name');
             done();
 		    });
       });
