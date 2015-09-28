@@ -20,7 +20,8 @@
     "root-path": "latest",
     "underscore": "^1.8.3",
     "xlsx": "latest",
-    "xlsx-to-json": "latest"
+    "xlsx-to-json": "latest",
+    "moment": "latest"
   },
   "author": "resol",
   "license": "ISC",

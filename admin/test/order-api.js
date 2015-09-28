@@ -20,18 +20,18 @@ describe("GET /api/orders", function() {
 
     it.skip("should get all orders", function(done) {
         var firstOrder = {
-            Name:"Ravi",
-            EmployeeId: 2748,
-            Quantity: 1,
-            Date: "2011-08-21T18:02:52.249Z",
-            DrinkName: "Lime"
+            date: "2011-08-21T18:02:52.249Z",
+            employeeId: 2748,
+            drinkName: "Lime",
+            quantity: 1,
+            expiresAt: "2018-08-21T18:02:52.249Z"
         };
         var secondOrder = {
-            Name:"Ravi",
-            EmployeeId: 2748,
-            Quantity: 1,
-            Date: "2011-08-21T18:02:52.249Z",
-            DrinkName: "Lime"
+            date: "2011-08-21T18:02:52.249Z",
+            employeeId: 2748,
+            drinkName: "Lime",
+            quantity: 1,
+            expiresAt: new Date()
         };
 
         Order.create(firstOrder);
@@ -43,7 +43,7 @@ describe("GET /api/orders", function() {
         .expect(200)
         .end(function(err, res) {
             if (err) return done(err);
-            assert.equal(res.body.length, 2);
+            assert.equal(res.body.length, 1);
             done();
         });
     })
@@ -64,7 +64,7 @@ describe("POST /api/orders", function() {
 
             var res = response.body;
             assert.equal(res.orderStatus,"success");
-            Order.find({ EmployeeId: req.employeeId }).exec(function (err, order) {
+            Order.find({ employeeId: req.employeeId }).exec(function (err, order) {
                         assert.notEqual(order, undefined);
                         assert.equal(order.length, 2);
                         done();

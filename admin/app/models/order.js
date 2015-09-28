@@ -1,10 +1,10 @@
 var mongoose = require("mongoose");
 
 var orderSchema = new mongoose.Schema({
-  Date: { type: Date },
-  EmployeeId: String,
-  DrinkName: String,
-  Quantity: { type: Number },
+  date: { type: Date },
+  employeeId: String,
+  drinkName: String,
+  quantity: { type: Number },
   expiresAt: { type: Date }
 });
 

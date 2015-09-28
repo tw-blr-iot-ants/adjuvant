@@ -74,7 +74,7 @@ module.exports = function(app) {
     });
 
 	app.delete('/api/users/:empId/', function(req, res) {
-    		Users.findOneAndRemove({EmpId: req.params.empId}).exec(function (err, user) {
+    		Users.findOneAndRemove({empId: req.params.empId}).exec(function (err, user) {
             res.send(user == null ? 404 : "");
     		});
     	});
@@ -91,7 +91,7 @@ module.exports = function(app) {
 
     app.put('/api/users/:empId/', function(req, res) {
 
-  		Users.findOneAndUpdate({EmpId: req.params.empId}, req.body).exec(function(err, user) {
+  		Users.findOneAndUpdate({empId: req.params.empId}, req.body).exec(function(err, user) {
   			if(err) {
   				console.log("Error in updating user", err);
   				return;
@@ -108,7 +108,7 @@ module.exports = function(app) {
     })
 
     app.post('/api/deleteUser', function(req, res) {
-	  return Users.remove({"EmpId": req.body.EmpId }, function(err, data) {
+	  return Users.remove({"empId": req.body.EmpId }, function(err, data) {
                         if(err) return res.send(err);
                         res.json(req.body)
       });
@@ -120,10 +120,10 @@ module.exports = function(app) {
 
 		  req.body.drinks.forEach(function(drink) {
 		  	eachDrinkRequest = {
-            		  	Date: new Date(),
-            		  	EmployeeId: req.body.employeeId,
-            		  	DrinkName: drink.name,
-            		  	Quantity: drink.quantity,
+            		  	date: new Date(),
+            		  	employeeId: req.body.employeeId,
+            		  	drinkName: drink.name,
+            		  	quantity: drink.quantity,
             		  	expiresAt: moment(moment(new Date())+moment.duration(6, 'months'))
             };
             allDrinksRequest.push(eachDrinkRequest);
@@ -137,7 +137,7 @@ module.exports = function(app) {
 	})
 
 	app.put('/api/findOrdersForSingleDay', function(req, res) {
-    	  return Order.find({"Date" : new Date(req.body.Date)}).exec(function(error, orders) {
+    	  return Order.find({"date" : new Date(req.body.date)}).exec(function(error, orders) {
     	                if(error)
     	                    res.send(error);
 						res.json(orders);
@@ -145,7 +145,7 @@ module.exports = function(app) {
 	})
 
 	app.put('/api/findOrdersForSelectPeriod', function(req, res) {
-    	  return Order.find({"Date" : {$gte: new Date(req.body.startDate), $lt: new Date(req.body.endDate)}})
+    	  return Order.find({"date" : {$gte: new Date(req.body.startDate), $lt: new Date(req.body.endDate)}})
     	                    .exec(function(error, orders) {
     	                if(error)
     	                    res.send(error);

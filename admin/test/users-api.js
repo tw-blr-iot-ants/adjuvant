@@ -15,20 +15,20 @@ before(function(done) {
       });
     }
     user1 = new Users({
-			EmpId: "12345",
-			SerialNumber: "1",
-			ExternalNumber: "111",
-			InternalNumber: "222",
-			EmployeeName: "Employee1"
+			empId: "12345",
+			serialNumber: "1",
+			externalNumber: "111",
+			internalNumber: "222",
+			employeeName: "Employee1"
 		});
     user1.save();
     
     user2 = new Users({
-			EmpId: "12346",
-            SerialNumber: "2",
-            ExternalNumber: "333",
-            InternalNumber: "444",
-            EmployeeName: "Employee2"
+			empId: "12346",
+            serialNumber: "2",
+            externalNumber: "333",
+            internalNumber: "444",
+            employeeName: "Employee2"
 		});
     user2.save();
     return done();
@@ -45,7 +45,7 @@ describe('GET /api/users/', function() {
         if (err) return done(err);
         
         var response = res.body;
-        assert.equal(response[0].EmpId, "12345");
+        assert.equal(response[0].empId, "12345");
         assert.equal(response.length, 2);
         
         done();
@@ -59,7 +59,7 @@ describe('POST /api/users/', function() {
   it('should create a user', function(done){
     request
       .post('/api/users/')
-      .send({ EmpId: "12347", SerialNumber: "3", ExternalNumber: "555", InternalNumber: "666", EmployeeName: "Employee3"})
+      .send({ empId: "12347", serialNumber: "3", externalNumber: "555", internalNumber: "666", employeeName: "Employee3"})
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
@@ -67,7 +67,7 @@ describe('POST /api/users/', function() {
 
         var response = res.body;
         assert.notEqual(response._id, undefined);
-        assert.equal(response.EmpId, "12347");
+        assert.equal(response.empId, "12347");
         Users.findOne({ _id: response._id }).exec(function (err, user) {
             assert.notEqual(user, undefined);
             done();
@@ -81,14 +81,14 @@ describe('GET /api/users/empId/:empId', function() {
 
   it('should return a single user', function(done){
     request
-      .get('/api/users/empId/' + user1.EmpId)
+      .get('/api/users/empId/' + user1.empId)
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
         if (err) return done(err);
 
         var response = res.body;
-        assert.equal(response.EmployeeName, "Employee1");
+        assert.equal(response.employeeName, "Employee1");
 
         done();
       });
@@ -115,14 +115,14 @@ describe('GET /api/users/internalNumber/:internalNumber', function() {
 
   it('should return a single user', function(done){
     request
-      .get('/api/users/internalNumber/' + user1.InternalNumber)
+      .get('/api/users/internalNumber/' + user1.internalNumber)
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
         if (err) return done(err);
 
         var response = res.body;
-        assert.equal(response.EmployeeName, "Employee1");
+        assert.equal(response.employeeName, "Employee1");
 
         done();
       });
@@ -134,14 +134,14 @@ describe('PUT /api/users/:empId', function() {
 
   it('should update a single user', function(done){
     request
-      .put('/api/users/' + user1.EmpId)
-      .send({EmployeeName: 'New Employee1', EmpId: "12345", SerialNumber: "1", ExternalNumber: "111", InternalNumber: "222"})
+      .put('/api/users/' + user1.empId)
+      .send({employeeName: 'New Employee1', empId: "12345", serialNumber: "1", externalNumber: "111", internalNumber: "222"})
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
         if (err) return done(err);
-        Users.findOne({EmpId: user1.EmpId }).exec(function (err, user) {
-            assert.equal(user.EmployeeName, 'New Employee1');
+        Users.findOne({empId: user1.empId }).exec(function (err, user) {
+            assert.equal(user.employeeName, 'New Employee1');
             done();
 		    });
       });
@@ -153,11 +153,11 @@ describe('DELETE /api/users/:empId', function() {
 
   it('should delete a single user', function(done){
     request
-      .delete('/api/users/' + user2.EmpId)
+      .delete('/api/users/' + user2.empId)
       .expect(200)
       .end(function(err, res){
         if (err) return done(err);
-        Users.findOne({ EmpId: user2.EmpId }).exec(function (err, user) {
+        Users.findOne({ empId: user2.empId }).exec(function (err, user) {
             assert.equal(user, undefined);
             done();
 		    });
