@@ -77,7 +77,7 @@ describe('POST /api/users/', function() {
 
 });
 
-describe('GET /api/users/empId/:empId', function() {
+xdescribe('GET /api/users/empId/:empId', function() {
 
   it('should return a single user', function(done){
     request
@@ -111,7 +111,7 @@ describe('GET /api/users/empId/:empId should return 404 if the user is not prese
 
 });
 
-describe('GET /api/users/internalNumber/:internalNumber', function() {
+xdescribe('GET /api/users/internalNumber/:internalNumber', function() {
 
   it('should return a single user', function(done){
     request
