@@ -81,7 +81,7 @@ describe('GET /api/users/empId/:empId', function() {
 
   it('should return a single user', function(done){
     request
-      .get('/api/users/empId' + user1.EmpId)
+      .get('/api/users/empId/' + user1.EmpId)
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
@@ -100,7 +100,7 @@ describe('GET /api/users/internalNumber/:internalNumber', function() {
 
   it('should return a single user', function(done){
     request
-      .get('/api/users/internalNumber' + user1.InternalNumber)
+      .get('/api/users/internalNumber/' + user1.InternalNumber)
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
