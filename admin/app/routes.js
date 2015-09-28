@@ -56,25 +56,25 @@ module.exports = function(app) {
                 console.log("Error in reading users");
                 return;
             }
-            res.json(users);
+            res.json(users == null ? 404 : users);
         });
 	});
 
 	app.get('/api/users/empId/:empId', function(req, res) {
         Users.findOne({EmpId: req.params.empId}).exec(function (err, user) {
-            res.json(user);
+            res.send(user == null ? 404 : user);
         });
     });
 
     app.get('/api/users/internalNumber/:internalNumber', function(req, res) {
         Users.findOne({InternalNumber: req.params.internalNumber}).exec(function (err, user) {
-            res.json(user);
+            res.send(user == null ? 404 : user);
         });
     });
 
 	app.delete('/api/users/:empId/', function(req, res) {
     		Users.findOneAndRemove({EmpId: req.params.empId}).exec(function (err, user) {
-    			res.json("");
+            res.send(user == null ? 404 : "");
     		});
     	});
 
@@ -95,7 +95,7 @@ module.exports = function(app) {
   				console.log("Error in updating user", err);
   				return;
   			}
-  			res.json(user);
+            res.send(user == null ? 404 : user);
   		});
   	});
 
