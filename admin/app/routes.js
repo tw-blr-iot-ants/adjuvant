@@ -4,8 +4,7 @@ var Users = require('./models/users');
 var rmdir = require('rimraf');
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
-var xlsxj = require('xlsx-to-json');
-var xlsx = require('xlsx');
+var xlsxj = require('xlsx2json');
 var root = require('root-path');
 var moment = require('moment');
 
@@ -24,23 +23,19 @@ module.exports = function(app) {
 	    });
 
 	    var excelFilePath = root( req.file.path);
-	    var resourcePath = root('admin', 'resources');
-	    var workbook = xlsx.readFile(excelFilePath);
 
-        workbook.SheetNames.forEach(function(sheetName, index) {
-            xlsxj({
-                    input: excelFilePath,
-                    output: null,
-                    sheet: sheetName
-                  }, function(err, result) {
-                    if(err) {
-                      console.error(err);
-                    }
-                    Users.collection.insert(result, function(err, data) {
-                        if(err) return console.error(err);
-                    });
-
-                  });
+        xlsxj(excelFilePath, {
+            dataStartingRow: 2,
+            mapping:{
+                "SerialNumber": "A",
+                "ExternalNumber": "B",
+                "InternalNumber": "C",
+                "EmployeeName": "D",
+                "EmpId": "E"
+        }}).done(function(jsonArray) {
+         Users.collection.insert(jsonArray, function(err, data) {
+                if(err) return console.error(err);
+            });
         });
 
         rmdir(root('admin', 'uploads'), function(err) {

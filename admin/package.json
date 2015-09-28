@@ -19,8 +19,7 @@
     "rimraf": "latest",
     "root-path": "latest",
     "underscore": "^1.8.3",
-    "xlsx": "latest",
-    "xlsx-to-json": "latest"
+    "xlsx2json": "0.0.8"
   },
   "author": "resol",
   "license": "ISC",
