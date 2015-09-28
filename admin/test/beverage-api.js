@@ -124,10 +124,10 @@ describe('PUT /api/beverages/:id', function() {
 
 describe('DELETE /api/beverages/:id', function() {
 
-  it('should delete a single beverage', function(done){
+  it('should return 204 if item is successfully deleted', function(done){
     request
       .delete('/api/beverages/' + testBeverage.id)
-      .expect(200)
+      .expect(204)
       .end(function(err, res){
         if (err) return done(err);
         Beverage.findOne({ _id: testBeverage.id }).exec(function (err, beverage) {
@@ -136,6 +136,16 @@ describe('DELETE /api/beverages/:id', function() {
 		    });
       });
   });  
+  
+  it('should return 404 if item is not found when deleting', function(done){
+    request
+      .delete('/api/beverages/56087044770aef8e9a9b08ed')
+      .expect(404)
+      .end(function(err, res){
+        if (err) return done(err);
+          done();
+      });
+  });
   
 });
 
