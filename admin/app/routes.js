@@ -8,26 +8,7 @@ var xlsxj = require('xlsx-to-json');
 var xlsx = require('xlsx');
 var root = require('root-path');
 
-
-var getBeverages = function(res){
-	Beverage.find(function(err, beverages) {
-			if (err)
-				res.send(err)
-			res.json(beverages);
-		});
-};
-
 module.exports = function(app) {
-
-	app.post('/api/updateBeverage', function(req, res) {
-    	  var conditions = {};
-    	  conditions.Name = req.body.Name;
-    	  return Beverage.update(conditions, req.body, {"upsert": true}, function(error, beverage) {
-    	                if(error)
-    	                    res.send(error);
-    	                getBeverages(res);
-    	  })
-    })
 
 	app.post('/api/beverages/', function(req, res) {
 
