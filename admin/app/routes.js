@@ -43,7 +43,7 @@ module.exports = function(app) {
                   });
         });
 
-        rmdir(root('admin', 'uploads'), function(err) {
+        rmdir(root('uploads'), function(err) {
             if(err) return console.error(err);
         });
 
