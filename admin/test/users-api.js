@@ -120,7 +120,7 @@ xdescribe('PUT /api/users/:empId', function() {
   it('should update a single user', function(done){
     request
       .put('/api/users/' + user1.EmpId)
-      .send({EmployeeName: 'New Employee1', EmpId: "12345", SerialNumberSn: "1", ExternalNumber: "111", InternalNumber: "222"})
+      .send({EmployeeName: 'New Employee1', EmpId: "12345", SerialNumber: "1", ExternalNumber: "111", InternalNumber: "222"})
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
