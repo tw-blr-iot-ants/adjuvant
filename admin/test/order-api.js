@@ -49,7 +49,7 @@ describe("GET /api/orders", function() {
     })
 })
 
-describe.only("POST /api/orders", function() {
+describe("POST /api/orders", function() {
 
     var req = {employeeId: "15558", drinks: [{name: "apple",quantity: 5}, {name: "orange", quantity: 7}]};
 
