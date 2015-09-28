@@ -34,7 +34,7 @@ before(function(done) {
     return done();
 });
   
-describe('GET /api/users/', function() {
+xdescribe('GET /api/users/', function() {
   
   it('should return list of users', function(done){
     request
@@ -54,7 +54,7 @@ describe('GET /api/users/', function() {
   
 });
 
-describe('POST /api/users/', function() {
+xdescribe('POST /api/users/', function() {
 
   it('should create a user', function(done){
     request
@@ -77,7 +77,7 @@ describe('POST /api/users/', function() {
 
 });
 
-describe('GET /api/users/empId/:empId', function() {
+xdescribe('GET /api/users/empId/:empId', function() {
 
   it('should return a single user', function(done){
     request
@@ -96,7 +96,7 @@ describe('GET /api/users/empId/:empId', function() {
 
 });
 
-describe('GET /api/users/internalNumber/:internalNumber', function() {
+xdescribe('GET /api/users/internalNumber/:internalNumber', function() {
 
   it('should return a single user', function(done){
     request
@@ -115,7 +115,7 @@ describe('GET /api/users/internalNumber/:internalNumber', function() {
 
 });
 
-describe('PUT /api/users/:empId', function() {
+xdescribe('PUT /api/users/:empId', function() {
 
   it('should update a single user', function(done){
     request
@@ -134,7 +134,7 @@ describe('PUT /api/users/:empId', function() {
 
 });
 
-describe('DELETE /api/users/:empId', function() {
+xdescribe('DELETE /api/users/:empId', function() {
 
   it('should delete a single user', function(done){
     request
