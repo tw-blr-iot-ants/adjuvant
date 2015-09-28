@@ -62,13 +62,13 @@ module.exports = function(app) {
 	});
 
 	app.get('/api/users/empId/:empId', function(req, res) {
-        Users.findOne({EmpId: req.params.empId}).exec(function (err, user) {
+        Users.findOne({empId: req.params.empId}).exec(function (err, user) {
             res.send(user == null ? 404 : user);
         });
     });
 
     app.get('/api/users/internalNumber/:internalNumber', function(req, res) {
-        Users.findOne({InternalNumber: req.params.internalNumber}).exec(function (err, user) {
+        Users.findOne({internalNumber: req.params.internalNumber}).exec(function (err, user) {
             res.send(user == null ? 404 : user);
         });
     });
@@ -99,20 +99,6 @@ module.exports = function(app) {
             res.send(user == null ? 404 : user);
   		});
   	});
-
-	app.post('/api/addUser', function(req, res) {
-	  return Users.create(req.body, function(err, data) {
-                                     if(err) return res.send(err);
-                                     res.json(req.body)
-      });
-    })
-
-    app.post('/api/deleteUser', function(req, res) {
-	  return Users.remove({"empId": req.body.EmpId }, function(err, data) {
-                        if(err) return res.send(err);
-                        res.json(req.body)
-      });
-    })
 
 	app.post('/api/orders', function(req, res) {
 		  var allDrinksRequest = [];

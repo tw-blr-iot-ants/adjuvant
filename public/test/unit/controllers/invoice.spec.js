@@ -2,9 +2,9 @@ describe("invoiceControllerTest", function() {
     var scope, mongooseService, sce, invoiceService;
 
     var orders = [
-    {Date: "2015-08-01T18:30:00.000Z", DrinkName: "pineapple", EmployeeId: "16305", Name: "dixith", Quantity: 1},
-    {Date: "2015-08-01T18:30:00.000Z", DrinkName: "strawberry", EmployeeId: "16305", Name: "dixith", Quantity: 2},
-    {Date: "2015-08-01T18:30:00.000Z", DrinkName: "pineapple", EmployeeId: "16305", Name: "dixith",Quantity: 3}]
+    {date: "2015-08-01T18:30:00.000Z", drinkName: "pineapple", employeeId: "16305", name: "dixith", quantity: 1},
+    {date: "2015-08-01T18:30:00.000Z", drinkName: "strawberry",employeeId: "16305", name: "dixith", quantity: 2},
+    {date: "2015-08-01T18:30:00.000Z", drinkName: "pineapple", employeeId: "16305", name: "dixith", quantity: 3}]
 
     var beverages = [{Available: false, Cost: 15, Name: "pineapple"},
                     {Available: false, Cost: 15, Name: "strawberry"}]
@@ -41,10 +41,10 @@ describe("invoiceControllerTest", function() {
     }))
 
 
-    xit("should generateInvoice for single day", function() {
+    it("should generateInvoice for single day", function() {
 
         var someDate = new Date();
-        var expectedQuery = {"Date": someDate};
+        var expectedQuery = {"date": someDate};
         scope.selectedDate = someDate;
 
         return scope.getInvoice().then(function() {

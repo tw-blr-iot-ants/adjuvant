@@ -41,10 +41,10 @@ describe("manageJuiceController", function() {
     }))
 
     it("should get all juices on the admin portal", function() {
-        var expectedBeverages =  [ { Name : 'strawberry', Cost : 27, Available : false },
-                                    { Name : 'mango', Cost : 19, Available : false },
-                                    { Name : 'amla', Cost : 21, Available : false },
-                                    { Name : 'mosambi', Cost : 22, Available : false } ]
+        var expectedBeverages =  [ { name : 'strawberry', cost : 27, available : false },
+                                   { name : 'mango',      cost : 19, available : false },
+                                   { name : 'amla',       cost : 21, available : false },
+                                   { name : 'mosambi',    cost : 22, available : false } ]
         expect(scope.beverages).to.have.members(beverages);
         expect(scope.loading).to.be.false;
     })
