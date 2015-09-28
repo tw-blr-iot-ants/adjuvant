@@ -62,7 +62,9 @@
 
         <form ng-if="flushAndUpdateDB" action="api/createUsers" method="post" enctype="multipart/form-data">
             <input type="file" name="users" accept=".xlsx">
-            <input  type="submit">
+            <div class="minor-gap">
+                <input  type="submit">
+            </div>
         </form>
 
     </div>

@@ -115,6 +115,7 @@ module.exports = function(app) {
       });
     })
 
+    //tobe changed
 	app.post('/api/orders', function(req, res) {
     	  return Order.create(req.body, function(error) {
     	                if(error)
@@ -123,7 +124,7 @@ module.exports = function(app) {
     	  })
 	})
 
-	app.put('/api/orders', function(req, res) {
+	app.put('/api/findOrdersForSingleDay', function(req, res) {
     	  return Order.find({"Date" : new Date(req.body.Date)}).exec(function(error, orders) {
     	                if(error)
     	                    res.send(error);
@@ -131,7 +132,7 @@ module.exports = function(app) {
     	  })
 	})
 
-	app.put('/api/ordersWithInRange', function(req, res) {
+	app.put('/api/findOrdersForSelectPeriod', function(req, res) {
     	  return Order.find({"Date" : {$gte: new Date(req.body.startDate), $lt: new Date(req.body.endDate)}})
     	                    .exec(function(error, orders) {
     	                if(error)

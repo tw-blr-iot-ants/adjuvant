@@ -15,8 +15,8 @@ describe("invoiceControllerTest", function() {
                         "<td>15*</td><td>30</td></tr><tr><th colspan=\"3\">Grand Total</th><td>&#8377; 90</td></tr></table>"
 
     beforeEach(function() {
-        var mockMongooseService = {getOrders: sinon.stub().returns(Q({data: orders})),
-                                    getOrdersWithInRange: sinon.stub().returns(Q({})),
+        var mockMongooseService = {getOrdersForSingleDay: sinon.stub().returns(Q({data: orders})),
+                                    getOrdersForSelectPeriod: sinon.stub().returns(Q({})),
                                     getBeverages: sinon.stub().returns(Q({data: beverages}))
                                    };
         var mockInvoiceService = {
@@ -49,8 +49,8 @@ describe("invoiceControllerTest", function() {
 
         return scope.getInvoice().then(function() {
 
-        expect(mongooseService.getOrders).to.be.calledOnce;
-        expect(mongooseService.getOrders).to.be.calledWith(expectedQuery);
+        expect(mongooseService.getOrdersForSingleDay).to.be.calledOnce;
+        expect(mongooseService.getOrdersForSingleDay).to.be.calledWith(expectedQuery);
         expect(scope.invoiceReady).to.be.true;
         });
 
@@ -65,8 +65,8 @@ describe("invoiceControllerTest", function() {
         var expectedQuery = {"startDate": someDate, "endDate": someOtherDate}
 
         return scope.getInvoiceWithInRange().then(function() {
-            expect(mongooseService.getOrdersWithInRange).to.be.calledOnce;
-            expect(mongooseService.getOrdersWithInRange).to.be.calledWith(expectedQuery);
+            expect(mongooseService.getOrdersForSelectPeriod).to.be.calledOnce;
+            expect(mongooseService.getOrdersForSelectPeriod).to.be.calledWith(expectedQuery);
             expect(scope.invoiceReady).to.be.true;
         })
     })

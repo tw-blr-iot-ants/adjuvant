@@ -11,7 +11,7 @@ angular.module('invoiceController', [])
         $scope.getInvoice = function() {
             $scope.generatedTable = "";
             var transformedDate =  $scope.selectedDate;
-            return mongooseService.getOrders({"Date": transformedDate})
+            return mongooseService.getOrdersForSingleDay({"Date": transformedDate})
                                 .then(_extractRegisterOrders)
                                 .then(_getJuiceMenu)
                                 .then(_constructInvoice)
@@ -22,7 +22,7 @@ angular.module('invoiceController', [])
             startDate.setHours(0,0,0,0);
             var endDate =  $scope.endDate;
             endDate.setHours(24,0,0,0)
-            return mongooseService.getOrdersWithInRange({"startDate": startDate, "endDate": endDate})
+            return mongooseService.getOrdersForSelectPeriod({"startDate": startDate, "endDate": endDate})
                                 .then(_extractRegisterOrders)
                                 .then(_getJuiceMenu)
                                 .then(_constructInvoice)
