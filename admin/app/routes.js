@@ -59,14 +59,20 @@ module.exports = function(app) {
         });
 	});
 
-	app.get('/api/users/:empId/:internalNumber', function(req, res) {
-        Users.findOne({EmpId: req.params.empId, InternalNumber: req.params.internalNumber}).exec(function (err, user) {
+	app.get('/api/users/empId/:empId', function(req, res) {
+        Users.findOne({EmpId: req.params.empId}).exec(function (err, user) {
             res.json(user);
         });
     });
 
-	app.delete('/api/users/:empId/:internalNumber', function(req, res) {
-    		Users.findOneAndRemove({EmpId: req.params.empId, InternalNumber: req.params.internalNumber}).exec(function (err, user) {
+    app.get('/api/users/internalNumber/:internalNumber', function(req, res) {
+        Users.findOne({InternalNumber: req.params.internalNumber}).exec(function (err, user) {
+            res.json(user);
+        });
+    });
+
+	app.delete('/api/users/:empId/', function(req, res) {
+    		Users.findOneAndRemove({EmpId: req.params.empId}).exec(function (err, user) {
     			res.json("");
     		});
     	});
@@ -81,9 +87,9 @@ module.exports = function(app) {
         res.json(user);
     });
 
-    app.put('/api/users/:empId/:internalNumber', function(req, res) {
+    app.put('/api/users/:empId/', function(req, res) {
 
-  		Users.findOneAndUpdate({EmpId: req.params.empId, InternalNumber: req.params.internalNumber}, req.body).exec(function(err, user) {
+  		Users.findOneAndUpdate({EmpId: req.params.empId}, req.body).exec(function(err, user) {
   			if(err) {
   				console.log("Error in updating user", err);
   				return;

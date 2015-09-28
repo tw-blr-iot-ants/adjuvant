@@ -77,11 +77,11 @@ describe('POST /api/users/', function() {
 
 });
 
-describe('GET /api/users/:empId/:internalNumber', function() {
+describe('GET /api/users/empId/:empId', function() {
 
   it('should return a single user', function(done){
     request
-      .get('/api/users/' + user1.EmpId + '/' + user1.InternalNumber)
+      .get('/api/users/empId' + user1.EmpId)
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
@@ -96,11 +96,30 @@ describe('GET /api/users/:empId/:internalNumber', function() {
 
 });
 
-describe('PUT /api/users/:empId/:internalNumber', function() {
+describe('GET /api/users/internalNumber/:internalNumber', function() {
+
+  it('should return a single user', function(done){
+    request
+      .get('/api/users/internalNumber' + user1.InternalNumber)
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        if (err) return done(err);
+
+        var response = res.body;
+        assert.equal(response.EmployeeName, "Employee1");
+
+        done();
+      });
+  });
+
+});
+
+describe('PUT /api/users/:empId', function() {
 
   it('should update a single user', function(done){
     request
-      .put('/api/users/' + user1.EmpId + '/' + user1.InternalNumber)
+      .put('/api/users/' + user1.EmpId)
       .send({EmployeeName: 'New Employee1', EmpId: "12345", SNo: "1", ExternalNumber: "111", InternalNumber: "222"})
       .set('Accept', 'application/json')
       .expect(200)
@@ -115,11 +134,11 @@ describe('PUT /api/users/:empId/:internalNumber', function() {
 
 });
 
-describe('DELETE /api/users/:empId/:internalNumber', function() {
+describe('DELETE /api/users/:empId', function() {
 
   it('should delete a single user', function(done){
     request
-      .delete('/api/users/' + user2.EmpId + '/' + user2.InternalNumber)
+      .delete('/api/users/' + user2.EmpId)
       .expect(200)
       .end(function(err, res){
         if (err) return done(err);
