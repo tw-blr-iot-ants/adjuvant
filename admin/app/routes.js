@@ -1,5 +1,5 @@
 var Order = require('./models/order');
-var Beverage = require('./models/beverage');
+var beverageHandler = require("./handlers/beverage");
 var Users = require('./models/users');
 var rmdir = require('rimraf');
 var multer  = require('multer');
@@ -10,57 +10,11 @@ var root = require('root-path');
 
 module.exports = function(app) {
 
-	app.post('/api/beverages/', function(req, res) {
-
-		var beverage = new Beverage({
-			Name: req.body.Name,
-			Cost: req.body.Cost,
-			Available: true
-		});
-
-		beverage.save(function(err){
-			if(err){
-				console.log("Error in saving the beverage", err);
-				return;
-			}
-			
-		});
-
-		res.json(beverage);
-	});
-	
-	app.put('/api/beverages/:id', function(req, res) {
-		
-		Beverage.findOneAndUpdate({ _id: req.params.id }, req.body).exec(function(err, beverage) {
-			if(err) {
-				console.log("Error in updating beverage", err);
-				return;
-			}
-			res.json(beverage);
-		});
-	});
-	
-	app.get('/api/beverages/', function(req, res) {
-		Beverage.find().exec(function(error, beverages) {
-			if(error) {
-				console.log("Error in reading beverages");
-				return;
-			}
-			res.json(beverages);
-		});
-	});
-	
-	app.get('/api/beverages/:id', function(req, res) {
-		Beverage.findOne({ _id: req.params.id }).exec(function (err, beverage) {
-			res.json(beverage);
-		});
-	});
-	
-	app.delete('/api/beverages/:id', function(req, res) {
-		Beverage.findOneAndRemove({ _id: req.params.id }).exec(function (err, beverage) {
-			res.json("");
-		});
-	});
+	app.post('/api/beverages/', beverageHandler.create);
+	app.put('/api/beverages/:id', beverageHandler.update);
+	app.get('/api/beverages/', beverageHandler.findAll);
+	app.get('/api/beverages/:id', beverageHandler.findById);
+	app.delete('/api/beverages/:id', beverageHandler.delete);
 
 	app.post('/api/createUsers', upload.single('users'), function(req, res) {
 	    Users.remove({}, function(err) {
