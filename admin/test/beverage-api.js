@@ -90,6 +90,17 @@ describe('GET /api/beverages/:id', function() {
       });
   });  
   
+  it('should return 404 if not found', function(done){
+    request
+      .get('/api/beverages/56087044770aef8e9a9b08ed')
+      .set('Accept', 'application/json')
+      .expect(404)
+      .end(function(err, res){
+        if (err) return done(err);
+        done();
+      });
+  });
+  
 });
 
 describe('PUT /api/beverages/:id', function() {

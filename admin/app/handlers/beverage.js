@@ -38,7 +38,11 @@ module.exports.findAll = function(req, res) {
 
 module.exports.findById = function(req, res) {
 	Beverage.findOne({ _id: req.params.id }).exec(function (err, beverage) {
-		res.json(beverage);
+		if(beverage)
+			res.json(beverage);
+		else {
+			res.status(404).send("");	
+		}
 	});
 };
 
