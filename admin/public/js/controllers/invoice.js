@@ -11,7 +11,7 @@ angular.module('invoiceController', [])
         $scope.getInvoice = function() {
             $scope.generatedTable = "";
             var transformedDate =  $scope.selectedDate;
-            return mongooseService.getOrdersForSingleDay({"Date": transformedDate})
+            return mongooseService.getOrdersForSingleDay({"date": transformedDate})
                                 .then(_extractRegisterOrders)
                                 .then(_getJuiceMenu)
                                 .then(_constructInvoice)
@@ -45,8 +45,8 @@ angular.module('invoiceController', [])
         var _extractRegisterOrders = function(response) {
           var juiceChoice = [];
           _.each(response.data, function(order) {
-            var drinkName = order.DrinkName;
-            _.times(order.Quantity, function() {
+            var drinkName = order.drinkName;
+            _.times(order.quantity, function() {
                 juiceChoice.push(drinkName)
             })
           })

@@ -49,7 +49,7 @@ describe("usersControllerTest", function() {
         scope.deleteUser();
 
         expect(mongooseService.deleteUser).to.be.calledOnce
-        expect(mongooseService.deleteUser).to.be.calledWith({ EmpId: "16305" })
+        expect(mongooseService.deleteUser).to.be.calledWith({ empId: "16305" })
     })
 
     it("should set scope from setSelctedTab ", function() {

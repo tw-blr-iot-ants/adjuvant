@@ -5,18 +5,17 @@ angular.module('usersController', [])
 
        $scope.addUser = function() {
             var user = {};
-            user["EmpId"] = $scope.employeeId;
-            user["EmployeeName"] = $scope.employeeName;
-            user["SerialNumber"] = $scope.serialNumber;
-            user["ExternalNumber"] = $scope.externalNumber;
-            user["InternalNumber"] = $scope.internalNumber;
-            console.log("user", user)
+            user["empId"] = $scope.employeeId;
+            user["employeeName"] = $scope.employeeName;
+            user["serialNumber"] = $scope.serialNumber;
+            user["externalNumber"] = $scope.externalNumber;
+            user["internalNumber"] = $scope.internalNumber;
             mongooseService.addUser(user)
                                .then(_notifySuccess);
        }
 
        $scope.deleteUser = function() {
-            mongooseService.deleteUser({"EmpId": $scope.employeeId})
+            mongooseService.deleteUser({"empId": $scope.employeeId})
                                 .then(_notifySuccess)
        }
 

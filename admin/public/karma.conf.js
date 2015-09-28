@@ -23,8 +23,8 @@ module.exports = function(config) {
         'node_modules/q/q.js',
         'node_modules/underscore/underscore.js',
         'js/**/*.js',
-        'test/**/*.spec.js'
-
+        'test/unit/controllers/*.spec.js',
+        'test/unit/services/*.spec.js'
     ],
 
 
@@ -69,6 +69,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true
+    singleRun: false
   })
 }

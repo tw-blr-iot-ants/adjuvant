@@ -11,15 +11,15 @@ angular.module('juiceController', [])
 
     $scope.updateBeverage = function() {
         var beverage = {};
-        beverage.Name = ($scope.Name);
-        beverage.Cost = parseInt($scope.Cost);
-        beverage.Available = true;
+        beverage.name = ($scope.name);
+        beverage.cost = parseInt($scope.cost);
+        beverage.available = true;
         mongooseService.updateBeverage(beverage)
                            .then(_successCallback, _errorCallBack)
     }
 
     $scope.updateAvailability = function(beverage) {
-        beverage.Available = !beverage.Available;
+        beverage.available = !beverage.available;
         mongooseService.updateBeverage(beverage)
                             .then(function(response) {
                                       $scope.juices = response.data;
@@ -34,7 +34,7 @@ angular.module('juiceController', [])
     var _successCallback = function(response) {
          $scope.beverages = response.data;
          $scope.loading = false;
-         $scope.Name = "";
-         $scope.Cost = "";
+         $scope.name = "";
+         $scope.cost = "";
     }
 }])

@@ -2,8 +2,10 @@
 <div class="gap">
     <div class="left-div col-sm-3 col-sm-offset-4">
         <div class="div-center">
-            <div>Juice Name: <input type="text" class="form-control input-lg text-center"  ng-model="Name"></div>
-            <div>Juice Price: <input type="text" class="form-control input-lg text-center"  ng-model="Cost"></div>
+            <div>Juice Name:
+                <input type="text" class="form-control input-lg text-center"  ng-model="name"></div>
+            <div>Juice Price:
+                <input type="text" class="form-control input-lg text-center"  ng-model="cost"></div>
             <div class="col-sm-3 col-sm-offset-4">
                 <p class="text-center" ng-show="loading">
                     <span class="fa fa-spinner fa-spin fa-3x"></span>
@@ -26,10 +28,10 @@
                 <th>Availability</th>
             </tr>
             <tr ng-repeat="beverage in beverages">
-                <td>{{beverage.Name}}</td>
-                <td>{{beverage.Cost}}</td>
+                <td>{{beverage.name}}</td>
+                <td>{{beverage.cost}}</td>
                 <td>
-                    <input type="checkbox" ng-checked="{{beverage.Available}}" ng-click="updateAvailability(beverage)">
+                    <input type="checkbox" ng-checked="{{beverage.available}}" ng-click="updateAvailability(beverage)">
                 </td>
             </tr>
         </table>

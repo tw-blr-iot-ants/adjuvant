@@ -15,8 +15,8 @@ module.exports = function(app) {
 	app.put('/api/beverages/:id', beverageHandler.update);
 	app.get('/api/beverages/', beverageHandler.findAll);
 	app.get('/api/beverages/:id', beverageHandler.findById);
-	app.post('/api/updateBeverage', beverageHandler.updateWithUpsert)
 	app.delete('/api/beverages/:id', beverageHandler.delete);
+	app.post('/api/beverages/updateWithUpsert', beverageHandler.updateWithUpsert)
 
 	app.post('/api/createUsers', upload.single('users'), function(req, res) {
 	    Users.remove({}, function(err) {
@@ -75,7 +75,7 @@ module.exports = function(app) {
 
 	app.delete('/api/users/:empId/', function(req, res) {
     		Users.findOneAndRemove({empId: req.params.empId}).exec(function (err, user) {
-            res.send(user == null ? 404 : "");
+            res.send(user == null ? 404 : "success");
     		});
     	});
 
@@ -136,16 +136,16 @@ module.exports = function(app) {
           });
 	})
 
-	app.put('/api/findOrdersForSingleDay', function(req, res) {
-    	  return Order.find({"date" : new Date(req.body.date)}).exec(function(error, orders) {
+	app.get('/api/orders/:date/', function(req, res) {
+    	  return Order.find({"date" : new Date(req.params.date)}).exec(function(error, orders) {
     	                if(error)
     	                    res.send(error);
 						res.json(orders);
     	  })
 	})
 
-	app.put('/api/findOrdersForSelectPeriod', function(req, res) {
-    	  return Order.find({"date" : {$gte: new Date(req.body.startDate), $lt: new Date(req.body.endDate)}})
+	app.get('/api/orders/:startDate/:endDate', function(req, res) {
+    	  return Order.find({"date" : {$gte: new Date(req.params.startDate), $lt: new Date(req.params.endDate)}})
     	                    .exec(function(error, orders) {
     	                if(error)
     	                    res.send(error);

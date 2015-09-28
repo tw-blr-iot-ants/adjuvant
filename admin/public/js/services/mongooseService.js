@@ -3,22 +3,22 @@ angular.module("mongooseService", [])
 
       return {
         updateBeverage: function(data) {
-            return $http.post("/api/updateBeverage", data)
+            return $http.post("/api/beverages/updateWithUpsert", data)
         },
         getBeverages: function() {
             return $http.get("/api/beverages/")
         },
-        getOrdersForSingleDay: function(data) {
-            return $http.put("/api/findOrdersForSingleDay", data)
+        getOrdersForSingleDay: function(request) {
+            return $http.get("/api/orders/" +  request.date)
         },
-        getOrdersForSelectPeriod: function(data) {
-            return $http.put("/api/findOrdersForSelectPeriod", data)
+        getOrdersForSelectPeriod: function(request) {
+            return $http.get("/api/orders/" + request.startDate + "/" + request.endDate)
         },
         addUser: function(data) {
-             return $http.post("/api/addUser", data)
+             return $http.post("/api/users/", data)
         },
-        deleteUser: function(data) {
-             return $http.post("/api/deleteUser", data)
+        deleteUser: function(request) {
+             return $http.delete("/api/users/" +  request.empId)
         }
       }
     }

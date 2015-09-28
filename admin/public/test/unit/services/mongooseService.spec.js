@@ -20,7 +20,7 @@ describe("mongooseServiceTest", function() {
         var actualResult;
         var request = {query: "query"}
         var response = {data : {"dummy": "superDummy"}};
-        httpBackend.expectPOST('/api/updateBeverage', request).respond(response);
+        httpBackend.expectPOST('/api/beverages/updateWithUpsert', request).respond(response);
 
         var returnPromise = mongooseService.updateBeverage(request);
 
@@ -50,7 +50,7 @@ describe("mongooseServiceTest", function() {
         var actualResult;
         var request = {date: "someDate"}
         var response = {data : {"dummy": "superDummy"}};
-        httpBackend.expectPUT('/api/findOrdersForSingleDay').respond(response);
+        httpBackend.expectGET('/api/orders/someDate').respond(response);
 
         var returnPromise = mongooseService.getOrdersForSingleDay(request);
         returnPromise.then(function(res) {
@@ -63,9 +63,9 @@ describe("mongooseServiceTest", function() {
 
     it('should get orders for select period', function() {
         var actualResult;
-        var request = {date: "someDate"}
+        var request = {startDate: "someDate", endDate: "someOtherDate"}
         var response = {data : {"dummy": "superDummy"}};
-        httpBackend.expectPUT('/api/findOrdersForSelectPeriod').respond(response);
+        httpBackend.expectGET('/api/orders/someDate/someOtherDate').respond(response);
 
         var returnPromise = mongooseService.getOrdersForSelectPeriod(request);
         returnPromise.then(function(res) {
@@ -80,9 +80,24 @@ describe("mongooseServiceTest", function() {
         var actualResult;
         var request = {user: "someUser"}
         var response = {data : {"dummy": "superDummy"}};
-        httpBackend.expectPOST('/api/addUser', request).respond(response);
+        httpBackend.expectPOST('/api/users/', request).respond(response);
 
         var returnPromise = mongooseService.addUser(request);
+        returnPromise.then(function(res) {
+            actualResult = res;
+        })
+        httpBackend.flush();
+
+        expect(actualResult.data).to.be.eql(response)
+    })
+
+    it('should delete a user', function() {
+        var actualResult;
+        var request = {empId: "16305"}
+        var response = {data : {"dummy": "superDummy"}};
+        httpBackend.expectDELETE('/api/users/16305').respond(response);
+
+        var returnPromise = mongooseService.deleteUser(request);
         returnPromise.then(function(res) {
             actualResult = res;
         })
