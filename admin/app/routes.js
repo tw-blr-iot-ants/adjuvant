@@ -7,6 +7,7 @@ var upload = multer({ dest: 'uploads/' });
 var xlsxj = require('xlsx-to-json');
 var xlsx = require('xlsx');
 var root = require('root-path');
+var moment = require('moment');
 
 module.exports = function(app) {
 
@@ -115,13 +116,26 @@ module.exports = function(app) {
       });
     })
 
-    //tobe changed
 	app.post('/api/orders', function(req, res) {
-    	  return Order.create(req.body, function(error) {
-    	                if(error)
-    	                    res.send(error);
-						res.json(req.body);
-    	  })
+		  var allDrinksRequest = [];
+		  var eachDrinkRequest;
+
+		  req.body.drinks.forEach(function(drink) {
+		  	eachDrinkRequest = {
+            		  	Date: new Date(),
+            		  	EmployeeId: req.body.employeeId,
+            		  	DrinkName: drink.name,
+            		  	Quantity: drink.quantity,
+            		  	expiresAt: moment(moment(new Date())+moment.duration(6, 'months'))
+            };
+            allDrinksRequest.push(eachDrinkRequest);
+		  })
+
+		  return Order.create(allDrinksRequest, function(error) {
+						if(error)
+						  res.send(error);
+						res.json({"orderStatus": "success"});
+          });
 	})
 
 	app.put('/api/findOrdersForSingleDay', function(req, res) {

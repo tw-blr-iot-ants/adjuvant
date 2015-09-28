@@ -49,30 +49,29 @@ describe("GET /api/orders", function() {
     })
 })
 
-describe("POST /api/orders", function() {
+describe.only("POST /api/orders", function() {
+
+    var req = {employeeId: "15558", drinks: [{name: "apple",quantity: 5}, {name: "orange", quantity: 7}]};
 
     it("should place an order", function(done) {
         request
         .post('/api/orders')
-        .send({Name: "Jack",EmployeeId:"1048",DrinkName:"Amla",Date:"2011-08-21T18:02:52.249Z",Quantity:1})
+        .send(req)
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, response) {
             if (err) return done(err);
 
             var res = response.body;
-            assert.equal(res.Name,"Jack");
-            assert.equal(res.EmployeeId,"1048");
-            assert.equal(res.Date,"2011-08-21T18:02:52.249Z");
-            assert.equal(res.Quantity,1);
-            assert.equal(res.DrinkName,"Amla");
-            Order.findOne({ EmployeeId: res.EmployeeId }).exec(function (err, order) {
+            assert.equal(res.orderStatus,"success");
+            Order.find({ EmployeeId: req.employeeId }).exec(function (err, order) {
                         assert.notEqual(order, undefined);
+                        assert.equal(order.length, 2);
                         done();
             });
         });
-    })
-})
+    });
+});
 
 
 after(function(done) {
