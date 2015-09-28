@@ -16,7 +16,7 @@ before(function(done) {
     }
     user1 = new Users({
 			EmpId: "12345",
-			SNo: "1",
+			SerialNumber: "1",
 			ExternalNumber: "111",
 			InternalNumber: "222",
 			EmployeeName: "Employee1"
@@ -25,7 +25,7 @@ before(function(done) {
     
     user2 = new Users({
 			EmpId: "12346",
-            SNo: "2",
+            SerialNumber: "2",
             ExternalNumber: "333",
             InternalNumber: "444",
             EmployeeName: "Employee2"
@@ -59,7 +59,7 @@ describe('POST /api/users/', function() {
   it('should create a user', function(done){
     request
       .post('/api/users/')
-      .send({ EmpId: "12347", SNo: "3", ExternalNumber: "555", InternalNumber: "666", EmployeeName: "Employee3"})
+      .send({ EmpId: "12347", SerialNumber: "3", ExternalNumber: "555", InternalNumber: "666", EmployeeName: "Employee3"})
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
@@ -120,7 +120,7 @@ describe('PUT /api/users/:empId', function() {
   it('should update a single user', function(done){
     request
       .put('/api/users/' + user1.EmpId)
-      .send({EmployeeName: 'New Employee1', EmpId: "12345", SNo: "1", ExternalNumber: "111", InternalNumber: "222"})
+      .send({EmployeeName: 'New Employee1', EmpId: "12345", SerialNumberSn: "1", ExternalNumber: "111", InternalNumber: "222"})
       .set('Accept', 'application/json')
       .expect(200)
       .end(function(err, res){
