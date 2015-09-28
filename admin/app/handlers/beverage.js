@@ -1,5 +1,13 @@
 var Beverage = require("../models/beverage");
 
+var getBeverages = function(res){
+	Beverage.find(function(err, beverages) {
+			if (err)
+				res.send(err)
+			res.json(beverages);
+		});
+};
+
 module.exports.create = function(req, res) {
 	var beverage = new Beverage({
 		Name: req.body.Name,
@@ -54,3 +62,13 @@ module.exports.delete = function(req, res) {
 			res.status(404).send();
 	});
 };
+
+module.exports.updateWithUpsert = function(req, res) {
+       var conditions = {};
+      conditions.Name = req.body.Name;
+      return Beverage.update(conditions, req.body, {"upsert": true}, function(error, beverage) {
+    	                if(error)
+    	                    res.send(error);
+    	                getBeverages(res);
+   })
+}

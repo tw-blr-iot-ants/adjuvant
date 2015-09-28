@@ -15,6 +15,7 @@ module.exports = function(app) {
 	app.put('/api/beverages/:id', beverageHandler.update);
 	app.get('/api/beverages/', beverageHandler.findAll);
 	app.get('/api/beverages/:id', beverageHandler.findById);
+	app.post('/api/updateBeverage', beverageHandler.updateWithUpsert)
 	app.delete('/api/beverages/:id', beverageHandler.delete);
 
 	app.post('/api/createUsers', upload.single('users'), function(req, res) {
@@ -100,8 +101,6 @@ module.exports = function(app) {
   	});
 
 	app.post('/api/addUser', function(req, res) {
-
-	  console.log("req.body", req.body)
 	  return Users.create(req.body, function(err, data) {
                                      if(err) return res.send(err);
                                      res.json(req.body)
@@ -109,7 +108,6 @@ module.exports = function(app) {
     })
 
     app.post('/api/deleteUser', function(req, res) {
-      console.log("re", req.body.EmpId)
 	  return Users.remove({"EmpId": req.body.EmpId }, function(err, data) {
                         if(err) return res.send(err);
                         res.json(req.body)

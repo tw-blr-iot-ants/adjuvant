@@ -17,7 +17,7 @@
 
 
     <div class="col-sm-4 col-sm-offset-4 right-div">
-        <form ng-if="addUserForm">
+        <form ng-show="addUserForm">
             <div class="form-group">
                 <label >Employee ID</label>
                 <input  class="form-control" ng-model="employeeId" placeholder="Employee ID">
@@ -44,23 +44,23 @@
                 <input  class="form-control"  ng-model="internalNumber" placeholder="Internal Number">
             </div>
 
-            <div ng-if="updated" flash-message="5000" ></div>
+            <div ng-show="updated" flash-message="5000" ></div>
 
             <button type="submit" class="btn btn-default" ng-click="addUser()">Submit</button>
         </form>
 
-        <form ng-if="deleteUserForm">
+        <form ng-show="deleteUserForm">
             <div class="form-group">
                 <label >Employee ID</label>
                 <input  class="form-control" ng-model="employeeId" placeholder="Employee ID">
             </div>
 
-            <div ng-if="updated" flash-message="5000" ></div>
+            <div ng-show="updated" flash-message="5000" ></div>
 
             <button type="submit" class="btn btn-default" ng-click="deleteUser()">Submit</button>
         </form>
 
-        <form ng-if="flushAndUpdateDB" action="api/createUsers" method="post" enctype="multipart/form-data">
+        <form ng-show="flushAndUpdateDB" action="api/createUsers" method="post" enctype="multipart/form-data">
             <input type="file" name="users" accept=".xlsx">
             <div class="minor-gap">
                 <input  type="submit">

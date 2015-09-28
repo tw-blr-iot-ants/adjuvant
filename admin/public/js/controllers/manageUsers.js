@@ -10,7 +10,7 @@ angular.module('usersController', [])
             user["SerialNumber"] = $scope.serialNumber;
             user["ExternalNumber"] = $scope.externalNumber;
             user["InternalNumber"] = $scope.internalNumber;
-
+            console.log("user", user)
             mongooseService.addUser(user)
                                .then(_notifySuccess);
        }
@@ -36,8 +36,8 @@ angular.module('usersController', [])
        var _notifySuccess = function(response) {
            var message = '<strong>User updated Successfully </strong> ';
            Flash.create('success', message, 'custom-class');
-           $scope.updated = true;
            _resetDefaults();
+           $scope.updated = true;
        }
 
        var _resetDefaults = function() {
