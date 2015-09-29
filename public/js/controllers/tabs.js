@@ -8,6 +8,7 @@ angular.module('tabsController', [])
            { link : '#/manageUsers', label : 'Users' }
      ];
 
+      $scope.selectedTab = $scope.tabs[0];
       var hashUrl = "#" + $location.path();
 
       _.each($scope.tabs, function(tab){
