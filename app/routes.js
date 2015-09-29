@@ -1,4 +1,4 @@
-var Order = require('./models/order');
+var orderHandler = require('./handlers/order');
 var beverageHandler = require("./handlers/beverage");
 var Users = require('./models/users');
 var rmdir = require('rimraf');
@@ -100,44 +100,8 @@ module.exports = function(app) {
   		});
   	});
 
-	app.post('/api/orders', function(req, res) {
-		  var allDrinksRequest = [];
-		  var eachDrinkRequest;
-
-		  req.body.drinks.forEach(function(drink) {
-		  	eachDrinkRequest = {
-            		  	date: new Date(),
-            		  	employeeId: req.body.employeeId,
-            		  	drinkName: drink.name,
-            		  	quantity: drink.quantity,
-            		  	expiresAt: moment(moment(new Date())+moment.duration(6, 'months'))
-            };
-            allDrinksRequest.push(eachDrinkRequest);
-		  })
-
-		  return Order.create(allDrinksRequest, function(error) {
-						if(error)
-						  res.send(error);
-						res.json({"orderStatus": "success"});
-          });
-	})
-
-	app.get('/api/orders/:date/', function(req, res) {
-    	  return Order.find({"date" : new Date(req.params.date)}).exec(function(error, orders) {
-    	                if(error)
-    	                    res.send(error);
-						res.json(orders);
-    	  })
-	})
-
-	app.get('/api/orders/:startDate/:endDate', function(req, res) {
-    	  return Order.find({"date" : {$gte: new Date(req.params.startDate), $lt: new Date(req.params.endDate)}})
-    	                    .exec(function(error, orders) {
-    	                if(error)
-    	                    res.send(error);
-						res.json(orders);
-    	  })
-	})
-
+	app.post('/api/orders', orderHandler.create);
+    app.get('/api/orders/:date/', orderHandler.ordersForSingleDay);
+	app.get('/api/orders/:startDate/:endDate', orderHandler.ordersForSelectPeriod);
 };
 
