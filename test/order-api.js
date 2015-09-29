@@ -6,7 +6,7 @@ var Order = require('../app/models/order');
 var server = require('../app/server').app;
 
 var request = require('supertest')(server);
-require("../app/database");
+require("../app/testDatabase");
 
 before(function(done) {
     for (var i in mongoose.connection.collections) {

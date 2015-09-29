@@ -4,7 +4,7 @@ var assert = require('chai').assert;
 var mongoose = require('mongoose');
 var Users = require('../app/models/users');
 var server = require('../app/server').app;
-require("../app/database");
+require("../app/testDatabase");
 
 var user1, user2;
 var request = require('supertest')(server);

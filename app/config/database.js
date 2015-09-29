@@ -1,3 +1,4 @@
 module.exports = {
-	url : 'mongodb://localhost/adjuvant'
+	url : 'mongodb://localhost/adjuvant',
+	testUrl : 'mongodb://localhost/testAdjuvant'
 }
