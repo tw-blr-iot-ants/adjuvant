@@ -18,7 +18,7 @@ before(function(done) {
 
 describe("GET /api/orders", function() {
 
-    it.skip("should get all orders", function(done) {
+    it("should get all orders", function(done) {
         var firstOrder = {
             date: "2011-08-21T18:02:52.249Z",
             employeeId: 2748,
@@ -43,7 +43,7 @@ describe("GET /api/orders", function() {
         .expect(200)
         .end(function(err, res) {
             if (err) return done(err);
-            assert.equal(res.body.length, 1);
+            assert.equal(res.body.length, 2);
             done();
         });
     })

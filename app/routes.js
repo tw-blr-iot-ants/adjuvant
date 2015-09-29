@@ -23,6 +23,7 @@ module.exports = function(app) {
     app.put('/api/users/:empId/', userHandler.updateUser);
 
 	app.post('/api/orders', orderHandler.create);
+	app.get('/api/orders', orderHandler.allOrders);
     app.get('/api/orders/:date/', orderHandler.ordersForSingleDay);
 	app.get('/api/orders/:startDate/:endDate', orderHandler.ordersForSelectPeriod);
 };

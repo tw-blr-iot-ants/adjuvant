@@ -1,5 +1,14 @@
 var Order = require("../models/order");
+var moment = require("../../node_modules/moment");
 
+
+module.exports.allOrders =  function(req, res) {
+       return Order.find({}).exec(function(error, orders) {
+                   if(error)
+                       res.send(error);
+                   res.json(orders);
+       })
+}
 
 module.exports.ordersForSingleDay =  function(req, res) {
        return Order.find({"date" : new Date(req.params.date)}).exec(function(error, orders) {
@@ -8,6 +17,7 @@ module.exports.ordersForSingleDay =  function(req, res) {
                    res.json(orders);
        })
 }
+
 module.exports.ordersForSelectPeriod =  function(req, res) {
      return Order.find({"date" : {$gte: new Date(req.params.startDate), $lt: new Date(req.params.endDate)}})
                                                	                    .exec(function(error, orders) {
