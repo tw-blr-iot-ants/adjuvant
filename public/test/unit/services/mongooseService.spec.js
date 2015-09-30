@@ -46,28 +46,13 @@ describe("mongooseServiceTest", function() {
         expect(actualResult.data).to.be.eql(response)
     })
 
-    it('should get orders for given date', function() {
-        var actualResult;
-        var request = {date: "someDate"}
-        var response = {data : {"dummy": "superDummy"}};
-        httpBackend.expectGET('/api/orders/someDate').respond(response);
-
-        var returnPromise = mongooseService.getOrdersForSingleDay(request);
-        returnPromise.then(function(res) {
-            actualResult = res;
-        })
-        httpBackend.flush();
-
-        expect(actualResult.data).to.be.eql(response)
-    })
-
     it('should get orders for select period', function() {
         var actualResult;
         var request = {startDate: "someDate", endDate: "someOtherDate"}
         var response = {data : {"dummy": "superDummy"}};
         httpBackend.expectGET('/api/orders/someDate/someOtherDate').respond(response);
 
-        var returnPromise = mongooseService.getOrdersForSelectPeriod(request);
+        var returnPromise = mongooseService.getOrdersForSelection(request);
         returnPromise.then(function(res) {
             actualResult = res;
         })

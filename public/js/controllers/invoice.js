@@ -10,8 +10,17 @@ angular.module('invoiceController', [])
         var menu = {};
         $scope.getInvoice = function() {
             $scope.generatedTable = "";
-            var transformedDate =  $scope.selectedDate;
-            return mongooseService.getOrdersForSingleDay({"date": transformedDate})
+            var startDate = $scope.selectedDate;
+            startDate.setSeconds(0);
+            startDate.setHours(0);
+            startDate.setMinutes(0);
+
+            var dateMidnight = new Date(startDate);
+            dateMidnight.setHours(23);
+            dateMidnight.setMinutes(59);
+            dateMidnight.setSeconds(59);
+
+            return mongooseService.getOrdersForSelection({"startDate": startDate, "endDate": dateMidnight})
                                 .then(_extractRegisterOrders)
                                 .then(_getJuiceMenu)
                                 .then(_constructInvoice)
@@ -19,10 +28,14 @@ angular.module('invoiceController', [])
 
         $scope.getInvoiceWithInRange = function() {
             var startDate =  $scope.startDate;
-            startDate.setHours(0,0,0,0);
+            startDate.setSeconds(0);
+            startDate.setHours(0);
+            startDate.setMinutes(0);
             var endDate =  $scope.endDate;
-            endDate.setHours(24,0,0,0)
-            return mongooseService.getOrdersForSelectPeriod({"startDate": startDate, "endDate": endDate})
+            endDate.setHours(23);
+            endDate.setMinutes(59);
+            endDate.setSeconds(59);
+            return mongooseService.getOrdersForSelection({"startDate": startDate, "endDate": endDate})
                                 .then(_extractRegisterOrders)
                                 .then(_getJuiceMenu)
                                 .then(_constructInvoice)
@@ -43,6 +56,7 @@ angular.module('invoiceController', [])
         }
 
         var _extractRegisterOrders = function(response) {
+          console.log("res of orders", response)
           var juiceChoice = [];
           _.each(response.data, function(order) {
             var drinkName = order.drinkName;
@@ -64,8 +78,9 @@ angular.module('invoiceController', [])
         }
 
         var _buildMenu = function(response) {
+             console.log("res", response)
              _.each(response.data, function(item) {
-                     menu[item.Name] = item.Cost;
+                     menu[item.name] = item.cost;
              })
         }
 

@@ -15,8 +15,7 @@ describe("invoiceControllerTest", function() {
                         "<td>15*</td><td>30</td></tr><tr><th colspan=\"3\">Grand Total</th><td>&#8377; 90</td></tr></table>"
 
     beforeEach(function() {
-        var mockMongooseService = { getOrdersForSingleDay: sinon.stub().returns(Q({data: orders})),
-                                    getOrdersForSelectPeriod: sinon.stub().returns(Q({})),
+        var mockMongooseService = { getOrdersForSelection: sinon.stub().returns(Q({data: orders})),
                                     getBeverages: sinon.stub().returns(Q({data: beverages}))
                                    };
         var mockInvoiceService = {
@@ -43,14 +42,22 @@ describe("invoiceControllerTest", function() {
 
     it("should generateInvoice for single day", function() {
 
-        var someDate = new Date();
-        var expectedQuery = {"date": someDate};
-        scope.selectedDate = someDate;
+        var today = new Date();
+        today.setSeconds(0);
+        today.setHours(0);
+        today.setMinutes(0);
+        var todayMidNight  = new Date();
+        todayMidNight.setSeconds(59);
+        todayMidNight.setHours(23);
+        todayMidNight.setMinutes(59);
+
+        var expectedQuery = {"startDate": today, "endDate": todayMidNight};
+        scope.selectedDate = today;
 
         return scope.getInvoice().then(function() {
 
-        expect(mongooseService.getOrdersForSingleDay).to.be.calledOnce;
-        expect(mongooseService.getOrdersForSingleDay).to.be.calledWith(expectedQuery);
+        expect(mongooseService.getOrdersForSelection).to.be.calledOnce;
+        expect(mongooseService.getOrdersForSelection).to.be.calledWith(expectedQuery);
         expect(scope.invoiceReady).to.be.true;
         });
 
@@ -59,14 +66,24 @@ describe("invoiceControllerTest", function() {
     it("should generateInvoice for select period", function() {
 
         var someDate = new Date();
-        var someOtherDate = new Date();
+        someDate.setSeconds(0);
+        someDate.setHours(0);
+        someDate.setMinutes(0);
+        var someAnotherDate  = new Date();
+        someAnotherDate.setHours(23);
+        someAnotherDate.setSeconds(59);
+        someAnotherDate.setMinutes(59);
+
+        var expectedQuery = {"startDate": someDate, "endDate": someAnotherDate};
+
         scope.startDate = someDate;
-        scope.endDate = someOtherDate;
-        var expectedQuery = {"startDate": someDate, "endDate": someOtherDate}
+        scope.endDate = someAnotherDate;
+
+
 
         return scope.getInvoiceWithInRange().then(function() {
-            expect(mongooseService.getOrdersForSelectPeriod).to.be.calledOnce;
-            expect(mongooseService.getOrdersForSelectPeriod).to.be.calledWith(expectedQuery);
+            expect(mongooseService.getOrdersForSelection).to.be.calledOnce;
+            expect(mongooseService.getOrdersForSelection).to.be.calledWith(expectedQuery);
             expect(scope.invoiceReady).to.be.true;
         })
     })

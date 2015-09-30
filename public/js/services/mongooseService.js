@@ -8,10 +8,7 @@ angular.module("mongooseService", [])
         getBeverages: function() {
             return $http.get("/api/beverages/")
         },
-        getOrdersForSingleDay: function(request) {
-            return $http.get("/api/orders/" +  request.date)
-        },
-        getOrdersForSelectPeriod: function(request) {
+        getOrdersForSelection: function(request) {
             return $http.get("/api/orders/" + request.startDate + "/" + request.endDate)
         },
         addUser: function(data) {
