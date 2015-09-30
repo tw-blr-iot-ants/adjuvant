@@ -15,13 +15,15 @@ angular.module('usersController', [])
        }
 
        $scope.deleteUser = function() {
-            mongooseService.findUser({"empId": $scope.employeeId})
-                                .then(_notifySuccess)
+            mongooseService.deleteUser({"empId": $scope.employeeId})
+                                .then(_notifySuccess, _notifyError)
        }
 
        $scope.findUser = function() {
             mongooseService.findUser({"empId": $scope.employeeId})
-                                .then(_notifySuccess)
+                                .then(function(response){
+                                    $scope.result = response.data;
+                                }, _notifyError)
        }
 
        $scope.updateUser = function() {
@@ -36,6 +38,7 @@ angular.module('usersController', [])
        }
 
        $scope.setSelectedTab = function(selection) {
+            _resetDefaults();
             if(selection.action == "add") {
               _resetDefaults();
               $scope.addUserForm = true
@@ -56,11 +59,15 @@ angular.module('usersController', [])
 
 
        var _notifySuccess = function(response) {
-           $scope.user = response.data;
+           $scope.showSuccess = true;
            var message = '<strong>User updated Successfully </strong> ';
            Flash.create('success', message, 'custom-class');
-           _resetDefaults();
-           $scope.updated = true;
+       }
+
+       var _notifyError = function(response) {
+           $scope.showError = true;
+           var message = '<strong>User details Not Found</strong> ';
+           Flash.create('danger', message, 'custom-class');
        }
 
        var _resetDefaults = function() {
@@ -74,6 +81,8 @@ angular.module('usersController', [])
             $scope.flushAndUpdateDB = false;
             $scope.findUserForm = false;
             $scope.updateUserForm = false;
-
+            $scope.showSuccess = false;
+            $scope.result = null;
+            $scope.showError = false;
        }
 }])

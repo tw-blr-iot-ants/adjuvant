@@ -56,7 +56,6 @@ angular.module('invoiceController', [])
         }
 
         var _extractRegisterOrders = function(response) {
-          console.log("res of orders", response)
           var juiceChoice = [];
           _.each(response.data, function(order) {
             var drinkName = order.drinkName;
@@ -78,7 +77,6 @@ angular.module('invoiceController', [])
         }
 
         var _buildMenu = function(response) {
-             console.log("res", response)
              _.each(response.data, function(item) {
                      menu[item.name] = item.cost;
              })

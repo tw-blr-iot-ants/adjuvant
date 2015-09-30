@@ -91,5 +91,23 @@ describe("mongooseServiceTest", function() {
         expect(actualResult.data).to.be.eql(response)
     })
 
+    it('should update a user', function() {
+        var actualResult;
+        var request = {empId: "16305", employeeName: "hit",
+                       externalNumber: "10117767", internalNumber: "13013",
+                       serialNumber: "748"}
+
+        var response = {data : {"dummy": "superDummy"}};
+        httpBackend.expectPUT('/api/users/16305').respond(response);
+
+        var returnPromise = mongooseService.updateUser(request);
+        returnPromise.then(function(res) {
+            actualResult = res;
+        })
+        httpBackend.flush();
+
+        expect(actualResult.data).to.be.eql(response)
+    })
+
 
 })
