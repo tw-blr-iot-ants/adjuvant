@@ -15,7 +15,23 @@ angular.module('usersController', [])
        }
 
        $scope.deleteUser = function() {
-            mongooseService.deleteUser({"empId": $scope.employeeId})
+            mongooseService.findUser({"empId": $scope.employeeId})
+                                .then(_notifySuccess)
+       }
+
+       $scope.findUser = function() {
+            mongooseService.findUser({"empId": $scope.employeeId})
+                                .then(_notifySuccess)
+       }
+
+       $scope.updateUser = function() {
+            var user = {};
+            user["empId"] = $scope.employeeId;
+            user["employeeName"] = $scope.employeeName;
+            user["serialNumber"] = $scope.serialNumber;
+            user["externalNumber"] = $scope.externalNumber;
+            user["internalNumber"] = $scope.internalNumber;
+            mongooseService.updateUser(user)
                                 .then(_notifySuccess)
        }
 
@@ -29,10 +45,18 @@ angular.module('usersController', [])
             } else if (selection.action == "flushAndUpdateDB") {
                   _resetDefaults();
                   $scope.flushAndUpdateDB = true;
+            } else if (selection.action == "findUser") {
+                  _resetDefaults();
+                  $scope.findUserForm = true;
+            } else if (selection.action == "updateUser") {
+                  _resetDefaults();
+                  $scope.updateUserForm = true;
             }
        }
 
+
        var _notifySuccess = function(response) {
+           $scope.user = response.data;
            var message = '<strong>User updated Successfully </strong> ';
            Flash.create('success', message, 'custom-class');
            _resetDefaults();
@@ -48,6 +72,8 @@ angular.module('usersController', [])
             $scope.addUserForm = false;
             $scope.deleteUserForm = false;
             $scope.flushAndUpdateDB = false;
+            $scope.findUserForm = false;
+            $scope.updateUserForm = false;
 
        }
 }])

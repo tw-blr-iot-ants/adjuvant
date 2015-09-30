@@ -14,8 +14,11 @@ angular.module("mongooseService", [])
         addUser: function(data) {
              return $http.post("/api/users/", data)
         },
-        deleteUser: function(request) {
-             return $http.delete("/api/users/" +  request.empId)
+        findUser: function(request) {
+             return $http.get("/api/users/empId/" +  request.empId)
+        },
+        updateUser: function(request) {
+             return $http.put("/api/users/" +  request.empId, request)
         }
       }
     }

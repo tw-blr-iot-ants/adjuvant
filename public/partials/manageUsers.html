@@ -2,15 +2,20 @@
 
     <ul class="nav nav-pills nav-stacked left-div">
         <li>
-            <a ng-click="setSelectedTab({action: 'add'})">Add a user</a>
+            <a  ng-click="setSelectedTab({action: 'add'})">Add a user</a>
         </li>
 
         <li>
-            <a ng-click="setSelectedTab({action: 'delete'})">Delete a user</a>
+            <a  ng-click="setSelectedTab({action: 'delete'})">Delete a user</a>
         </li>
-
         <li>
-            <a ng-click="setSelectedTab({action: 'flushAndUpdateDB'})">Flush and Update DB</a>
+            <a  ng-click="setSelectedTab({action: 'flushAndUpdateDB'})">Flush and Update DB</a>
+        </li>
+        <li>
+            <a  ng-click="setSelectedTab({action: 'findUser'})">Find User</a>
+        </li>
+        <li>
+            <a  ng-click="setSelectedTab({action: 'updateUser'})">Update User</a>
         </li>
 
     </ul>
@@ -58,6 +63,67 @@
             <div ng-show="updated" flash-message="5000" ></div>
 
             <button type="submit" class="btn btn-default" ng-click="deleteUser()">Submit</button>
+        </form>
+
+        <form ng-show="findUserForm">
+            <div class="form-group">
+                <label >Employee ID</label>
+                <input  class="form-control" ng-model="employeeId" placeholder="Employee ID">
+            </div>
+
+            <table ng-if="user" class="gridtable div-center"
+                   border="1" cellspacing="1" cellpadding="5">
+                <tr>
+                    <th>EmpId</th>
+                    <th>Serial Number</th>
+                    <th>External Number</th>
+                    <th>Internal Number</th>
+                    <th>Employee Name</th>
+                </tr>
+                <tr>
+                    <td>{{user.empId}}         </td>
+                    <td>{{user.serialNumber}}  </td>
+                    <td>{{user.externalNumber}}</td>
+                    <td>{{user.internalNumber}}</td>
+                    <td>{{user.employeeName}}  </td>
+                </tr>
+            </table>
+
+
+
+            <button type="submit" class="btn btn-default" ng-click="updateUser()">Submit</button>
+        </form>
+
+        <form ng-show="updateUserForm">
+            <div class="form-group">
+                <label >Employee ID</label>
+                <input  class="form-control" ng-model="employeeId" placeholder="Employee ID">
+            </div>
+
+            <div class="form-group">
+                <label >Employee Name</label>
+                <input  class="form-control"   ng-model="employeeName" placeholder="Employee Name">
+            </div>
+
+
+            <div class="form-group">
+                <label >Sl No</label>
+                <input  class="form-control"  ng-model="serialNumber" placeholder="Sl No">
+            </div>
+
+            <div class="form-group">
+                <label >External Number</label>
+                <input  class="form-control"  ng-model="externalNumber" placeholder="External Number">
+            </div>
+
+            <div class="form-group">
+                <label >Internal Number</label>
+                <input  class="form-control"  ng-model="internalNumber" placeholder="Internal Number">
+            </div>
+
+            <div ng-show="updated" flash-message="5000" ></div>
+
+            <button type="submit" class="btn btn-default" ng-click="updateUser()">Submit</button>
         </form>
 
         <form ng-show="flushAndUpdateDB" action="api/createUsers" method="post" enctype="multipart/form-data">
