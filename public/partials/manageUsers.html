@@ -1,21 +1,21 @@
 <div  class="gap">
 
     <ul class="nav nav-pills nav-stacked left-div">
-        <li>
+        <li  ng-class="{'active': addUserForm}">
             <a  ng-click="setSelectedTab({action: 'add'})">Add a user</a>
         </li>
 
-        <li>
+        <li ng-class="{'active': deleteUserForm}">
             <a  ng-click="setSelectedTab({action: 'delete'})">Delete a user</a>
         </li>
-        <li>
+        <li ng-class="{'active': flushAndUpdateDB}">
             <a  ng-click="setSelectedTab({action: 'flushAndUpdateDB'})">Flush and Update DB</a>
         </li>
-        <li>
+        <li ng-class="{'active': findUserForm}">
             <a  ng-click="setSelectedTab({action: 'findUser'})">Find User</a>
         </li>
-        <li>
-            <a  ng-click="setSelectedTab({action: 'updateUser'})">Update User</a>
+        <li  ng-class="{'active': updateUserForm}">
+            <a   ng-click="setSelectedTab({action: 'updateUser'})">Update User</a>
         </li>
 
     </ul>
@@ -72,7 +72,7 @@
                 <input  class="form-control" ng-model="employeeId" placeholder="Employee ID">
             </div>
 
-            <table ng-if="result" class="gridtable div-center"
+            <table ng-if="result" class="gridtable div-center minor-gap"
                    border="1" cellspacing="1" cellpadding="5">
                 <tr>
                     <th>EmpId</th>
@@ -90,11 +90,10 @@
                 </tr>
             </table>
 
-            <div ng-show="showSuccess" flash-message="5000" ></div>
             <div ng-show="showError" flash-message="5000" ></div>
-
-
-            <button type="submit" class="btn btn-default" ng-click="findUser()">Submit</button>
+            <div class="minor-gap">
+                <button type="submit" class="btn btn-default minor-gap" ng-click="findUser()">Submit</button>
+            </div>
         </form>
 
         <form ng-show="updateUserForm">
