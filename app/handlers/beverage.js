@@ -44,6 +44,16 @@ module.exports.findAll = function(req, res) {
 	});
 };
 
+module.exports.findJuices = function(req, res) {
+	Beverage.find({name: {$ne: "CTL"}}).exec(function (error, beverages) {
+		if (error) {
+			console.log("Error in reading beverages");
+			return;
+		}
+		res.json(beverages);
+	});
+};
+
 module.exports.findById = function(req, res) {
 	Beverage.findOne({ _id: req.params.id }).exec(function (err, beverage) {
 		if(beverage)
