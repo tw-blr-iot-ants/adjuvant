@@ -1,7 +1,6 @@
 var Users = require('../models/users');
 var rmdir = require('rimraf');
-var xlsxj = require('xlsx-to-json');
-var xlsx = require('xlsx');
+var xlsxj = require('xlsx2json');
 var root = require('root-path');
 
 module.exports.createUsers = function(req, res) {
@@ -10,24 +9,18 @@ module.exports.createUsers = function(req, res) {
 	    });
 
 	    var excelFilePath = root(req.file.path);
-	    var resourcePath = root('admin', 'resources');
-	    var workbook = xlsx.readFile(excelFilePath);
 
-        workbook.SheetNames.forEach(function(sheetName, index) {
-            xlsxj({
-                    input: excelFilePath,
-                    output: null,
-                    sheet: sheetName
-                  }, function(err, result) {
-                    if(err) {
-                      console.error(err);
-                    }
-                    Users.collection.insert(result, function(err, data) {
+        xlsxj(excelFilePath, {
+                    dataStartingRow: 2,
+                    mapping:{
+                        "empId": "B",
+                        "employeeName": "C",
+                        "internalNumber": "D"
+                }}).done(function(jsonArray) {
+                 Users.collection.insert(jsonArray, function(err, data) {
                         if(err) return console.error(err);
                     });
-
-                  });
-        });
+                });
 
         rmdir(root('uploads'), function(err) {
             if(err) return console.error(err);

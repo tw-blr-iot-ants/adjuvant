@@ -11,7 +11,7 @@
     "express": "~4.6.1",
     "fs": "latest",
     "method-override": "~2.1.1",
-    "moment": "^2.10.6",
+    "moment": "latest",
     "mongoose": "~3.8.13",
     "morgan": "~1.1.1",
     "multer": "latest",
@@ -19,9 +19,7 @@
     "rimraf": "latest",
     "root-path": "latest",
     "underscore": "^1.8.3",
-    "xlsx": "latest",
-    "xlsx-to-json": "latest",
-    "moment": "latest"
+    "xlsx2json": "0.0.8"
   },
   "author": "resol",
   "license": "ISC",
