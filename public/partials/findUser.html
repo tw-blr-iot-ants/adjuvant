@@ -1,0 +1,28 @@
+<form>
+    <div class="form-group">
+        <label >Employee ID</label>
+        <input  class="form-control" ng-model="employeeId" placeholder="Employee ID">
+    </div>
+
+    <table ng-if="result" class="gridtable div-center minor-gap"
+           border="1" cellspacing="1" cellpadding="5">
+        <tr>
+            <th>EmpId</th>
+            <th>Employee Name</th>
+            <th>Internal Number</th>
+        </tr>
+        <tr>
+            <td>{{result.empId}}         </td>
+            <td>{{result.employeeName}}  </td>
+            <td>{{result.internalNumber}}</td>
+        </tr>
+    </table>
+
+    <div class="alert alert-danger" ng-show="showErrorAlert">
+        <strong>User details Not Found</strong>
+    </div>
+
+    <div class="minor-gap">
+        <button type="submit" class="btn btn-default minor-gap" ng-click="findUser()">Submit</button>
+    </div>
+</form>

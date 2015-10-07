@@ -1,6 +1,6 @@
 var app = angular.module('adjuvant', ['ngRoute', 'tabsController', 'juiceController',
                                       'invoiceController', 'usersController',
-                                      'mongooseService', 'invoiceService', "flash"])
+                                      'mongooseService', 'invoiceService'])
 
 app.config(function($routeProvider) {
     $routeProvider
