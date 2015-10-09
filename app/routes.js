@@ -1,6 +1,7 @@
 var orderHandler = require('./handlers/order');
 var beverageHandler = require("./handlers/beverage");
 var userHandler = require("./handlers/users");
+var newUserHandler = require("./handlers/newUser")
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
 var moment = require('moment');
@@ -26,5 +27,11 @@ module.exports = function(app) {
 	app.post('/api/orders', orderHandler.create);
 	app.get('/api/orders', orderHandler.allOrders);
 	app.get('/api/orders/:startDate/:endDate', orderHandler.ordersForSelectPeriod);
+
+	app.post('/api/register/', newUserHandler.register);
+	app.get('/api/register/', newUserHandler.getAllUsers);
+	app.get('/api/register/internalNumber/:internalNumber', newUserHandler.getUserByInternalNumber);
+	app.put('/api/register/', newUserHandler.approve);
+	app.delete('/api/register/:empId', newUserHandler.delete);
 };
 

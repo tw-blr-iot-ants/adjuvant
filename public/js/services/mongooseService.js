@@ -22,6 +22,16 @@ angular.module("mongooseService", [])
         },
         updateUser: function(request) {
              return $http.put("/api/users/" +  request.empId, request)
+        },
+        getUsersTobeAuthenticated: function() {
+             return $http.get("/api/register/");
+        },
+        approveUser: function(userToBeApproved) {
+            return $http.put("/api/register/", userToBeApproved)
+        },
+
+        deleteUserFromNewUsers: function(userToBeDeleted) {
+            return $http.delete("/api/register/" +  userToBeDeleted.empId);
         }
       }
     }

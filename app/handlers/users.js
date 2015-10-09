@@ -48,6 +48,11 @@ module.exports.createUsers = function(req, res) {
 
     module.exports.getUserByInternalNumber = function(req, res) {
         Users.findOne({internalNumber: req.params.internalNumber}).exec(function (err, user) {
+            if(user == null) {
+                res.redirect("/api/register/internalNumber/" + req.params.internalNumber);
+                return;
+
+            }
             res.send(user == null ? 404 : user);
         });
     };

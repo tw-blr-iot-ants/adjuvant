@@ -18,6 +18,9 @@ angular.module('usersController', [])
             } else if (selection.action == "updateUser") {
                   _resetDefaults();
                   $scope.updateUserForm = true;
+            } else if (selection.action == "authenticateUser") {
+                  _resetDefaults();
+                  $scope.authenticateUserForm = true;
             }
 
             $scope.tabs = _getTabs();
@@ -29,6 +32,7 @@ angular.module('usersController', [])
             $scope.flushAndUpdateDB = false;
             $scope.findUserForm = false;
             $scope.updateUserForm = false;
+            $scope.authenticateUserForm = false;
        }
 
        var _getTabs = function() {
@@ -36,7 +40,8 @@ angular.module('usersController', [])
                     {name:"Delete a user", action: "delete", isActive: $scope.deleteUserForm},
                     {name:"Flush and Update DB", action: "flushAndUpdateDB", isActive: $scope.flushAndUpdateDB},
                     {name:"Find User", action: "findUser", isActive: $scope.findUserForm},
-                    {name:"Update User", action: "updateUser", isActive: $scope.updateUserForm}];
+                    {name:"Update User", action: "updateUser", isActive: $scope.updateUserForm},
+                    {name:"Authenticate User", action: "authenticateUser", isActive: $scope.authenticateUser}];
        }
 
        _resetDefaults();
