@@ -9,7 +9,7 @@ require("../app/testDatabase");
 var user1, user2;
 var request = require('supertest')(server);
 
-before(function(done) {
+beforeEach(function(done) {
     for (var i in mongoose.connection.collections) {
       mongoose.connection.collections[i].drop( function(err) {
       });
@@ -41,9 +41,7 @@ describe('GET /api/users/', function() {
         if (err) return done(err);
 
         var response = res.body;
-        assert.equal(response[0].empId, "12345");
         assert.equal(response.length, 2);
-
         done();
       });
   });
@@ -162,7 +160,7 @@ describe('DELETE /api/users/:empId', function() {
 
 });
 
-after(function(done) {
+afterEach(function(done) {
   for (var i in mongoose.connection.collections) {
     mongoose.connection.collections[i].drop( function(err) {
     });

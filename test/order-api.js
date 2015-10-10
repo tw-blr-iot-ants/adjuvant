@@ -8,7 +8,7 @@ var server = require('../app/server').app;
 var request = require('supertest')(server);
 require("../app/testDatabase");
 
-before(function(done) {
+beforeEach(function(done) {
     for (var i in mongoose.connection.collections) {
       mongoose.connection.collections[i].drop( function(err) {
       });
@@ -74,7 +74,7 @@ describe("POST /api/orders", function() {
 });
 
 
-after(function(done) {
+afterEach(function(done) {
   for (var i in mongoose.connection.collections) {
     mongoose.connection.collections[i].drop( function(err) {
     });

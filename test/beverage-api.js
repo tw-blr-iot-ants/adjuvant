@@ -9,7 +9,7 @@ require("../app/testDatabase");
 var beverage, testBeverage;
 var request = require('supertest')(server);
 
-before(function(done) {
+beforeEach(function(done) {
     for (var i in mongoose.connection.collections) {
       mongoose.connection.collections[i].drop( function(err) {
       });
@@ -149,7 +149,7 @@ describe('DELETE /api/beverages/:id', function() {
   
 });
 
-after(function(done) {
+afterEach(function(done) {
   for (var i in mongoose.connection.collections) {
     mongoose.connection.collections[i].drop( function(err) {
     });
