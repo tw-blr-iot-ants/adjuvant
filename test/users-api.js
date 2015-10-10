@@ -20,7 +20,7 @@ before(function(done) {
 			employeeName: "Employee1"
 		});
     user1.save();
-    
+
     user2 = new Users({
 			empId: "12346",
             internalNumber: "444",
@@ -29,9 +29,9 @@ before(function(done) {
     user2.save();
     return done();
 });
-  
+
 describe('GET /api/users/', function() {
-  
+
   it('should return list of users', function(done){
     request
       .get('/api/users/')
@@ -39,15 +39,15 @@ describe('GET /api/users/', function() {
       .expect(200)
       .end(function(err, res){
         if (err) return done(err);
-        
+
         var response = res.body;
         assert.equal(response[0].empId, "12345");
         assert.equal(response.length, 2);
-        
+
         done();
       });
-  });  
-  
+  });
+
 });
 
 describe('POST /api/users/', function() {
@@ -65,7 +65,7 @@ describe('POST /api/users/', function() {
         assert.notEqual(response._id, undefined);
         assert.equal(response.empId, "12347");
         Users.findOne({ _id: response._id }).exec(function (err, user) {
-            assert.notEqual(user, undefined);
+            assert.notEqual(user, null);
             done();
 		    });
       });

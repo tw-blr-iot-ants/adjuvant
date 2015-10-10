@@ -29,7 +29,8 @@ describe("usersControllerTest", function() {
                             {name:"Delete a user", action: "delete", isActive: true},
                             {name:"Flush and Update DB", action: "flushAndUpdateDB", isActive: false},
                             {name:"Find User", action: "findUser", isActive: false},
-                            {name:"Update User", action: "updateUser", isActive: false}]
+                            {name:"Update User", action: "updateUser", isActive: false},
+                             {name:"Authenticate User", action: "authenticateUser", isActive: false}]
         var selection = {action: "delete"}
         scope.setSelectedTab(selection);
 

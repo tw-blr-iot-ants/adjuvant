@@ -41,7 +41,7 @@ angular.module('usersController', [])
                     {name:"Flush and Update DB", action: "flushAndUpdateDB", isActive: $scope.flushAndUpdateDB},
                     {name:"Find User", action: "findUser", isActive: $scope.findUserForm},
                     {name:"Update User", action: "updateUser", isActive: $scope.updateUserForm},
-                    {name:"Authenticate User", action: "authenticateUser", isActive: $scope.authenticateUser}];
+                    {name:"Authenticate User", action: "authenticateUser", isActive: $scope.authenticateUserForm}];
        }
 
        _resetDefaults();
