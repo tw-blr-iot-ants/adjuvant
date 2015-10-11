@@ -1,8 +1,8 @@
-var app = angular.module('adjuvant', ['ngRoute', 'tabsController', 'juiceController',
+var adjuvant = angular.module('adjuvant', ['ngRoute', 'tabsController', 'juiceController',
                                       'invoiceController', 'usersController',
                                       'mongooseService', 'invoiceService'])
 
-app.config(function($routeProvider) {
+adjuvant.config(function($routeProvider) {
     $routeProvider
         .when('/manageJuices', {
             templateUrl: 'partials/manageJuices.html',

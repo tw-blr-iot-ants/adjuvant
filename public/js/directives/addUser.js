@@ -4,7 +4,7 @@ angular.module('adjuvant').directive('addUser', ['mongooseService', '$timeout',
     return {
         restrict: 'AE',
         replace: 'true',
-        templateUrl: "/partials/addUser.html",
+        templateUrl: "partials/addUser.html",
         scope: {},
         link: function(scope) {
 

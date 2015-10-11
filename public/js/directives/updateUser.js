@@ -1,10 +1,10 @@
-angular.module('adjuvant').directive('updateUser', ['mongooseService', '$timeout',
+adjuvant.directive('updateUser', ['mongooseService', '$timeout',
                      function(mongooseService, $timeout) {
 
     return {
         restrict: 'AE',
         replace: 'true',
-        templateUrl: "/partials/updateUser.html",
+        templateUrl: "partials/updateUser.html",
         scope: {},
         link: function(scope) {
 

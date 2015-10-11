@@ -23,8 +23,11 @@ module.exports = function(config) {
         'node_modules/q/q.js',
         'node_modules/underscore/underscore.js',
         'js/**/*.js',
+        'js/app.js',
         'test/unit/controllers/*.spec.js',
-        'test/unit/services/*.spec.js'
+        'test/unit/services/*.spec.js',
+        'partials/*.html',
+        'test/unit/directives/*.spec.js'
     ],
 
 
@@ -36,6 +39,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+        'partials/*.html': ['ng-html2js']
     },
 
 

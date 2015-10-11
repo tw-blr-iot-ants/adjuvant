@@ -1,10 +1,10 @@
-angular.module('adjuvant').directive('deleteUser', ['mongooseService', '$timeout',
+adjuvant.directive('deleteUser', ['mongooseService', '$timeout',
                      function(mongooseService, $timeout) {
 
     return {
         restrict: 'AE',
         replace: 'true',
-        templateUrl: "/partials/deleteUser.html",
+        templateUrl: "partials/deleteUser.html",
         scope: {},
         link: function(scope) {
 

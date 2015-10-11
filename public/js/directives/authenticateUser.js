@@ -1,10 +1,10 @@
-angular.module('adjuvant').directive('authenticateUser', ['mongooseService', '$timeout',
+adjuvant.directive('authenticateUser', ['mongooseService', '$timeout',
                      function(mongooseService, $timeout) {
 
     return {
         restrict: 'AE',
         replace: 'true',
-        templateUrl: "/partials/authenticateUser.html",
+        templateUrl: "partials/authenticateUser.html",
         scope: {},
         link: function(scope) {
 
@@ -19,12 +19,6 @@ angular.module('adjuvant').directive('authenticateUser', ['mongooseService', '$t
                                   .then(_getUsersTobeAuthenticated, _notifyError)
             }
 
-            var _notifyError = function(response) {
-                  scope.showErrorAlert = true;
-                  $timeout(function() {
-                    scope.showErrorAlert = false;
-                  }, 1000)
-            }
 
             var _getUsersTobeAuthenticated = function() {
                  mongooseService
@@ -34,12 +28,6 @@ angular.module('adjuvant').directive('authenticateUser', ['mongooseService', '$t
                      }, _notifyError)
             }
 
-            var _notifySuccess = function(response) {
-                  scope.showErrorAlert = true;
-                  $timeout(function() {
-                    scope.showErrorAlert = false;
-                  }, 1000)
-            }
 
             var _constructUser = function(userTobeApproved) {
                return {empId: userTobeApproved.empId,
@@ -50,6 +38,13 @@ angular.module('adjuvant').directive('authenticateUser', ['mongooseService', '$t
             var _deleteUserFromNewUsers = function(response) {
                 var userToBeDeleted = response.data;
                 return mongooseService.deleteUserFromNewUsers(userToBeDeleted);
+            }
+
+            var _notifyError = function(response) {
+                  scope.showErrorAlert = true;
+                  $timeout(function() {
+                    scope.showErrorAlert = false;
+                  }, 1000)
             }
 
             _getUsersTobeAuthenticated();

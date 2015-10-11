@@ -6,5 +6,5 @@ mongoose.connect(databaseConfig.url);
 
 db.on('error', console.error);
 db.once('open', function() {
-  console.log("Mongo connection successful")
+  console.log("Mongo connection successful " + databaseConfig.url)
 });

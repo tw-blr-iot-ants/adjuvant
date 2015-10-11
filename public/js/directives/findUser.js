@@ -1,15 +1,16 @@
-angular.module('adjuvant').directive('findUser', ['mongooseService', '$timeout',
+adjuvant.directive('findUser', ['mongooseService', '$timeout',
                      function(mongooseService, $timeout) {
 
     return {
         restrict: 'AE',
         replace: 'true',
-        templateUrl: "/partials/findUser.html",
+        templateUrl: "partials/findUser.html",
         scope: {},
         link: function(scope) {
 
             scope.showSuccessAlert = false;
             scope.employeeId = "";
+            scope.result = "";
 
             scope.findUser = function() {
                       mongooseService.findUser({"empId": scope.employeeId})
