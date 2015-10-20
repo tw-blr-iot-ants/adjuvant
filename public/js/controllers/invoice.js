@@ -10,32 +10,16 @@ angular.module('invoiceController', [])
         var menu = {};
         $scope.getInvoice = function() {
             $scope.generatedTable = "";
-            var startDate = $scope.selectedDate;
-            startDate.setSeconds(0);
-            startDate.setHours(0);
-            startDate.setMinutes(0);
-
-            var dateMidnight = new Date(startDate);
-            dateMidnight.setHours(23);
-            dateMidnight.setMinutes(59);
-            dateMidnight.setSeconds(59);
-
-            return mongooseService.getOrdersForSelection({"startDate": startDate, "endDate": dateMidnight})
+            return mongooseService.getOrdersForSelection({"startDate": _setStartOfDate($scope.selectedDate),
+                                                          "endDate": _setEndOfDate(new Date(startDate))})
                                 .then(_extractRegisterOrders)
                                 .then(_getJuiceMenu)
                                 .then(_constructInvoice)
         }
 
         $scope.getInvoiceWithInRange = function() {
-            var startDate =  $scope.startDate;
-            startDate.setSeconds(0);
-            startDate.setHours(0);
-            startDate.setMinutes(0);
-            var endDate =  $scope.endDate;
-            endDate.setHours(23);
-            endDate.setMinutes(59);
-            endDate.setSeconds(59);
-            return mongooseService.getOrdersForSelection({"startDate": startDate, "endDate": endDate})
+            return mongooseService.getOrdersForSelection({"startDate": _setStartOfDate($scope.startDate),
+                                                          "endDate": _setEndOfDate($scope.endDate)})
                                 .then(_extractRegisterOrders)
                                 .then(_getJuiceMenu)
                                 .then(_constructInvoice)
@@ -72,7 +56,8 @@ angular.module('invoiceController', [])
         }
 
         var _constructInvoice = function() {
-            $scope.generatedTable = $sce.trustAsHtml(invoiceService.generateInvoice(menu, orders));
+            $scope.generatedTableForJuices = $sce.trustAsHtml(invoiceService.generateInvoice(menu, orders));
+            $scope.generatedTableForCTL = $sce.trustAsHtml(invoiceService.generateInvoice(menu, {CTL : orders.CTL}));
             $scope.invoiceReady = true;
         }
 
@@ -82,4 +67,17 @@ angular.module('invoiceController', [])
              })
         }
 
+        var _setStartOfDate = function(startDate) {
+            startDate.setSeconds(0);
+            startDate.setHours(0);
+            startDate.setMinutes(0);
+            return startDate;
+        }
+
+        var _setEndOfDate = function(endDate) {
+            endDate.setHours(23);
+            endDate.setMinutes(59);
+            endDate.setSeconds(59);
+            return endDate;
+        }
 }])
