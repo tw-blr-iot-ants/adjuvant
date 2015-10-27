@@ -4,10 +4,6 @@ var xlsxj = require('xlsx2json');
 var root = require('root-path');
 
 module.exports.createUsers = function(req, res) {
-	    Users.remove({}, function(err) {
-	        if(err) return console.error(err);
-	    });
-
 	    var excelFilePath = root(req.file.path);
 
         xlsxj(excelFilePath, {
