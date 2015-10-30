@@ -2,6 +2,14 @@ var Users = require('../models/users');
 var rmdir = require('rimraf');
 var xlsxj = require('xlsx2json');
 var root = require('root-path');
+var internalCardLength = 5;
+
+var transform = function(internalNumber) {
+    while (internalNumber.length < internalCardLength) {
+        internalNumber = '0' + internalNumber;
+    }
+    return internalNumber;
+}
 
 module.exports.createUsers = function(req, res) {
 	    var excelFilePath = root(req.file.path);
@@ -43,9 +51,10 @@ module.exports.createUsers = function(req, res) {
     };
 
     module.exports.getUserByInternalNumber = function(req, res) {
-        Users.findOne({internalNumber: req.params.internalNumber}).exec(function (err, user) {
+        var validInternalNumber = transform(req.params.internalNumber)
+        Users.findOne({internalNumber: validInternalNumber}).exec(function (err, user) {
             if(user == null) {
-                res.redirect("/api/register/internalNumber/" + req.params.internalNumber);
+                res.redirect("/api/register/internalNumber/" + validInternalNumber);
                 return;
 
             }

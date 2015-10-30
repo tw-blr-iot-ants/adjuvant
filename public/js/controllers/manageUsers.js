@@ -38,7 +38,7 @@ angular.module('usersController', [])
        var _getTabs = function() {
             return [{name: "Add a user", action: "add", isActive: $scope.addUserForm},
                     {name:"Delete a user", action: "delete", isActive: $scope.deleteUserForm},
-                    {name:"Flush and Update DB", action: "flushAndUpdateDB", isActive: $scope.flushAndUpdateDB},
+                    {name:"Update DB From a file", action: "flushAndUpdateDB", isActive: $scope.flushAndUpdateDB},
                     {name:"Find User", action: "findUser", isActive: $scope.findUserForm},
                     {name:"Update User", action: "updateUser", isActive: $scope.updateUserForm},
                     {name:"Authenticate User", action: "authenticateUser", isActive: $scope.authenticateUserForm}];
