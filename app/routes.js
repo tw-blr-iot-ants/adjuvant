@@ -26,6 +26,7 @@ module.exports = function(app) {
 
 	app.post('/api/orders', orderHandler.create);
 	app.get('/api/orders', orderHandler.allOrders);
+	app.get('/api/orders/recentOrders', orderHandler.lastTenOrders);
 	app.get('/api/orders/:startDate/:endDate', orderHandler.ordersForSelectPeriod);
 
 	app.post('/api/register/', newUserHandler.register);
