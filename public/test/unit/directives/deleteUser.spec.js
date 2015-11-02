@@ -29,7 +29,7 @@ describe('deleteUser', function() {
         expect(labels.text()).to.contain("Employee ID")
     })
 
-    it('Should delete user on submit', function() {
+    it('Should delete user on submit if present', function() {
         var expectedUser = { empId: "16305" }
 
         var isolatedScope = element.isolateScope();
@@ -39,5 +39,20 @@ describe('deleteUser', function() {
 
         expect(mockMongooseService.deleteUser).to.be.calledOnce;
         expect(mockMongooseService.deleteUser).to.be.calledWith(expectedUser);
+        expect(isolatedScope.showSuccessAlert).to.be.eql.true;
+    })
+
+    it('Should throw an error message if trying to delete a user not exisiting', function() {
+        var expectedUser = { empId: "16305" }
+        mockMongooseService.deleteUser = sinon.stub().returns(Q.reject({"error": "SomeThing"}))
+        var isolatedScope = element.isolateScope();
+        isolatedScope.employeeId = "16305";
+
+        element.find('button')[0].click();
+
+        expect(mockMongooseService.deleteUser).to.be.calledOnce;
+        expect(mockMongooseService.deleteUser).to.be.calledWith(expectedUser);
+        expect(isolatedScope.showErrorAlert).to.be.eql.true;
+
     })
 })

@@ -2,7 +2,7 @@ describe("invoiceServiceTest", function() {
 
     var invoiceService;
      var orders = {pineapple: 4, strawberry: 2};
-     var menu = {a: 20, apple: 24, mosambi: 22, amla: 21, mango: 19, strawberry: 27}
+     var menu = {a: 20, apple: 24, mosambi: 22, amla: 21, mango: 19, strawberry: 27, CTL: 15}
 
     beforeEach(function(){
         module('adjuvant');

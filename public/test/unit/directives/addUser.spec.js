@@ -48,4 +48,14 @@ describe('addUser', function() {
         expect(mockMongooseService.addUser).to.be.calledOnce;
         expect(mockMongooseService.addUser).to.be.calledWith(expectedUser);
     })
+
+    it('should show error message if form is mandatory fields are missing', function() {
+
+        var isolatedScope = element.isolateScope();
+        isolatedScope.employeeId = "16305";
+        isolatedScope.addUser();
+        expect(mockMongooseService.addUser).not.to.be.called;
+        expect(isolatedScope.showErrorAlert).to.be.eql(true)
+
+    })
 })

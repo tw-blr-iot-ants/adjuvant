@@ -9,7 +9,8 @@ angular.module('invoiceController', [])
         var orders = {};
         var menu = {};
         $scope.getInvoice = function() {
-            $scope.generatedTable = "";
+            $scope.generatedTableForCTL = "";
+            $scope.generatedTableForJuices = "";
             return mongooseService.getOrdersForSelection({"startDate": _setStartOfDate($scope.selectedDate),
                                                           "endDate": _setEndOfDate(new Date($scope.selectedDate))})
                                 .then(_extractRegisterOrders)
@@ -18,6 +19,8 @@ angular.module('invoiceController', [])
         }
 
         $scope.getInvoiceWithInRange = function() {
+            $scope.generatedTableForCTL = "";
+            $scope.generatedTableForJuices = "";
             return mongooseService.getOrdersForSelection({"startDate": _setStartOfDate($scope.startDate),
                                                           "endDate": _setEndOfDate($scope.endDate)})
                                 .then(_extractRegisterOrders)
@@ -56,18 +59,28 @@ angular.module('invoiceController', [])
         }
 
         var _constructInvoice = function() {
-            var juiceOrders, CTLOrders;
-            CTLOrders = getOnlyCTLOrders();
-            $scope.generatedTableForCTL = $sce.trustAsHtml(invoiceService.generateInvoice(menu, CTLOrders));
-            juiceOrders = getOnlyJuicesOrders();
-            $scope.generatedTableForJuices = $sce.trustAsHtml(invoiceService.generateInvoice(menu, juiceOrders));
+            _constructCTLInvoice();
+            _constructJuiceInvoice();
             $scope.invoiceReady = true;
+        }
+
+        var _constructCTLInvoice = function() {
+            var CTLOrders = getOnlyCTLOrders();
+            if(CTLOrders.CTL) {
+                $scope.generatedTableForCTL = $sce.trustAsHtml(invoiceService.generateInvoice(menu, CTLOrders));
+            }
+        }
+
+        var _constructJuiceInvoice = function() {
+            var juiceOrders = getOnlyJuicesOrders();
+            $scope.generatedTableForJuices = $sce.trustAsHtml(invoiceService.generateInvoice(menu, juiceOrders));
         }
 
         var _buildMenu = function(response) {
              _.each(response.data, function(item) {
                      menu[item.name] = item.cost;
              })
+
         }
 
         var _setStartOfDate = function(startDate) {

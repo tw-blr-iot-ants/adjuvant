@@ -2,12 +2,14 @@ describe("invoiceControllerTest", function() {
     var scope, mongooseService, sce, invoiceService;
 
     var orders = [
-    {date: "2015-08-01T18:30:00.000Z", drinkName: "pineapple", employeeId: "16305", name: "dixith", quantity: 1},
-    {date: "2015-08-01T18:30:00.000Z", drinkName: "strawberry",employeeId: "16305", name: "dixith", quantity: 2},
-    {date: "2015-08-01T18:30:00.000Z", drinkName: "pineapple", employeeId: "16305", name: "dixith", quantity: 3}]
+    {date: "2015-08-01T18:30:00.000Z", drinkName: "pineapple", employeeId: "16305", name: "Sathi", quantity: 1},
+    {date: "2015-08-01T18:30:00.000Z", drinkName: "strawberry",employeeId: "16305", name: "Sathi", quantity: 2},
+    {date: "2015-08-01T18:30:00.000Z", drinkName: "pineapple", employeeId: "16305", name: "Sathi", quantity: 3},
+    {date: "2015-08-01T18:30:00.000Z", drinkName: "CTL", employeeId: "16305", name: "Sathi", quantity: 3}]
 
-    var beverages = [{Available: false, Cost: 15, Name: "pineapple"},
-                    {Available: false, Cost: 15, Name: "strawberry"}]
+    var beverages = [{available: false, cost: 15, name: "pineapple"},
+                     {available: false, cost: 15, name: "strawberry"},
+                     {available: false, cost: 6, name: "CTL"}]
 
     var generatedHtml = "<table border=\"1\" class=\"gridtable\" cellspacing=\"1\" cellpadding=\"5\"><tr><td>" +
                         "Description</td><td>Quantity</td><td>Unit Price</td><td>Line Total</td></tr><tr><td>" +
@@ -41,7 +43,6 @@ describe("invoiceControllerTest", function() {
 
 
     it("should generateInvoice for single day", function() {
-
         var today = new Date();
         today.setSeconds(0);
         today.setHours(0);
@@ -55,12 +56,10 @@ describe("invoiceControllerTest", function() {
         scope.selectedDate = today;
 
         return scope.getInvoice().then(function() {
-
-        expect(mongooseService.getOrdersForSelection).to.be.calledOnce;
-        expect(mongooseService.getOrdersForSelection).to.be.calledWith(expectedQuery);
-        expect(scope.invoiceReady).to.be.true;
+                expect(mongooseService.getOrdersForSelection).to.be.calledOnce;
+                expect(mongooseService.getOrdersForSelection).to.be.calledWith(expectedQuery);
+                expect(scope.invoiceReady).to.be.true;
         });
-
     })
 
     it("should generateInvoice for select period", function() {
@@ -78,8 +77,6 @@ describe("invoiceControllerTest", function() {
 
         scope.startDate = someDate;
         scope.endDate = someAnotherDate;
-
-
 
         return scope.getInvoiceWithInRange().then(function() {
             expect(mongooseService.getOrdersForSelection).to.be.calledOnce;

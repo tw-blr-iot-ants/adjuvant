@@ -32,7 +32,7 @@ describe('findUser', function() {
         expect(labels.text()).to.contain("Employee ID")
     })
 
-    it('Should delete user on submit', function() {
+    it('Should find a user on submit', function() {
         var expectedUser = { empId: "16305" }
 
         var isolatedScope = element.isolateScope();
