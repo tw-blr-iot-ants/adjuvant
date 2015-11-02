@@ -27,7 +27,7 @@ describe("usersControllerTest", function() {
     it("should change the tabs object based on the scope variables", function() {
         var expectedTabs = [{name: "Add a user", action: "add", isActive: false},
                             {name:"Delete a user", action: "delete", isActive: true},
-                            {name:"Flush and Update DB", action: "flushAndUpdateDB", isActive: false},
+                            {name:"Update DB From a file", action: "flushAndUpdateDB", isActive: false},
                             {name:"Find User", action: "findUser", isActive: false},
                             {name:"Update User", action: "updateUser", isActive: false},
                              {name:"Authenticate User", action: "authenticateUser", isActive: false}]

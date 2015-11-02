@@ -11,7 +11,7 @@ angular.module('invoiceController', [])
         $scope.getInvoice = function() {
             $scope.generatedTable = "";
             return mongooseService.getOrdersForSelection({"startDate": _setStartOfDate($scope.selectedDate),
-                                                          "endDate": _setEndOfDate(new Date(startDate))})
+                                                          "endDate": _setEndOfDate(new Date($scope.selectedDate))})
                                 .then(_extractRegisterOrders)
                                 .then(_getJuiceMenu)
                                 .then(_constructInvoice)
@@ -56,8 +56,11 @@ angular.module('invoiceController', [])
         }
 
         var _constructInvoice = function() {
-            $scope.generatedTableForJuices = $sce.trustAsHtml(invoiceService.generateInvoice(menu, orders));
-            $scope.generatedTableForCTL = $sce.trustAsHtml(invoiceService.generateInvoice(menu, {CTL : orders.CTL}));
+            var juiceOrders, CTLOrders;
+            CTLOrders = getOnlyCTLOrders();
+            $scope.generatedTableForCTL = $sce.trustAsHtml(invoiceService.generateInvoice(menu, CTLOrders));
+            juiceOrders = getOnlyJuicesOrders();
+            $scope.generatedTableForJuices = $sce.trustAsHtml(invoiceService.generateInvoice(menu, juiceOrders));
             $scope.invoiceReady = true;
         }
 
@@ -79,5 +82,14 @@ angular.module('invoiceController', [])
             endDate.setMinutes(59);
             endDate.setSeconds(59);
             return endDate;
+        }
+
+        var getOnlyJuicesOrders = function() {
+            delete orders.CTL;
+            return orders;
+        }
+
+        var getOnlyCTLOrders = function() {
+            return {CTL : orders.CTL};
         }
 }])

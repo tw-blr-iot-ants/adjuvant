@@ -12,7 +12,7 @@ angular.module('juiceController', [])
     $scope.updateBeverage = function() {
         var beverage = {};
         beverage.name = ($scope.name);
-        beverage.cost = parseInt($scope.cost);
+        beverage.cost = parseFloat($scope.cost);
         beverage.available = true;
         mongooseService.updateBeverage(beverage)
                            .then(_successCallback, _errorCallBack)
