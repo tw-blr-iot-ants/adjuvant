@@ -2,7 +2,7 @@
 
 # Adjuvant
 ### Steps to start the app.
-Install dependencies:
+
 
 ```sh
 $ node index.js
