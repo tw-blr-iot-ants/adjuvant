@@ -56,7 +56,6 @@ module.exports.createUsers = function(req, res) {
             if(user == null) {
                 res.redirect("/api/register/internalNumber/" + validInternalNumber);
                 return;
-
             }
             res.send(user == null ? 404 : user);
         });

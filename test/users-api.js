@@ -3,10 +3,11 @@ var express = require('express');
 var assert = require('chai').assert;
 var mongoose = require('mongoose');
 var Users = require('../app/models/users');
+var NewUsers = require('../app/models/newUser');
 var server = require('../app/server').app;
 require("../app/testDatabase");
 
-var user1, user2;
+var user1, user2, userNotInMasterDB;
 var request = require('supertest')(server);
 
 beforeEach(function(done) {
@@ -14,9 +15,11 @@ beforeEach(function(done) {
       mongoose.connection.collections[i].drop( function(err) {
       });
     }
+
+    var today = new Date();
     user1 = new Users({
 			empId: "12345",
-			internalNumber: "222",
+			internalNumber: "00222",
 			employeeName: "Employee1"
 		});
     user1.save();
@@ -26,7 +29,17 @@ beforeEach(function(done) {
             internalNumber: "444",
             employeeName: "Employee2"
 		});
+
     user2.save();
+    userNotInMasterDB = new NewUsers({
+                empId: "11111",
+                internalNumber: "77777",
+                employeeName: "SoemOne",
+                date: today
+         })
+
+    userNotInMasterDB.save();
+
     return done();
 });
 
@@ -124,6 +137,18 @@ describe('GET /api/users/internalNumber/:internalNumber', function() {
 
 });
 
+describe('GET /api/users/internalNumber/:internalNumber from newUsers', function() {
+
+  it('should get user from registerDB(newUsersDB) if not present in usersDB', function(done) {
+      request
+            .get('/api/users/internalNumber/' + userNotInMasterDB.internalNumber)
+            .set('Accept', 'application/json')
+            .expect(302, done) //redirection to newUserDB
+    })
+
+});
+
+
 describe('PUT /api/users/:empId', function() {
 
   it('should update a single user', function(done){
@@ -159,6 +184,8 @@ describe('DELETE /api/users/:empId', function() {
   });
 
 });
+
+
 
 afterEach(function(done) {
   for (var i in mongoose.connection.collections) {
