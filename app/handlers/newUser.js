@@ -1,8 +1,18 @@
 var NewUser = require('../models/newUser');
 var User = require('../models/users');
+var internalCardLength = 5;
+
+
+var transform = function(internalNumber) {
+    while (internalNumber.length < internalCardLength) {
+        internalNumber = '0' + internalNumber;
+    }
+    return internalNumber;
+}
 
 module.exports.register = function(req, res) {
        req.body["date"] = new Date();
+       req.body.internalNumber = transform(req.body.internalNumber);
 	   return NewUser.create(req.body , function(error) {
              				if(error) {
              				    res.send(error);
