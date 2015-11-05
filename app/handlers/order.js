@@ -20,7 +20,7 @@ module.exports.ordersForSelectPeriod =  function(req, res) {
 };
 
 module.exports.lastTenOrders = function(req, res) {
-    return Order.find().sort({$natural: -1}).limit(10).exec(function(error, orders) {
+    return Order.find().sort({date: -1}).limit(10).exec(function(error, orders) {
         if(error)
             res.send(error);
         res.send(parse(orders));
@@ -52,7 +52,6 @@ module.exports.create = function(req, res) {
 var parse = function(orders) {
     var drinkNames = [];
     orders.forEach(function(order) {
-        console.log("order: ", order)
         drinkNames.push(order.drinkName);
 
     });
