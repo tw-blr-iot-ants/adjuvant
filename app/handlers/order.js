@@ -1,6 +1,4 @@
 var Order = require("../models/order");
-var moment = require("../../node_modules/moment");
-
 
 module.exports.allOrders =  function(req, res) {
        return Order.find({}).exec(function(error, orders) {
@@ -36,8 +34,7 @@ module.exports.create = function(req, res) {
                 date: new Date(),
                 employeeId: req.body.employeeId,
                 drinkName: drink.name,
-                quantity: drink.quantity,
-                expiresAt: moment(moment(new Date())+moment.duration(6, 'months'))
+                quantity: drink.quantity
             };
             allDrinksRequest.push(eachDrinkRequest);
         })

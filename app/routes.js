@@ -4,7 +4,6 @@ var userHandler = require("./handlers/users");
 var newUserHandler = require("./handlers/newUser")
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
-var moment = require('moment');
 
 module.exports = function(app) {
 

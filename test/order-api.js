@@ -23,15 +23,13 @@ describe("GET /api/orders", function() {
             date: "2011-08-21T18:02:52.249Z",
             employeeId: 2748,
             drinkName: "Lime",
-            quantity: 1,
-            expiresAt: "2018-08-21T18:02:52.249Z"
+            quantity: 1
         };
         var secondOrder = {
             date: "2011-08-21T18:02:52.249Z",
             employeeId: 2748,
             drinkName: "Lime",
-            quantity: 1,
-            expiresAt: new Date()
+            quantity: 1
         };
 
         Order.create(firstOrder);
