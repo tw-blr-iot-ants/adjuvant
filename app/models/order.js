@@ -11,3 +11,4 @@ var orderSchema = new mongoose.Schema({
 orderSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 })
 
 module.exports = mongoose.model('Order', orderSchema);
+
