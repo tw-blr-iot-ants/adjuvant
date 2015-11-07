@@ -2,12 +2,12 @@
 var express = require('express');
 var assert = require('chai').assert;
 var mongoose = require('mongoose');
-var Users = require('../app/models/users');
+var Users = require('../app/models/user');
 var NewUsers = require('../app/models/newUser');
 var server = require('../app/server').app;
 require("../app/testDatabase");
 
-var user1, user2, userNotInMasterDB;
+var user1, user2, user3, userNotInMasterDB;
 var request = require('supertest')(server);
 
 beforeEach(function(done) {
@@ -31,6 +31,15 @@ beforeEach(function(done) {
 		});
 
     user2.save();
+
+    user3 = new NewUsers({
+            empId: "56789",
+            internalNumber: "44411",
+            employeeName: "Employee3",
+            date: today
+    });
+
+    user3.save();
     userNotInMasterDB = new NewUsers({
                 empId: "11111",
                 internalNumber: "77777",
@@ -101,13 +110,28 @@ describe('GET /api/users/empId/:empId', function() {
       });
   });
 
+  it('should return a single newly registered user', function(done){
+    request
+      .get('/api/users/empId/' + user3.empId)
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        if (err) return done(err);
+
+        var response = res.body;
+        assert.equal(response.employeeName, "Employee3");
+
+        done();
+      });
+  });
+
 });
 
-describe('GET /api/users/empId/:empId should return 404 if the user is not present', function() {
+describe('GET /api/users/empId/:empId should return 404 if the user is not present in both users and new users', function() {
 
   it('should return a single user', function(done){
     request
-      .get('/api/users/empId/11111')
+      .get('/api/users/empId/99999')
       .set('Accept', 'application/json')
       .expect(404)
       .end(function(err, res){

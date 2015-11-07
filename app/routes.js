@@ -1,6 +1,6 @@
 var orderHandler = require('./handlers/order');
 var beverageHandler = require("./handlers/beverage");
-var userHandler = require("./handlers/users");
+var userHandler = require("./handlers/user");
 var newUserHandler = require("./handlers/newUser")
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });

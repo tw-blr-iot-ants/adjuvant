@@ -1,4 +1,5 @@
-var Users = require('../models/users');
+var Users = require('../models/user');
+var NewUsers = require('../models/newUser');
 var rmdir = require('rimraf');
 var xlsxj = require('xlsx2json');
 var root = require('root-path');
@@ -46,7 +47,13 @@ module.exports.createUsers = function(req, res) {
 
 	module.exports.getUserByEmpId =  function(req, res) {
         Users.findOne({empId: req.params.empId}).exec(function (err, user) {
-            res.send(user == null ? 404 : user);
+            if(user)
+                return res.send(user);
+            else {
+                NewUsers.findOne({empId: req.params.empId}).exec(function (err, newUser) {
+                    res.send(newUser == null ? 404 : newUser);
+                });
+            }
         });
     };
 

@@ -1,5 +1,5 @@
 var NewUser = require('../models/newUser');
-var User = require('../models/users');
+var User = require('../models/user');
 var internalCardLength = 5;
 
 
