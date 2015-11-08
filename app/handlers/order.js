@@ -21,7 +21,7 @@ module.exports.lastTenOrders = function(req, res) {
     return Order.find().sort({date: -1}).limit(10).exec(function(error, orders) {
         if(error)
             res.send(error);
-        res.send(parse(orders));
+        res.send(orders.reverse());
     });
 }
 
@@ -45,14 +45,3 @@ module.exports.create = function(req, res) {
       				res.json({"orderStatus": "success"});
         });
 }
-
-var parse = function(orders) {
-    var drinkNames = [];
-    orders.forEach(function(order) {
-        drinkNames.push(order.drinkName);
-
-    });
-    return drinkNames.reverse();
-}
-
-
