@@ -33,6 +33,7 @@ module.exports.create = function(req, res) {
         	eachDrinkRequest = {
                 date: new Date(),
                 employeeId: req.body.employeeId,
+                employeeName: req.body.employeeName,
                 drinkName: drink.name,
                 quantity: drink.quantity
             };
