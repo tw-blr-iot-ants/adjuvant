@@ -36,7 +36,8 @@ module.exports.create = function(req, res) {
                 employeeId: req.body.employeeId,
                 employeeName: req.body.employeeName,
                 drinkName: drink.name,
-                quantity: drink.quantity
+                quantity: drink.quantity,
+                isSwipe: req.body.isSwipe
             };
             BeverageHandler.updateRelevancy(drink.name, drink.quantity);
             allDrinksRequest.push(eachDrinkRequest);
