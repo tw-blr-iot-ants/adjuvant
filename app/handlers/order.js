@@ -1,4 +1,5 @@
 var Order = require("../models/order");
+var BeverageHandler = require('../handlers/beverage');
 
 module.exports.allOrders =  function(req, res) {
        return Order.find({}).exec(function(error, orders) {
@@ -37,6 +38,7 @@ module.exports.create = function(req, res) {
                 drinkName: drink.name,
                 quantity: drink.quantity
             };
+            BeverageHandler.updateRelevancy(drink.name, drink.quantity);
             allDrinksRequest.push(eachDrinkRequest);
         })
 
@@ -44,5 +46,5 @@ module.exports.create = function(req, res) {
       				if(error)
       				  res.send(error);
       				res.json({"orderStatus": "success"});
-        });
+        })
 }
