@@ -5,7 +5,8 @@ angular.module('tabsController', [])
      $scope.tabs = [
            { link : '#/manageJuices', label : 'Beverages' },
            { link : '#/invoice', label : 'Invoices' },
-           { link : '#/manageUsers', label : 'Users' }
+           { link : '#/manageUsers', label : 'Users' },
+           { link : '#/orders', label : 'Orders' }
      ];
 
       $scope.selectedTab = $scope.tabs[0];

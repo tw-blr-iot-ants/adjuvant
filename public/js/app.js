@@ -1,5 +1,5 @@
 var adjuvant = angular.module('adjuvant', ['ngRoute', 'tabsController', 'juiceController',
-                                      'invoiceController', 'usersController',
+                                      'invoiceController', 'usersController', 'ordersController',
                                       'mongooseService', 'invoiceService'])
 
 adjuvant.config(function($routeProvider) {
@@ -15,6 +15,9 @@ adjuvant.config(function($routeProvider) {
         .when('/manageUsers', {
             templateUrl: 'partials/manageUsers.html',
             controller: 'usersController'
+        }).when('/orders', {
+            templateUrl: 'partials/orders.html',
+            controller: 'ordersController'
         })
        .otherwise({
             redirectTo: '/manageJuices'

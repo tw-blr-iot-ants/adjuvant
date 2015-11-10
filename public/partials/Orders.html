@@ -1,0 +1,28 @@
+<div class="col-sm-4 col-sm-offset-2 gap">
+
+    <input   type="date" ng-model="selectedDate">
+    <button  style="{display: inline-block}" type="submit" class="generate-invoice" ng-click="getOrders()">Get Orders </button>
+    <div>
+        <div class="gap" ng-show="ordersReady">
+            <table border="1" class="gridtable" cellspacing="1" cellpadding="5">
+                <tr>
+                    <td>Serial No.</td>
+                    <td>Employee ID</td>
+                    <td>Employee Name</td>
+                    <td>Drinks</td>
+                    <td>Quantity</td>
+                    <td>Is Swipe</td>
+                </tr>
+                <tr ng-repeat="order in orders | orderBy: '-quantity'">
+                    <td>{{$index +1 }}</td>
+                    <td>{{ order.employeeId }}</td>
+                    <td>{{ order.employeeName }}</td>
+                    <td>{{ order.drinks }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.isSwipe }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
