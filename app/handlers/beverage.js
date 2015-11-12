@@ -112,15 +112,10 @@ module.exports.updateWithUpsert = function(req, res) {
       var conditions = {};
       conditions.name = req.body.name;
       var today = new Date();
-      var beverage = {
-        name: req.body.name,
-        cost: req.body.cost,
-        available: req.body.available,
-        relevancy: 0,
-        lastUpdated: today
-      }
+      req.body.relevancy = 0;
+      req.body.lastUpdated = today;
 
-      return Beverage.update(conditions, beverage, {"upsert": true}, function(error, beverage) {
+      return Beverage.update(conditions, req.body, {"upsert": true}, function(error, beverage) {
     	                if(error)
     	                    res.send(error);
     	                getBeverages(res);
