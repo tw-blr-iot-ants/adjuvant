@@ -1,5 +1,45 @@
 var Order = require("../models/order");
 var BeverageHandler = require('../handlers/beverage');
+var _ = require('../../node_modules/underscore/underscore')
+
+var _setStartOfDate = function(startDate) {
+    startDate.setSeconds(0);
+    startDate.setHours(0);
+    startDate.setMinutes(0);
+    return startDate;
+}
+
+var _setEndOfDate = function(endDate) {
+    endDate.setHours(23);
+    endDate.setMinutes(59);
+    endDate.setSeconds(59);
+    return endDate;
+}
+
+var _extractRegisterOrders = function(orders) {
+    var summary = [];
+    var totalCount =0;
+    var juiceChoice = [];
+    _.each(orders, function(order) {
+      var drinkName = order.drinkName;
+      _.times(order.quantity, function() {
+          juiceChoice.push(drinkName)
+      })
+    })
+    orders =   _.countBy(juiceChoice , _.identity);
+
+    _.each(orders, function(value, key) {
+       var eachOrder = {};
+       eachOrder.name = key;
+       eachOrder.count = value;
+       totalCount += value;
+       summary.push(eachOrder);
+
+    })
+
+    summary.push({"name": "totalCount", "count": totalCount});
+    return summary;
+}
 
 module.exports.allOrders =  function(req, res) {
        return Order.find({}).exec(function(error, orders) {
@@ -24,6 +64,16 @@ module.exports.lastTenOrders = function(req, res) {
             res.send(error);
         res.send(orders.reverse());
     });
+}
+
+module.exports.todayOrders = function(req, res) {
+   var today = new Date();
+   return Order.find({"date": {$gte: new Date(_setStartOfDate(today)),
+                               $lt: new Date(_setEndOfDate(today))}}).exec(function(error, orders) {
+                if(error)
+                     res.send(error);
+                res.json(_extractRegisterOrders(orders));
+   })
 }
 
 module.exports.create = function(req, res) {
