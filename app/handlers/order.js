@@ -16,31 +16,6 @@ var _setEndOfDate = function(endDate) {
     return endDate;
 }
 
-var _extractRegisterOrders = function(orders) {
-    var summary = [];
-    var totalCount =0;
-    var juiceChoice = [];
-    _.each(orders, function(order) {
-      var drinkName = order.drinkName;
-      _.times(order.quantity, function() {
-          juiceChoice.push(drinkName)
-      })
-    })
-    orders =   _.countBy(juiceChoice , _.identity);
-
-    _.each(orders, function(value, key) {
-       var eachOrder = {};
-       eachOrder.name = key;
-       eachOrder.count = value;
-       totalCount += value;
-       summary.push(eachOrder);
-
-    })
-
-    summary.push({"name": "totalCount", "count": totalCount});
-    return summary;
-}
-
 module.exports.allOrders =  function(req, res) {
        return Order.find({}).exec(function(error, orders) {
                    if(error)
@@ -70,9 +45,19 @@ module.exports.todayOrders = function(req, res) {
    var today = new Date();
    return Order.find({"date": {$gte: new Date(_setStartOfDate(today)),
                                $lt: new Date(_setEndOfDate(today))}}).exec(function(error, orders) {
-                if(error)
-                     res.send(error);
-                res.json(_extractRegisterOrders(orders));
+        if(error)
+             res.send(error);
+        else {
+            var mapReduceRequest = {};
+            mapReduceRequest.map = function() { emit(this.drinkName, this.quantity)}
+            mapReduceRequest.reduce = function(key, values) { return Array.sum(values);}
+            mapReduceRequest.out = {inline: 1}
+            Order.mapReduce(mapReduceRequest, function (err, orderGroups) {
+              if(err)
+                 res.send(error);
+              res.send(orderGroups);
+            })
+        }
    })
 }
 
