@@ -18,7 +18,6 @@ var _setEndOfDate = function(endDate) {
 
 var _extractRegisterOrders = function(orders) {
     var summary = [];
-    var totalCount =0;
     var juiceChoice = [];
     _.each(orders, function(order) {
       var drinkName = order.drinkName;
@@ -32,12 +31,8 @@ var _extractRegisterOrders = function(orders) {
        var eachOrder = {};
        eachOrder.name = key;
        eachOrder.count = value;
-       totalCount += value;
        summary.push(eachOrder);
-
     })
-
-    summary.push({"name": "totalCount", "count": totalCount});
     return summary;
 }
 
