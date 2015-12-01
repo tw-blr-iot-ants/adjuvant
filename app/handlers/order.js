@@ -17,6 +17,7 @@ var _setEndOfDate = function(endDate) {
 }
 
 var _extractRegisterOrders = function(orders) {
+    var totalJuiceCount = 0, totalCoffeeTeaCount = 0;
     var summary = [];
     var juiceChoice = [];
     _.each(orders, function(order) {
@@ -31,8 +32,10 @@ var _extractRegisterOrders = function(orders) {
        var eachOrder = {};
        eachOrder.name = key;
        eachOrder.count = value;
+       if(key != "CTL") totalJuiceCount += value;
        summary.push(eachOrder);
     })
+    summary.push({name:"Total Juice", count:totalJuiceCount});
     return summary;
 }
 
