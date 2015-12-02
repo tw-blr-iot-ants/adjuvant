@@ -21,8 +21,6 @@ angular.module('juiceController', [])
 
     $scope.updateAvailability = function(beverage) {
         beverage.available = !beverage.available;
-        beverage.isFruit = false;
-        console.log(beverage);
         mongooseService.updateBeverage(beverage)
                             .then(function(response) {
                                       $scope.juices = response.data;

@@ -136,7 +136,7 @@ module.exports.updateRelevancy = function(drinkName, quantity) {
 
 module.exports.findFruits = function(req, res) {
         checkJuicesLastUpdated();
-	    Beverage.find({isFruit: {$eq: true}}).exec(function (error, beverages) {
+	    Beverage.find({isFruit: {$eq: true}, available: {$eq: true}}).exec(function (error, beverages) {
 	    	if (error) {
 	    		console.log("Error in reading beverages");
 	    		return;
