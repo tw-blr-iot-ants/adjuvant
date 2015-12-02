@@ -6,13 +6,19 @@
                 <input type="text" class="form-control input-lg text-center"  ng-model="name"></div>
             <div>Juice Price:
                 <input type="text" class="form-control input-lg text-center"  ng-model="cost"></div>
+
+            <div class="minor-gap">Is a Fruit
+                <input type="checkbox" class="text-center"  ng-model="isFruit"></div>
+            </div>
             <div class="col-sm-3 col-sm-offset-4">
                 <p class="text-center" ng-show="loading">
                     <span class="fa fa-spinner fa-spin fa-3x"></span>
                 </p>
             </div>
-            <div class="gap">
-                <button type="submit" class="col-sm-3 col-sm-offset-4" ng-click="updateBeverage()">Add</button>
+
+        <div class="gap">
+
+            <button type="submit" class="col-sm-3 col-sm-offset-4" ng-click="updateBeverage()">Add</button>
             </div>
         </div>
 
@@ -26,12 +32,16 @@
                 <th>Juice Name</th>
                 <th>Unit Cost</th>
                 <th>Availability</th>
+                <th>Is fruit</th>
             </tr>
             <tr ng-repeat="beverage in beverages">
                 <td>{{beverage.name}}</td>
                 <td>{{beverage.cost}}</td>
                 <td>
                     <input type="checkbox" ng-checked="{{beverage.available}}" ng-click="updateAvailability(beverage)">
+                </td>
+                <td>
+                    <input type="checkbox" ng-checked="{{beverage.isFruit}}" onclick="return false" >
                 </td>
             </tr>
         </table>

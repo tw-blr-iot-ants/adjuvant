@@ -6,7 +6,8 @@ var beverageSchema = new Schema({
   cost: Number,
   available: Boolean,
   relevancy: Number,
-  lastUpdated: { type: Date }
+  lastUpdated: { type: Date },
+  isFruit: Boolean
 });
 
 module.exports = mongoose.model('Beverage', beverageSchema);

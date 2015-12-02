@@ -11,6 +11,7 @@ module.exports = function(app) {
 	app.put('/api/beverages/:id', beverageHandler.update);
 	app.get('/api/beverages/', beverageHandler.findAll);
 	app.get('/api/beverages/juices', beverageHandler.findJuices);
+	app.get('/api/beverages/fruits', beverageHandler.findFruits);
 	app.get('/api/beverages/:id', beverageHandler.findById);
 	app.delete('/api/beverages/:id', beverageHandler.delete);
 	app.post('/api/beverages/updateWithUpsert', beverageHandler.updateWithUpsert)
