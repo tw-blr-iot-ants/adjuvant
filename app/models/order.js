@@ -6,7 +6,8 @@ var orderSchema = new mongoose.Schema({
   employeeName: String,
   drinkName: String,
   quantity: { type: Number },
-  isSwipe: Boolean
+  isSwipe: Boolean,
+  isSugarless: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Order', orderSchema);

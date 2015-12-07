@@ -81,13 +81,15 @@ module.exports.create = function(req, res) {
         var eachDrinkRequest;
 
         req.body.drinks.forEach(function(drink) {
+            console.log("$$$$$$$$$$"+drink);
         	eachDrinkRequest = {
                 date: new Date(),
                 employeeId: req.body.employeeId,
                 employeeName: req.body.employeeName,
                 drinkName: drink.name,
                 quantity: drink.quantity,
-                isSwipe: req.body.isSwipe
+                isSwipe: req.body.isSwipe,
+                isSugarless: drink.isSugarless
             };
             BeverageHandler.updateRelevancy(drink.name, drink.quantity);
             allDrinksRequest.push(eachDrinkRequest);
