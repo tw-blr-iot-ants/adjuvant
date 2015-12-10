@@ -57,7 +57,7 @@ module.exports.ordersForSelectPeriod =  function(req, res) {
 };
 
 module.exports.lastTenOrders = function(req, res) {
-    return Order.find().sort({date: -1}).limit(10).exec(function(error, orders) {
+    return Order.find({"drinkName": {$ne: "CTL"}}).sort({date: -1}).limit(10).exec(function(error, orders) {
         if(error)
             res.send(error);
         res.send(orders.reverse());
