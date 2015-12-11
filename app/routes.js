@@ -2,6 +2,7 @@ var orderHandler = require('./handlers/order');
 var beverageHandler = require("./handlers/beverage");
 var userHandler = require("./handlers/user");
 var newUserHandler = require("./handlers/newUser")
+var logHandler = require("./handlers/log")
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
 
@@ -35,5 +36,7 @@ module.exports = function(app) {
 	app.get('/api/register/internalNumber/:internalNumber', newUserHandler.getUserByInternalNumber);
 	app.put('/api/register/', newUserHandler.approve);
 	app.delete('/api/register/:empId', newUserHandler.delete);
+
+	app.post('/api/log/', logHandler.store)
 };
 
