@@ -21,15 +21,21 @@ describe("GET /api/orders", function() {
     it("should get all orders", function(done) {
         var firstOrder = {
             date: "2011-08-21T18:02:52.249Z",
+            employeeName: "Ram",
             employeeId: 2748,
             drinkName: "Lime",
-            quantity: 1
+            quantity: 1,
+            isSwipe: true,
+            region: "Bangalore"
         };
         var secondOrder = {
             date: "2011-08-21T18:02:52.249Z",
+            employeeName: "Ram",
             employeeId: 2748,
             drinkName: "Lime",
-            quantity: 1
+            quantity: 1,
+            isSwipe: true,
+            region: "Bangalore"
         };
 
         Order.create(firstOrder);
@@ -49,7 +55,7 @@ describe("GET /api/orders", function() {
 
 describe("POST /api/orders", function() {
 
-    var req = {employeeId: "15558", drinks: [{name: "apple",quantity: 5}, {name: "orange", quantity: 7}]};
+    var req = {employeeId: "15558", employeeName: "Ravi", drinks: [{name: "apple",quantity: 5}, {name: "orange", quantity: 7}], isSwipe: false, region: "Bangalore"};
 
     it("should place an order", function(done) {
         request

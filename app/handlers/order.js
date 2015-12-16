@@ -17,8 +17,8 @@ var _setEndOfDate = function(endDate) {
 }
 
 var _extractRegisterOrders = function(orders) {
+    var totalJuiceCount = 0, totalCoffeeTeaCount = 0;
     var summary = [];
-    var totalCount =0;
     var juiceChoice = [];
     _.each(orders, function(order) {
       var drinkName = order.drinkName;
@@ -32,12 +32,10 @@ var _extractRegisterOrders = function(orders) {
        var eachOrder = {};
        eachOrder.name = key;
        eachOrder.count = value;
-       totalCount += value;
+       if(key != "CTL") totalJuiceCount += value;
        summary.push(eachOrder);
-
     })
-
-    summary.push({"name": "totalCount", "count": totalCount});
+    summary.push({name:"Total Juice", count:totalJuiceCount});
     return summary;
 }
 
@@ -59,7 +57,7 @@ module.exports.ordersForSelectPeriod =  function(req, res) {
 };
 
 module.exports.lastTenOrders = function(req, res) {
-    return Order.find().sort({date: -1}).limit(10).exec(function(error, orders) {
+    return Order.find({"drinkName": {$ne: "CTL"}}).sort({date: -1}).limit(10).exec(function(error, orders) {
         if(error)
             res.send(error);
         res.send(orders.reverse());
@@ -81,7 +79,6 @@ module.exports.create = function(req, res) {
         var eachDrinkRequest;
 
         req.body.drinks.forEach(function(drink) {
-            console.log("$$$$$$$$$$"+drink);
         	eachDrinkRequest = {
                 date: new Date(),
                 employeeId: req.body.employeeId,
@@ -90,6 +87,7 @@ module.exports.create = function(req, res) {
                 quantity: drink.quantity,
                 isSwipe: req.body.isSwipe,
                 isSugarless: drink.isSugarless
+                region: req.body.region
             };
             BeverageHandler.updateRelevancy(drink.name, drink.quantity);
             allDrinksRequest.push(eachDrinkRequest);

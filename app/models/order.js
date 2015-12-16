@@ -8,6 +8,7 @@ var orderSchema = new mongoose.Schema({
   quantity: { type: Number },
   isSwipe: Boolean,
   isSugarless: { type: Boolean, default: false }
+  region: String
 });
 
 module.exports = mongoose.model('Order', orderSchema);

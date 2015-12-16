@@ -14,6 +14,7 @@ angular.module('juiceController', [])
         beverage.name = ($scope.name);
         beverage.cost = parseFloat($scope.cost);
         beverage.available = true;
+        beverage.isFruit = $scope.isFruit || false;
         mongooseService.updateBeverage(beverage)
                            .then(_successCallback, _errorCallBack)
     }
@@ -36,5 +37,6 @@ angular.module('juiceController', [])
          $scope.loading = false;
          $scope.name = "";
          $scope.cost = "";
+         $scope.isFruit = false;
     }
 }])

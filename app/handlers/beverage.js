@@ -80,7 +80,7 @@ module.exports.findAll = function(req, res) {
 
 module.exports.findJuices = function(req, res) {
         checkJuicesLastUpdated();
-	    Beverage.find({name: {$ne: "CTL"}}).exec(function (error, beverages) {
+	    Beverage.find({name: {$ne: "CTL"}, isFruit: {$eq: false}}).exec(function (error, beverages) {
 	    	if (error) {
 	    		console.log("Error in reading beverages");
 	    		return;
@@ -111,14 +111,19 @@ module.exports.delete = function(req, res) {
 module.exports.updateWithUpsert = function(req, res) {
       var conditions = {};
       conditions.name = req.body.name;
+      conditions.isFruit = req.body.isFruit || false;
       var today = new Date();
       req.body.relevancy = 0;
       req.body.lastUpdated = today;
 
       return Beverage.update(conditions, req.body, {"upsert": true}, function(error, beverage) {
-    	                if(error)
-    	                    res.send(error);
-    	                getBeverages(res);
+    	                if(error){
+    	                        console.log("error", error);
+                                res.send(error);
+    	                }
+    	                else {
+    	                    getBeverages(res);
+    	                }
    })
 }
 
@@ -128,3 +133,14 @@ module.exports.updateRelevancy = function(drinkName, quantity) {
     Beverage.findOneAndUpdate(conditions, {$inc: { relevancy: quantity }}, {"upsert": true}, function(err, beverage) {
     })
 }
+
+module.exports.findFruits = function(req, res) {
+        checkJuicesLastUpdated();
+	    Beverage.find({isFruit: {$eq: true}, available: {$eq: true}}).exec(function (error, beverages) {
+	    	if (error) {
+	    		console.log("Error in reading beverages");
+	    		return;
+	    	}
+	    	res.json(sort(beverages).reverse());
+	    });
+};
