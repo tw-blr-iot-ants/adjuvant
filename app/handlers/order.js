@@ -86,6 +86,7 @@ module.exports.create = function(req, res) {
                 drinkName: drink.name,
                 quantity: drink.quantity,
                 isSwipe: req.body.isSwipe,
+                isSugarless: drink.isSugarless
                 region: req.body.region
             };
             BeverageHandler.updateRelevancy(drink.name, drink.quantity);

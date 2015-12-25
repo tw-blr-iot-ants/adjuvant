@@ -7,6 +7,7 @@ var orderSchema = new mongoose.Schema({
   drinkName: String,
   quantity: { type: Number },
   isSwipe: Boolean,
+  isSugarless: { type: Boolean, default: false }
   region: String
 });
 
