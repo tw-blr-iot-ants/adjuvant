@@ -31,6 +31,8 @@ module.exports = function(app) {
 	app.get('/api/orders/summary', orderHandler.todayOrders);
 	app.get('/api/orders/:startDate/:endDate', orderHandler.ordersForSelectPeriod);
 
+	app.delete('/api/orders/:id/', orderHandler.deleteOrder);
+
 	app.post('/api/register/', newUserHandler.register);
 	app.get('/api/register/', newUserHandler.getAllUsers);
 	app.get('/api/register/internalNumber/:internalNumber', newUserHandler.getUserByInternalNumber);

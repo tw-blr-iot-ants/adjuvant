@@ -100,3 +100,8 @@ module.exports.create = function(req, res) {
         })
 }
 
+module.exports.deleteOrder = function(req, res) {
+	Order.findOneAndRemove({ _id: req.params.id }).exec(function (err, order) {
+	res.send(order == null ? 404 : "success");
+	});
+};

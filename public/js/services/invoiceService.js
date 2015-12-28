@@ -5,7 +5,7 @@ angular.module("invoiceService", [])
 
     var generateInvoice = function(menu, orders) {
         var html = "";
-        html += '<table border="1" class="gridtable" cellspacing="1" cellpadding="5">';
+        html += '<table border="2" style="padding: 10px" class="gridtable"  >';
         var sum = 0;
         var totalCount =0;
         html += _getHeadings();
@@ -32,7 +32,7 @@ angular.module("invoiceService", [])
     }
 
     var _getHeadings = function() {
-        return '<tr><td>Description</td><td>Unit Price</td><td>Quantity</td><td>Line Total</td></tr>';
+        return '<tr><th>Description</th><th>Unit Price</th><th>Quantity</th><th>Line Total</th></tr>';
     }
 
     var _setDefaultPrice = function() {
