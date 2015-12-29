@@ -23,11 +23,16 @@
         <input   type="date" ng-model="endDate">
         <button type="submit" class="generate-invoice" ng-click="getInvoiceWithInRange()">Generate Invoice</button>
 
+        <div id="printable">
         <div  class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForJuices"></div>
         <div  class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForCTL"></div>
         <p  ng-if="invoiceReady">
             Note : * implies Unit cost took a default value of  &#8377; 15
         </p>
+        </div>
         <div  ng-if="!invoiceReady" class="bar"></div>
     </div>
+
+    <button ng-if="invoiceReady" ng-click="printDiv('printable');">Print Table</button>
+
 </div>
