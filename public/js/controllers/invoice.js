@@ -13,10 +13,6 @@ angular.module('invoiceController', [])
           popupWin.document.close();
         }
 
-        $scope.export = function(divName){
-          alasql('SELECT * INTO XLSX("john.xlsx",{headers:true}) FROM ?',[$scope.items]);
-        }
-
         var orders = {};
         var menu = {};
         $scope.getInvoice = function() {
