@@ -44,16 +44,16 @@ module.exports.create = function(req, res) {
 	var beverage = new Beverage({
 		name: req.body.name,
 		cost: req.body.cost,
-		available: true,
+		availability: req.body.availability,
 		relevancy: 0,
 		lastUpdated: today
 	});
-	
+
 	beverage.save(function(err){
 		if(err){
 			console.log("Error in saving the beverage", err);
 			return;
-		}		
+		}
 	});
 	res.json(beverage);
 };
@@ -94,7 +94,7 @@ module.exports.findById = function(req, res) {
 		if(beverage)
 			res.json(beverage);
 		else {
-			res.status(404).send("");	
+			res.status(404).send("");
 		}
 	});
 };

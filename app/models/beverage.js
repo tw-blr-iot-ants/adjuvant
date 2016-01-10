@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var beverageSchema = new Schema({
   name: String,
   cost: Number,
-  available: Boolean,
+  availability: [{region: String, value: Boolean}],
   relevancy: Number,
   lastUpdated: { type: Date },
   isFruit: Boolean
