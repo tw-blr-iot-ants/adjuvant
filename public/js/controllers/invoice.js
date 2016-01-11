@@ -54,7 +54,11 @@ angular.module('invoiceController', [])
           _.each(response.data, function(order) {
             var drinkName = order.drinkName;
             _.times(order.quantity, function() {
-                juiceChoice.push(drinkName)
+                if(order.isFruit == true) {
+                juiceChoice.push(drinkName + " Fruit")
+                } else {
+                    juiceChoice.push(drinkName)
+                }
             })
           })
           orders =  _.countBy(juiceChoice , _.identity);
