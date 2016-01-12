@@ -99,10 +99,10 @@ module.exports.findById = function(req, res) {
 	});
 };
 
-module.exports.delete = function(req, res) {
-	Beverage.findOneAndRemove({ _id: req.params.id }).exec(function (err, beverage) {
+module.exports.deleteBeverage = function(req, res) {
+	Beverage.findOneAndRemove({ name: req.params.beverageName }).exec(function (err, beverage) {
 		if(beverage)
-			res.status(204).send();
+		    getBeverages(res);
 		else
 			res.status(404).send();
 	});

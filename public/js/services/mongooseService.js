@@ -8,6 +8,9 @@ angular.module("mongooseService", [])
         getBeverages: function() {
             return $http.get("/api/beverages/")
         },
+        deleteBeverage: function(beverage) {
+            return $http.delete("/api/beverages/" + beverage.name)
+        },
         getOrdersForSelection: function(request) {
             return $http.get("/api/orders/" + request.startDate + "/" + request.endDate)
         },

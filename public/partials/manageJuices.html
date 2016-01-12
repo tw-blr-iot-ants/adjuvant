@@ -33,6 +33,7 @@
                 <th>Unit Cost</th>
                 <th>Availability</th>
                 <th>Is fruit</th>
+                <th></th>
             </tr>
             <tr ng-repeat="beverage in beverages">
                 <td>{{beverage.name}}</td>
@@ -42,6 +43,9 @@
                 </td>
                 <td>
                     <input type="checkbox" ng-checked="{{beverage.isFruit}}" onclick="return false" >
+                </td>
+                <td>
+                    <input type="image" src="../images/button_cancel.png" class="cancel-image" ng-click="deleteBeverage(beverage)">
                 </td>
             </tr>
         </table>

@@ -28,6 +28,10 @@ angular.module('juiceController', [])
                             }, _errorCallBack)
     }
 
+    $scope.deleteBeverage = function(beverage) {
+        mongooseService.deleteBeverage(beverage).then(_successCallback, _errorCallBack);
+    }
+
     var _errorCallBack = function(errorMessage) {
         console.log(errorMessage)
     }

@@ -28,6 +28,13 @@ describe("manageJuiceController", function() {
                 defer.resolve(this.data);
                 return defer.promise;
             }
+
+            mockMongooseService.deleteBeverage = function(beverage) {
+                var defer = $q.defer();
+                this.response.data.pop(beverage);
+                defer.resolve(this.response);
+                return defer.promise;
+            }
         })
     })
 
@@ -62,6 +69,17 @@ describe("manageJuiceController", function() {
         scope.updateBeverage();
 
         expect(scope.beverages).to.have.members(beverages);
+
+    })
+
+    it("should delete a beverage", function() {
+        var expectedBeverages =  [ { Name : 'strawberry', Cost : 27, Available : false },
+                                    { Name : 'mango', Cost : 19, Available : false },
+                                    { Name : 'mosambi', Cost : 22, Available : false },
+
+        scope.deleteBeverage({ name : 'amla', Cost : 21, Available : false });
+
+        expect(scope.beverages).to.have.members(expectedBeverages);
 
     })
 

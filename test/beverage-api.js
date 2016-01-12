@@ -122,15 +122,14 @@ describe('PUT /api/beverages/:id', function() {
   
 });
 
-describe('DELETE /api/beverages/:id', function() {
+describe('DELETE /api/beverages/:beverageName', function() {
 
-  it('should return 204 if item is successfully deleted', function(done){
+  it('should not return the item that is deleted', function(done){
     request
-      .delete('/api/beverages/' + testBeverage.id)
-      .expect(204)
+      .delete('/api/beverages/' + testBeverage.name)
       .end(function(err, res){
         if (err) return done(err);
-        Beverage.findOne({ _id: testBeverage.id }).exec(function (err, beverage) {
+        Beverage.findOne({ name: testBeverage.name }).exec(function (err, beverage) {
             assert.equal(beverage, undefined);
             done();
 		    });
@@ -139,7 +138,7 @@ describe('DELETE /api/beverages/:id', function() {
   
   it('should return 404 if item is not found when deleting', function(done){
     request
-      .delete('/api/beverages/56087044770aef8e9a9b08ed')
+      .delete('/api/beverages/nonExistingJuiceg')
       .expect(404)
       .end(function(err, res){
         if (err) return done(err);
