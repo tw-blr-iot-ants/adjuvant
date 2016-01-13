@@ -1,13 +1,16 @@
 describe("manageJuiceController", function() {
     var scope, mongooseService;
 
-    var beverages = [
-            {"Name" : "strawberry", "Cost" : 27, "Available" : false },
-            {"Name" : "mango", "Cost" : 19, "Available" : false },
-            {  "Name" : "amla", "Cost" : 21, "Available" : false },
-            {  "Name" : "mosambi", "Cost" : 22, "Available" : false}]
+    var beverages;
 
     beforeEach(function() {
+
+      beverages = [
+              {"Name" : "strawberry", "Cost" : 27, "Available" : false },
+              {"Name" : "mango", "Cost" : 19, "Available" : false },
+              {  "Name" : "amla", "Cost" : 21, "Available" : false },
+              {  "Name" : "mosambi", "Cost" : 22, "Available" : false}];
+
         var mockMongooseService = {};
         module('adjuvant', function($provide) {
             $provide.value('mongooseService', mockMongooseService);
@@ -31,8 +34,9 @@ describe("manageJuiceController", function() {
 
             mockMongooseService.deleteBeverage = function(beverage) {
                 var defer = $q.defer();
-                this.response.data.pop(beverage);
-                defer.resolve(this.response);
+                var index = this.response.data.indexOf(beverage);
+                this.response.data.splice(index, 1);
+                defer.resolve(this.response.data);
                 return defer.promise;
             }
         })
@@ -75,11 +79,9 @@ describe("manageJuiceController", function() {
     it("should delete a beverage", function() {
         var expectedBeverages =  [ { Name : 'strawberry', Cost : 27, Available : false },
                                     { Name : 'mango', Cost : 19, Available : false },
-                                    { Name : 'mosambi', Cost : 22, Available : false },
-
-        scope.deleteBeverage({ name : 'amla', Cost : 21, Available : false });
-
-        expect(scope.beverages).to.have.members(expectedBeverages);
+                                    { Name : 'mosambi', Cost : 22, Available : false }];
+        scope.deleteBeverage(beverages[2]);
+        expect(scope.beverages).to.deep.have.members(expectedBeverages);
 
     })
 
