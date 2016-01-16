@@ -2,11 +2,11 @@
 var express = require('express');
 var assert = require('chai').assert;
 var mongoose = require('mongoose');
-var Order = require('../app/models/order');
-var server = require('../app/server').app;
+var Order = require('../../app/models/order');
+var server = require('../../app/server').app;
 
 var request = require('supertest')(server);
-require("../app/testDatabase");
+require("../../app/testDatabase");
 
 beforeEach(function(done) {
     for (var i in mongoose.connection.collections) {

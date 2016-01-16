@@ -2,10 +2,10 @@
 var express = require('express');
 var assert = require('chai').assert;
 var mongoose = require('mongoose');
-var Users = require('../app/models/user');
-var NewUsers = require('../app/models/newUser');
-var server = require('../app/server').app;
-require("../app/testDatabase");
+var Users = require('../../app/models/user');
+var NewUsers = require('../../app/models/newUser');
+var server = require('../../app/server').app;
+require("../../app/testDatabase");
 
 var user1, user2, user3, userNotInMasterDB;
 var request = require('supertest')(server);

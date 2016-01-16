@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "node_modules/.bin/nodemon -x 'node_modules/.bin/mocha'"
+    "test": "nodemon -x 'mocha --recursive'",
+    "e2e": "nodemon -x 'mocha test/api --recursive'"
   },
   "dependencies": {
     "body-parser": "~1.4.3",
