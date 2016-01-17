@@ -1,10 +1,17 @@
-describe('findUser', function() {
-    var element, mockMongooseService, scope, mongooseServicePromise
+describe.only('findUser', function() {
+    var element, mockMongooseService, scope, mongooseServicePromise, employee, updatedEmployee;
 
 
     beforeEach(function() {
-       mongooseServicePromise = Q({data: ["dummy"]})
-       mockMongooseService = { findUser: sinon.stub().returns(mongooseServicePromise) };
+       employee = {employeeId: "123", employeeName: "Ravi", internalNumber: "000"};
+       mongooseServicePromise = Q({data: employee})
+
+       updatedEmployee = {employeeId: "123", employeeName: "Jack", internalNumber: "000"};
+       mongooseServiceUpdatePromise = Q({data: updatedEmployee})
+
+       mongooseServiceDeletePromise = Q({data: "success"})
+
+       mockMongooseService = { findUser: sinon.stub().returns(mongooseServicePromise), updateUser: sinon.stub().returns(mongooseServiceUpdatePromise), deleteUser: sinon.stub().returns(mongooseServiceDeletePromise) };
 
        module('adjuvant', function($provide) {
            $provide.value('mongooseService', mockMongooseService);
@@ -14,7 +21,6 @@ describe('findUser', function() {
     beforeEach(module('partials/findUser.html'));
 
     beforeEach(inject(function($rootScope, $compile) {
-
         element = angular.element('<div find-user></div>');
         scope = $rootScope;
         $compile(element)($rootScope);
@@ -23,13 +29,20 @@ describe('findUser', function() {
 
     it('should reset defaults', function() {
         var isolatedScope = element.isolateScope()
-        expect(isolatedScope.showSuccessAlert).to.be.eql(false)
         expect(isolatedScope.employeeId).to.be.eql('')
+        expect(isolatedScope.employeeName).to.be.eql('')
+        expect(isolatedScope.result).to.be.eql('')
+        expect(isolatedScope.showFindErrorAlert).to.be.eql(false)
+        expect(isolatedScope.shouldDisplayResult).to.be.eql(true)
+        expect(isolatedScope.showDeleteSuccessAlert).to.be.eql(false)
+        expect(isolatedScope.showDeleteErrorAlert).to.be.eql(false)
+        expect(isolatedScope.showUpdateSuccessAlert).to.be.eql(false)
+        expect(isolatedScope.showUpdateErrorAlert).to.be.eql(false)
     })
 
     it('should show form', function() {
-        var labels = element.find('label')
-        expect(labels.text()).to.contain("Employee ID")
+        var enterEmpIDLabel = element.find('label')
+        expect(enterEmpIDLabel.text()).to.contain("Employee ID")
     })
 
     it('Should find a user on submit', function() {
@@ -43,11 +56,12 @@ describe('findUser', function() {
         return mongooseServicePromise.then(function() {
             expect(mockMongooseService.findUser).to.be.calledOnce;
             expect(mockMongooseService.findUser).to.be.calledWith(expectedUser);
-            expect(isolatedScope.result).to.be.eql(["dummy"]);
+            expect(isolatedScope.result).to.be.eql(employee);
+            expect(isolatedScope.employeeName).to.be.eql(employee.employeeName);
         })
     })
 
-    it('Should set showErrorAlert flag to true when service fails', function() {
+    it('Should set appropriate flags when find service fails', function() {
         var expectedUser = { empId: "16305" }
         mockMongooseService.findUser = sinon.stub().returns(Q.reject());
 
@@ -57,7 +71,8 @@ describe('findUser', function() {
         element.find('button')[0].click();
 
         return mongooseServicePromise.then(function() {
-            expect(isolatedScope.showErrorAlert).to.be.eql(true)
+            expect(isolatedScope.showFindErrorAlert).to.be.eql(true)
+            expect(isolatedScope.shouldDisplayResult).to.be.eql(false)
         })
     })
 })
