@@ -1,0 +1,46 @@
+<form>
+    <div class="form-group">
+        <label>Employee ID</label>
+        <input  class="form-control" ng-model="employeeId" placeholder="Employee ID">
+    </div>
+
+    <table ng-if="result && shouldDisplayResult" class="gridtable div-center minor-gap"
+           border="1" cellspacing="1" cellpadding="5">
+        <tr>
+            <th>EmpId</th>
+            <th>Employee Name</th>
+            <th>Internal Number</th>
+        </tr>
+        <tr>
+            <td>{{result.empId}}</td>
+            <td><input ng-model="employeeName"></td>
+            <td>{{result.internalNumber}}</td>
+            <td><div><button id="updateButton" ng-click="updateUser(employeeName)">Update</button></div></td>
+            <td><div><button id="deleteButton" ng-click="deleteUser()">Delete</button></div></td>
+        </tr>
+    </table>
+
+    <div class="alert alert-danger" ng-show="showFindErrorAlert">
+        <strong>User details Not Found !!</strong>
+    </div>
+
+    <div class="alert alert-success" ng-show="showDeleteSuccessAlert">
+        <strong>Deleted User Successfully !!</strong>
+    </div>
+
+    <div class="alert alert-success" ng-show="showUpdateSuccessAlert">
+        <strong>Updated User Successfully !!</strong>
+    </div>
+
+    <div class="alert alert-danger" ng-show="showDeleteErrorAlert">
+        <strong>Delete User failed !!</strong>
+    </div>
+
+    <div class="alert alert-danger" ng-show="showUpdateErrorAlert">
+        <strong>Update User failed !!</strong>
+    </div>
+
+    <div class="minor-gap">
+        <button type="submit" class="btn btn-default minor-gap" ng-click="findUser()">Submit</button>
+    </div>
+</form>

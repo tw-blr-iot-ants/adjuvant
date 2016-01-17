@@ -10,11 +10,7 @@
 
         <add-user ng-show="addUserForm"></add-user>
 
-        <delete-user ng-show="deleteUserForm"></delete-user>
-
-        <find-user ng-show="findUserForm"></find-user>
-
-        <update-user ng-show="updateUserForm"></update-user>
+        <find-update-delete-user ng-show="findUpdateDeleteUserForm"></find-update-delete-user>
 
         <form ng-show="flushAndUpdateDB" action="api/createUsers" method="post" enctype="multipart/form-data">
             <input type="file" name="users" accept=".xlsx">

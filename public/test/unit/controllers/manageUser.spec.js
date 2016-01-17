@@ -19,19 +19,16 @@ describe("usersControllerTest", function() {
         scope.setSelectedTab(selection);
 
         expect(scope.addUserForm).to.be.true
-        expect(scope.deleteUserForm).to.be.false
         expect(scope.flushAndUpdateDB).to.be.false
     })
 
 
     it("should change the tabs object based on the scope variables", function() {
         var expectedTabs = [{name: "Add a user", action: "add", isActive: false},
-                            {name:"Delete a user", action: "delete", isActive: true},
                             {name:"Update DB From a file", action: "flushAndUpdateDB", isActive: false},
-                            {name:"Find User", action: "findUser", isActive: false},
-                            {name:"Update User", action: "updateUser", isActive: false},
+                            {name:"Find/Update/Delete User", action: "findUpdateDeleteUser", isActive: true},
                              {name:"Authenticate User", action: "authenticateUser", isActive: false}]
-        var selection = {action: "delete"}
+        var selection = {action: "findUpdateDeleteUser"}
         scope.setSelectedTab(selection);
 
         expect(scope.tabs).to.be.eql(expectedTabs)
