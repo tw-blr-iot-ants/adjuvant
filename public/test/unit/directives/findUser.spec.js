@@ -1,4 +1,4 @@
-describe.only('findUser', function() {
+describe('findUser', function() {
     var element, mockMongooseService, scope, mongooseServicePromise, employee, updatedEmployee;
 
 
