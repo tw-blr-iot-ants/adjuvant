@@ -75,4 +75,31 @@ describe('findUser', function() {
             expect(isolatedScope.shouldDisplayResult).to.be.eql(false)
         })
     })
+
+    it('Should show update and delete buttons', function() {
+            var compileElement = element[0];
+
+            var expectedUser = { empId: "16305" }
+
+            var isolatedScope = element.isolateScope();
+            isolatedScope.employeeId = "16305";
+            isolatedScope.shouldDisplayResult = true;
+
+
+
+            element.find('button')[0].click();
+
+            return mongooseServicePromise.then(function() {
+                expect(mockMongooseService.findUser).to.be.calledOnce;
+                expect(mockMongooseService.findUser).to.be.calledWith(expectedUser);
+                expect(isolatedScope.result).to.be.eql(employee);
+                expect(isolatedScope.employeeName).to.be.eql(employee.employeeName);
+                isolatedScope.$apply();
+
+                var updateButton = angular.element(compileElement.querySelector('#updateButton')).html();
+
+                expect(updateButton).to.be.eql("Update");
+
+            })
+    })
 })
