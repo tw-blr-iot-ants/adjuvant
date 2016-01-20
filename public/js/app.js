@@ -1,6 +1,6 @@
 var adjuvant = angular.module('adjuvant', ['ngRoute', 'tabsController', 'juiceController',
                                       'invoiceController', 'usersController', 'ordersController',
-                                      'mongooseService', 'invoiceService'])
+                                      'mongooseService', 'invoiceService', 'loginController', 'loginService'])
 
 adjuvant.config(function($routeProvider) {
     $routeProvider
@@ -15,11 +15,29 @@ adjuvant.config(function($routeProvider) {
         .when('/manageUsers', {
             templateUrl: 'partials/manageUsers.html',
             controller: 'usersController'
-        }).when('/orders', {
+        })
+        .when('/orders', {
             templateUrl: 'partials/orders.html',
             controller: 'ordersController'
+        })
+        .when('/', {
+            templateUrl: 'partials/login.html',
+            controller: 'loginController'
         })
        .otherwise({
             redirectTo: '/manageJuices'
         });
-});
+})
+.factory('httpResponseInterceptor', ['$q', '$location', function($q, $location) {
+    return {
+    responseError: function(rejection) {
+                if (rejection.status === 401) {
+                    console.log("Response Error 401",rejection);
+                    $location.path('/');
+                }
+                return $q.reject(rejection);
+            }}
+}])
+.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.interceptors.push('httpResponseInterceptor');
+}]);

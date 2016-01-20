@@ -3,10 +3,16 @@ var beverageHandler = require("./handlers/beverage");
 var userHandler = require("./handlers/user");
 var newUserHandler = require("./handlers/newUser")
 var logHandler = require("./handlers/log")
+var loginHandler = require("./handlers/login")
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
+var passport = require('passport');
+var expressSession = require('express-session');
 
 module.exports = function(app) {
+    app.use(expressSession({secret: 'mySecretKey'}));
+    app.use(passport.initialize());
+    app.use(passport.session());
 
 	app.post('/api/beverages/', beverageHandler.create);
 	app.put('/api/beverages/:id', beverageHandler.update);
@@ -39,6 +45,8 @@ module.exports = function(app) {
 	app.put('/api/register/', newUserHandler.approve);
 	app.delete('/api/register/:empId', newUserHandler.delete);
 
-	app.post('/api/log/', logHandler.store)
+	app.post('/api/log/', logHandler.store);
+
+	app.post('/api/login', loginHandler.loginUser);
 };
 
