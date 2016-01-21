@@ -22,7 +22,7 @@ app.use(cookieParser('S3CRE7'));
 
 app.use(session({
     store: new MongoStore({ url: 'mongodb://localhost/test-app',
-                            ttl: 60  })
+                            ttl: 30*60  })
 }));
 
 app.use(function(req, res, next) {

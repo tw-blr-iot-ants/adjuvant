@@ -9,6 +9,15 @@
         <input type="password" ng-model="password"/>
     </div>
     <div>
+        <label>Region:</label>
+
+        <input type="radio" name="region" value="Bangalore" ng-model="region"> Bangalore<br>
+        <input type="radio" name="region" value="Chennai" ng-model="region"> Chennai<br>
+        <input type="radio" name="region" value="Gurgaon" ng-model="region"> Gurgaon<br>
+        <input type="radio" name="region" value="Hyderabad" ng-model="region"> Hyderabad<br>
+        <input type="radio" name="region" value="Pune" ng-model="region"> Pune<br>
+    </div>
+    <div>
         <input type="submit" value="Log In" ng-click="onLogin()"/>
     </div>
 </form>

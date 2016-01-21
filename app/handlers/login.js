@@ -9,8 +9,11 @@ module.exports.loginUser = function(req, res, next) {
       passport.authenticate('local', function(err, user, info) {
         if (err) { return next(err); }
         if (!user) { return res.send(info); }
-
+        if (!req.body.region) {
+            return res.send({message: "Region is not selected"});
+        }
         req.session.password = req.body.password;
+        req.session.region = req.body.region;
 
 	    res.status(200).send({redirect: '/#/manageJuices'});
 
