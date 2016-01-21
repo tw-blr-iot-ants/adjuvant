@@ -48,5 +48,6 @@ module.exports = function(app) {
 	app.post('/api/log/', logHandler.store);
 
 	app.post('/api/login', loginHandler.loginUser);
+	app.delete('/api/login', loginHandler.destroyLoginSession);
 };
 

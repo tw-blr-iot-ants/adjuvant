@@ -20,12 +20,12 @@ adjuvant.config(function($routeProvider) {
             templateUrl: 'partials/orders.html',
             controller: 'ordersController'
         })
-        .when('/', {
+        .when('/login', {
             templateUrl: 'partials/login.html',
             controller: 'loginController'
         })
        .otherwise({
-            redirectTo: '/manageJuices'
+            redirectTo: '/login'
         });
 })
 .factory('httpResponseInterceptor', ['$q', '$location', function($q, $location) {

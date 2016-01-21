@@ -26,7 +26,7 @@ app.use(session({
 }));
 
 app.use(function(req, res, next) {
-    if(req.url != "/api/login" && req.session.username == undefined) {
+    if(req.url != "/api/login" && req.session.password == undefined) {
             res.status(401).send("User is not logged in");
     } else {
             next();

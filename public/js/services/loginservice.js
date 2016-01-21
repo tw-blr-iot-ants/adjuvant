@@ -10,7 +10,10 @@ angular.module("loginService", [])
                             return data.data;
                         }
                     });
-                }
+                },
+        destroyLoginSession: function() {
+            return $http.delete("/api/login");
+        }
       }
     }
 ]);

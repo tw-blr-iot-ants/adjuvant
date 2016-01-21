@@ -10,7 +10,7 @@ module.exports.loginUser = function(req, res, next) {
         if (err) { return next(err); }
         if (!user) { return res.send(info); }
 
-        req.session.username = req.body.username;
+        req.session.password = req.body.password;
 
 	    res.status(200).send({redirect: '/#/manageJuices'});
 
@@ -30,3 +30,9 @@ module.exports.loginUser = function(req, res, next) {
            });
            }
         ));
+
+
+module.exports.destroyLoginSession = function(req, res) {
+    req.session.destroy();
+
+}

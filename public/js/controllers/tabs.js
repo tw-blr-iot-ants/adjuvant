@@ -1,12 +1,13 @@
 angular.module('tabsController', [])
-                .controller('tabsController', ['$scope', '$location',
-                function($scope, $location) {
+                .controller('tabsController', ['$scope', '$location', 'loginService',
+                function($scope, $location, loginService) {
 
      $scope.tabs = [
            { link : '#/manageJuices', label : 'Beverages' },
            { link : '#/invoice', label : 'Invoices' },
            { link : '#/manageUsers', label : 'Users' },
-           { link : '#/orders', label : 'Orders' }
+           { link : '#/orders', label : 'Orders' },
+           { link : '/', label: 'LogOut'}
      ];
 
       $scope.selectedTab = $scope.tabs[0];
@@ -22,6 +23,9 @@ angular.module('tabsController', [])
 
       $scope.setSelectedTab = function(tab) {
          $scope.selectedTab = tab;
+         if(tab.label == 'LogOut') {
+            loginService.destroyLoginSession();
+         }
       }
 
       $scope.tabClass = function(tab) {
