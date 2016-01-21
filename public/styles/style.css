@@ -44,3 +44,12 @@
 #login-info {
     color: red;
 }
+
+#login-form {
+    padding-left: 40%;
+    padding-top: 10%;
+}
+
+input[type="submit"] {
+    margin-top: 10px;
+}

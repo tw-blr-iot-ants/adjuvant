@@ -1,5 +1,5 @@
 <div id="login-info" ng-if="info">{{info.message}}</div>
-<form method="post">
+<form method="post" id="login-form">
     <div>
         <label>Username:</label>
         <input type="text" ng-model="username"/>
@@ -9,7 +9,7 @@
         <input type="password" ng-model="password"/>
     </div>
     <div>
-        <label>Region:</label>
+        <label>Region:</label><br>
 
         <input type="radio" name="region" value="Bangalore" ng-model="region"> Bangalore<br>
         <input type="radio" name="region" value="Chennai" ng-model="region"> Chennai<br>
