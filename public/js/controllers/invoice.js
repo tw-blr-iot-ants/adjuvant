@@ -15,9 +15,11 @@ angular.module('invoiceController', [])
 
         var orders = {};
         var menu = {};
-        $scope.getInvoice = function() {
+        var summary = {};
+        $scope.getInvoiceForSingleDate = function() {
             $scope.generatedTableForCTL = "";
             $scope.generatedTableForJuices = "";
+            $scope.generatedTableForSummary = "";
             return mongooseService.getOrdersForSelection({"startDate": _setStartOfDate($scope.selectedDate),
                                                           "endDate": _setEndOfDate(new Date($scope.selectedDate))})
                                 .then(_extractRegisterOrders)
@@ -62,6 +64,29 @@ angular.module('invoiceController', [])
             })
           })
           orders =  _.countBy(juiceChoice , _.identity);
+          getSummary(response);
+        }
+
+        var getSummary = function(response) {
+            var ctlCount = 0, milkshakeCount = 0, fruitCount = 0, juiceCount = 0;
+           _.each(response.data, function(order) {
+                if(order.drinkName.indexOf("CTL") != -1) {
+                    ctlCount+=order.quantity;
+                }
+                else if(order.isFruit == true) {
+                    fruitCount+=order.quantity;
+                }
+                else if(order.drinkName.indexOf("Milkshake") != -1) {
+                    milkshakeCount+=order.quantity;
+                }
+                else {
+                    juiceCount+=order.quantity;
+                }
+           })
+           summary["Coffee/Tea"] = ctlCount;
+           summary["Fruits"] = fruitCount;
+           summary["Milkshakes"] = milkshakeCount;
+           summary["Juices"] = juiceCount;
         }
 
         var _getJuiceMenu = function() {
@@ -72,6 +97,7 @@ angular.module('invoiceController', [])
         var _constructInvoice = function() {
             _constructCTLInvoice();
             _constructJuiceInvoice();
+            _constructSummaryInvoice();
             $scope.invoiceReady = true;
         }
 
@@ -87,9 +113,26 @@ angular.module('invoiceController', [])
             $scope.generatedTableForJuices = $sce.trustAsHtml(invoiceService.generateInvoice(menu, juiceOrders));
         }
 
+        var _constructSummaryInvoice = function() {
+            var summaryOrders = summary;
+            $scope.generatedTableForSummary = $sce.trustAsHtml(invoiceService.generateInvoice(menu, summaryOrders));
+        }
+
         var _buildMenu = function(response) {
              _.each(response.data, function(item) {
                      menu[item.name] = item.cost;
+                     if(item.name.indexOf("CTL") != -1 && menu["Coffee/Tea"] == null) {
+                        menu["Coffee/Tea"] = item.cost;
+                     }
+                     else if(item.isFruit == true && menu["Fruits"] == null) {
+                        menu["Fruits"] = item.cost;
+                     }
+                     else if(item.name.indexOf("Milkshake") != -1 && menu["Milkshakes"] == null) {
+                        menu["Milkshakes"] = item.cost;
+                     }
+                     else {
+                        menu["Juices"] = item.cost;
+                     }
              })
 
         }
