@@ -55,7 +55,7 @@ describe("invoiceControllerTest", function() {
         var expectedQuery = {"startDate": today, "endDate": todayMidNight};
         scope.selectedDate = today;
 
-        return scope.getInvoice().then(function() {
+        return scope.getInvoiceForSingleDate().then(function() {
                 expect(mongooseService.getOrdersForSelection).to.be.calledOnce;
                 expect(mongooseService.getOrdersForSelection).to.be.calledWith(expectedQuery);
                 expect(scope.invoiceReady).to.be.true;

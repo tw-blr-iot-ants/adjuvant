@@ -9,9 +9,11 @@
 
     <div ng-show="invoiceForDate">
         <input   type="date" ng-model="selectedDate">
-        <button type="submit" class="generate-invoice" ng-click="getInvoice()">Generate Invoice</button>
+        <button type="submit" class="generate-invoice" ng-click="getInvoiceForSingleDate()">Generate Invoice</button>
         <div class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForJuices"></div>
         <div  class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForCTL"></div>
+        <h3 class="gap" ng-if="invoiceReady">Summary</h3>
+        <div ng-if="invoiceReady" ng-bind-html="generatedTableForSummary"></div>
         <p  ng-if="invoiceReady">
             Note : * implies Unit cost took a default value of  &#8377; 15
         </p>
@@ -26,6 +28,8 @@
         <div id="printable">
         <div  class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForJuices"></div>
         <div  class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForCTL"></div>
+        <h3 class="gap" ng-if="invoiceReady">Summary</h3>
+        <div ng-if="invoiceReady" ng-bind-html="generatedTableForSummary"></div>
         <p  ng-if="invoiceReady">
             Note : * implies Unit cost took a default value of  &#8377; 15
         </p>
