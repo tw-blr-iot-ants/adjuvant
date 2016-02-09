@@ -122,6 +122,25 @@ describe('PUT /api/beverages/:id', function() {
 
 });
 
+describe('POST /api/beverages/updateWithUpsert', function() {
+
+  it('should update/upsert a single beverage', function(done){
+    request
+      .post('/api/beverages/updateWithUpsert')
+      .send({ name: 'Updated Name', cost: 15, available: true})
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        if (err) return done(err);
+        Beverage.findOne({ name: "Updated Name" }).exec(function (err, beverage) {
+                assert.notEqual(beverage, undefined);
+               done();
+        	});
+        });
+  });
+
+});
+
 describe('DELETE /api/beverages/:beverageName', function() {
 
   it('should not return the item that is deleted', function(done){

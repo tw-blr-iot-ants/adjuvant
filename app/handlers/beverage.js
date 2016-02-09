@@ -1,4 +1,5 @@
 var Beverage = require("../models/beverage");
+var changeCase = require("change-case");
 
 var compare = function (filter) {
     return function (a,b) {
@@ -110,11 +111,13 @@ module.exports.deleteBeverage = function(req, res) {
 
 module.exports.updateWithUpsert = function(req, res) {
       var conditions = {};
-      conditions.name = req.body.name;
+      conditions.name = changeCase.titleCase(req.body.name);
       conditions.isFruit = req.body.isFruit || false;
       var today = new Date();
       req.body.relevancy = 0;
       req.body.lastUpdated = today;
+
+      req.body.name = changeCase.titleCase(req.body.name);
 
       return Beverage.update(conditions, req.body, {"upsert": true}, function(error, beverage) {
     	                if(error){
