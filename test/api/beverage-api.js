@@ -134,7 +134,7 @@ describe('POST /api/beverages/updateWithUpsert', function() {
         if (err) return done(err);
         Beverage.findOne({ name: "Updated Name" }).exec(function (err, beverage) {
                 assert.notEqual(beverage, undefined);
-               done();
+                done();
         	});
         });
   });
