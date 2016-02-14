@@ -35,6 +35,9 @@ angular.module("mongooseService", [])
 
         deleteUserFromNewUsers: function(userToBeDeleted) {
             return $http.delete("/api/register/" +  userToBeDeleted.empId);
+        },
+        getAllUsers: function() {
+            return $http.get("/api/users/");
         }
       }
     }

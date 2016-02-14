@@ -22,6 +22,7 @@ module.exports = function(config) {
         'node_modules/angular-flash-alert/dist/angular-flash.js',
         'node_modules/q/q.js',
         'node_modules/underscore/underscore.js',
+        'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
         'js/**/*.js',
         'js/app.js',
         'test/unit/controllers/*.spec.js',

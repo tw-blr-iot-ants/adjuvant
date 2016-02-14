@@ -27,7 +27,8 @@ describe("usersControllerTest", function() {
         var expectedTabs = [{name: "Add a user", action: "add", isActive: false},
                             {name:"Update DB From a file", action: "flushAndUpdateDB", isActive: false},
                             {name:"Find/Update/Delete User", action: "findUpdateDeleteUser", isActive: true},
-                             {name:"Authenticate User", action: "authenticateUser", isActive: false}]
+                             {name:"Authenticate User", action: "authenticateUser", isActive: false},
+                             {name:"All Users", action: "allUsers", isActive: false}]
         var selection = {action: "findUpdateDeleteUser"}
         scope.setSelectedTab(selection);
 

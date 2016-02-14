@@ -1,0 +1,43 @@
+<div>
+    <h4>{{users.length}} Users in Total</h4>
+
+    <h2>Showing {{begin + 1}} to {{end}}</h2>
+
+    <div class="alert alert-success" ng-show="showSuccessAlert">
+        <strong> User Updated Successfully !!</strong>
+    </div>
+
+    <div class="alert alert-danger" ng-show="showErrorAlert">
+        <strong>Error Rejecting a Users!!!</strong>
+    </div>
+    <div ng-repeat="user in filterUsers">
+
+        <form class="form-inline minor-gap">
+            <div class="form-group">
+                <input readonly class="form-control" ng-model="user.internalNumber" placeholder="Internal Number">
+            </div>
+            <div class="form-group">
+                <input  class="form-control" ng-model="user.empId" placeholder="Employee ID">
+            </div>
+            <div class="form-group">
+                <input  class="form-control" ng-model="user.employeeName" placeholder="Employee Name">
+            </div>
+
+            <button  style="border:1px solid black; background-color: transparent;" class="form-group glyphicon glyphicon-ok green"  ng-click="approve(user)" aria-hidden="true" id="updateUser-{{$index}}"></button>
+            <button  style="border:1px solid black; background-color: transparent;"  class="form-group glyphicon glyphicon-remove red"  ng-click="reject(user)" aria-hidden="true" id="removeUser-{{$index}}"></button>
+        </form>
+    </div>
+
+    <pagination
+            ng-model="currentPage"
+            total-items="users.length"
+            max-size="maxSize"
+            boundary-links="true">
+    </pagination>
+
+</div>
+
+
+
+
+
