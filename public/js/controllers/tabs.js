@@ -1,6 +1,6 @@
 angular.module('tabsController', [])
-                .controller('tabsController', ['$scope', '$location', 'loginService',
-                function($scope, $location, loginService) {
+                .controller('tabsController', ['$scope', '$location', 'appLoginService',
+                function($scope, $location, appLoginService) {
 
      $scope.tabs = [
            { link : '#/manageJuices', label : 'Beverages' },
@@ -24,7 +24,7 @@ angular.module('tabsController', [])
       $scope.setSelectedTab = function(tab) {
          $scope.selectedTab = tab;
          if(tab.label == 'LogOut') {
-            loginService.destroyLoginSession();
+            appLoginService.destroyLoginSession();
          }
       }
 

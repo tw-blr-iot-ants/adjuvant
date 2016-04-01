@@ -1,5 +1,5 @@
-angular.module("loginService", [])
-    .factory('loginService', ['$http', '$window', function($http, $window) {
+angular.module("appLoginService", [])
+    .factory('appLoginService', ['$http', '$window', function($http, $window) {
       return {
         loginUser: function(username, password, region) {
                     return $http.post("/api/login", {"username": username, "password": password, "region": region}).then(function(data) {
@@ -12,6 +12,7 @@ angular.module("loginService", [])
                     });
                 },
         destroyLoginSession: function() {
+        
             return $http.delete("/api/login");
         }
       }

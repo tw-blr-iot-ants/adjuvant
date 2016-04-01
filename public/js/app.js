@@ -1,6 +1,6 @@
 var adjuvant = angular.module('adjuvant', ['ngRoute', 'tabsController', 'juiceController',
                                       'invoiceController', 'usersController', 'ordersController',
-                                      'mongooseService', 'invoiceService', 'loginController', 'loginService',
+                                      'mongooseService', 'invoiceService', 'loginController', 'appLoginService',
                                       'ui.bootstrap'])
 
 adjuvant.config(function($routeProvider) {
