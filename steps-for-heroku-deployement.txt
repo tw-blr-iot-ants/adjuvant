@@ -1,0 +1,10 @@
+git checkout master
+
+heroku create {{appName}}
+
+git push heroku master
+
+heroku config:set  MONGODB_URL=mongodb://username:password@ds011810.mlab.com:11810/adjuvant
+heroku config MONGO_SESSION_URL=mongodb://username:password@ds011860.mlab.com:11860/adjuvant-test-app
+
+heroku open
