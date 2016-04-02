@@ -23,7 +23,7 @@ const encryption_key = 'abcd1234';
 app.use(cookieParser('S3CRE7'));
 
 app.use(session({
-    store: new MongoStore({ url: 'mongodb://localhost/test-app',
+    store: new MongoStore({ url: process.env.MONGO_SESSION_URL || 'mongodb://localhost/test-app',
                             ttl: 30*60  })
 }));
 

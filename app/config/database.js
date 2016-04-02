@@ -1,4 +1,4 @@
 module.exports = {
-	url : 'mongodb://localhost/adjuvant',
-	testUrl : 'mongodb://localhost/testAdjuvant'
+	url : process.env.MONGODB_URL ||  'mongodb://localhost/adjuvant',
+	testUrl : process.env.MONGODB_TEST_URL || 'mongodb://localhost/testAdjuvant'
 }
