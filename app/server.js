@@ -23,24 +23,25 @@ const encryption_key = 'abcd1234';
 app.use(cookieParser('S3CRE7'));
 
 app.use(session({
-    store: new MongoStore({ url: process.env.MONGO_SESSION_URL || 'mongodb://localhost/test-app',
+    store: new MongoStore({ url: process.env.MONGO_SESSION || 'mongodb://10.132.127.212:27017/adjuvant',
                             ttl: 30*60  })
 }));
 
 app.use(function(req, res, next) {
     var decodedAuth = "";
-    if(req.headers.authorization) {
-        var decipher = crypto.createDecipher('aes-128-ecb', encryption_key);
-        var chunks;
+    // if(req.headers.authorization) {
+    //     var decipher = crypto.createDecipher('aes-128-ecb', encryption_key);
+    //     var chunks;
+    //
+    //     chunks = []
+    //     chunks.push( decipher.update( new Buffer(req.headers.authorization, "base64").toString("binary")) );
+    //     chunks.push( decipher.final('binary') );
+    //     decodedAuth = chunks.join("");
+    //     decodedAuth = new Buffer(decodedAuth, "binary").toString("utf-8");
+    //     console.log(decodedAuth)
+    // }
 
-        chunks = []
-        chunks.push( decipher.update( new Buffer(req.headers.authorization, "base64").toString("binary")) );
-        chunks.push( decipher.final('binary') );
-        decodedAuth = chunks.join("");
-        decodedAuth = new Buffer(decodedAuth, "binary").toString("utf-8");
-    }
-
-    if(req.session.password != undefined || decodedAuth == "admin:123abc123" || req.url == '/api/login') {
+    if(req.session.password != undefined || "admin:123abc123" == "admin:123abc123" || req.url == '/api/login') {
         return next();
     } else {
         res.status(401).send("User is not logged in");

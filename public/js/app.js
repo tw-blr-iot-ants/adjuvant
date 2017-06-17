@@ -3,7 +3,7 @@ var adjuvant = angular.module('adjuvant', ['ngRoute', 'tabsController', 'juiceCo
                                       'mongooseService', 'invoiceService', 'loginController', 'appLoginService',
                                       'ui.bootstrap'])
 
-adjuvant.config(function($routeProvider) {
+adjuvant.config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/manageJuices', {
             templateUrl: 'partials/manageJuices.html',
@@ -28,6 +28,7 @@ adjuvant.config(function($routeProvider) {
        .otherwise({
             redirectTo: '/login'
         });
+    $locationProvider.hashPrefix('')
 })
 .factory('httpResponseInterceptor', ['$q', '$location', function($q, $location) {
     return {

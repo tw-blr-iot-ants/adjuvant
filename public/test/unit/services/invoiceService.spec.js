@@ -6,7 +6,6 @@ describe("invoiceServiceTest", function() {
 
     beforeEach(function(){
         module('adjuvant');
-
         inject(function(_invoiceService_) {
             invoiceService = _invoiceService_;
         })
