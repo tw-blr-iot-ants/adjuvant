@@ -8,33 +8,35 @@
 
 
     <div ng-show="invoiceForDate">
-        <input   type="date" ng-model="selectedDate">
+        <input type="date" ng-model="selectedDate">
         <button type="submit" class="generate-invoice" ng-click="getInvoiceForSingleDate()">Generate Invoice</button>
         <div class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForJuices"></div>
-        <div  class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForCTL"></div>
+        <div class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForCTL"></div>
+        <div class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForFruits"></div>
         <h3 class="gap" ng-if="invoiceReady">Summary</h3>
         <div ng-if="invoiceReady" ng-bind-html="generatedTableForSummary"></div>
-        <p  ng-if="invoiceReady">
-            Note : * implies Unit cost took a default value of  &#8377; 15
+        <p ng-if="invoiceReady">
+            Note : * implies Unit cost took a default value of &#8377; 15
         </p>
-        <div  ng-if="!invoiceReady" class="bar"></div>
+        <div ng-if="!invoiceReady" class="bar"></div>
     </div>
 
     <div ng-show="invoiceForPeriod">
-        <input   type="date" ng-model="startDate">
-        <input   type="date" ng-model="endDate">
+        <input type="date" ng-model="startDate">
+        <input type="date" ng-model="endDate">
         <button type="submit" class="generate-invoice" ng-click="getInvoiceWithInRange()">Generate Invoice</button>
 
         <div id="printable">
-        <div  class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForJuices"></div>
-        <div  class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForCTL"></div>
-        <h3 class="gap" ng-if="invoiceReady">Summary</h3>
-        <div ng-if="invoiceReady" ng-bind-html="generatedTableForSummary"></div>
-        <p  ng-if="invoiceReady">
-            Note : * implies Unit cost took a default value of  &#8377; 15
-        </p>
+            <div class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForJuices"></div>
+            <div class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForCTL"></div>
+            <div class="gap" ng-if="invoiceReady" ng-bind-html="generatedTableForFruits"></div>
+            <h3 class="gap" ng-if="invoiceReady">Summary</h3>
+            <div ng-if="invoiceReady" ng-bind-html="generatedTableForSummary"></div>
+            <p ng-if="invoiceReady">
+                Note : * implies Unit cost took a default value of &#8377; 15
+            </p>
         </div>
-        <div  ng-if="!invoiceReady" class="bar"></div>
+        <div ng-if="!invoiceReady" class="bar"></div>
     </div>
 
     <button ng-if="invoiceReady" ng-click="printDiv('printable');">Print Table</button>

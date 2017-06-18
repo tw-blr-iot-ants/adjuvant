@@ -8,37 +8,42 @@ angular.module('invoiceController', [])
             $scope.printDiv = function (divName) {
                 var printContents = document.getElementById(divName).innerHTML;
                 var popupWin = window.open('', '_blank', 'width=300,height=300,top=200, left=300');
-                popupWin.document.open()
+                popupWin.document.open();
                 popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
                 popupWin.document.close();
             };
 
-            var orders = {};
+            var allJuices = {};
+            var allCTL = {};
+            var allFruits = {};
             var menu = {};
             var summary = {};
             $scope.getInvoiceForSingleDate = function () {
                 $scope.generatedTableForCTL = "";
                 $scope.generatedTableForJuices = "";
                 $scope.generatedTableForSummary = "";
-                return mongooseService.getOrdersForSelection({
+
+                var promise = _getJuiceMenu().then(_buildMenu);
+
+                return promise.then(mongooseService.getOrdersForSelection({
                     "startDate": _setStartOfDate($scope.selectedDate),
                     "endDate": _setEndOfDate(new Date($scope.selectedDate))
-                })
-                    .then(_extractRegisterOrders)
-                    .then(_getJuiceMenu)
-                    .then(_constructInvoice)
+                }).then(_extractRegisterOrders)
+                    .then(_constructInvoice))
+
             };
 
             $scope.getInvoiceWithInRange = function () {
                 $scope.generatedTableForCTL = "";
                 $scope.generatedTableForJuices = "";
-                return mongooseService.getOrdersForSelection({
+                var promise = _getJuiceMenu().then(_buildMenu);
+                return promise.then(mongooseService.getOrdersForSelection({
                     "startDate": _setStartOfDate($scope.startDate),
                     "endDate": _setEndOfDate($scope.endDate)
-                })
-                    .then(_extractRegisterOrders)
+                }).then(_extractRegisterOrders)
                     .then(_getJuiceMenu)
-                    .then(_constructInvoice)
+                    .then(_constructInvoice))
+
             };
 
             $scope.setInvoiceForDate = function () {
@@ -57,109 +62,81 @@ angular.module('invoiceController', [])
 
             var _extractRegisterOrders = function (response) {
                 var juiceChoice = [];
+                var ctl = [];
+                var fruits = [];
                 _.each(response.data, function (order) {
                     var drinkName = order.drinkName;
                     _.times(order.quantity, function () {
-                        if (order.isFruit == true) {
-                            juiceChoice.push(drinkName + " Fruit")
-                        } else {
+                        if (order.isFruit) {
+                            fruits.push(drinkName)
+                        } else if (order.type == "juice") {
                             juiceChoice.push(drinkName)
+                        } else if (order.type == "ctl") {
+                            ctl.push(drinkName)
                         }
                     })
                 });
-                orders = _.countBy(juiceChoice, _.identity);
+                allJuices = _.countBy(juiceChoice, _.identity);
+                allCTL = _.countBy(ctl, _.identity);
+                allFruits = _.countBy(fruits, _.identity);
                 getSummary(response);
             };
 
             var getSummary = function (response) {
-                var ctl = 0, fruitCount = 0, milkshakeCount = 0, juiceCount = 0;
+                var ctl = 0, fruitCount = 0, juiceCount = 0;
+                var ctlTotalCosts = 0, fruitsTotalCosts = 0, juiceTotalCosts = 0;
                 _.each(response.data, function (order) {
-                    if (order.drinkName.toLowerCase() == "tea" || order.drinkName.toLowerCase().indexOf("coffee") != -1 || order.drinkName.toLowerCase().indexOf("ctl") != -1) {
-                        ctl += order.quantity;
-                    } else if (order.drinkName.toLowerCase().indexOf("lemon tea") != -1) {
-                        ctl += order.quantity;
-                    }
-                    else if (order.drinkName.toLowerCase()=="ginger tea") {
-                        ctl += order.quantity;
-                    }
-                    else if (order.drinkName.toLowerCase() =="almond milk") {
-                        ctl += order.quantity;
-                    }
-                    else if (order.isFruit == true) {
-                        fruitCount += order.quantity;
-                    }
-                    else if (order.drinkName.toLowerCase()=="milkshake") {
-                        milkshakeCount += order.quantity;
-                    }
-                    else {
+                    if (order.type == "juice") {
                         juiceCount += order.quantity;
+                        juiceTotalCosts += order.quantity * menu[order.drinkName];
+                        console.log(juiceTotalCosts)
+                    } else if (order.type == "ctl") {
+                        ctl += order.quantity;
+                        ctlTotalCosts += order.quantity * menu[order.drinkName];
+                    }
+                    else if (order.isFruit) {
+                        fruitCount += order.quantity;
+                        fruitsTotalCosts += order.quantity * menu[order.drinkName];
                     }
                 });
-                summary["CTL"] = ctl;
-                summary["Fruits"] = fruitCount;
-                summary["Milkshakes"] = milkshakeCount;
-                summary["Juices"] = juiceCount;
+
+                summary['CTL'] = {'count': ctl, 'totalCost': ctlTotalCosts};
+                summary['Fruits'] = {'count': fruitCount, 'totalCost': fruitsTotalCosts};
+                summary["Juices"] = {'count': juiceCount, 'totalCost': juiceTotalCosts};
             };
 
             var _getJuiceMenu = function () {
                 return mongooseService.getBeverages()
-                    .then(_buildMenu)
             };
 
             var _constructInvoice = function () {
                 _constructCTLInvoice();
                 _constructJuiceInvoice();
+                _constructFruitInvoice();
                 _constructSummaryInvoice();
                 $scope.invoiceReady = true;
             };
 
             var _constructCTLInvoice = function () {
-                var ctlOrders = getOnlyCTLOrders();
-                if (ctlOrders["Tea"] || ctlOrders["Coffee"] || ctlOrders["Lemon Tea"] || ctlOrders["Ginger Tea"] || ctlOrders["Almond Milk"]) {
-                    $scope.generatedTableForCTL = $sce.trustAsHtml(invoiceService.generateInvoice(menu, ctlOrders));
-                }
+                $scope.generatedTableForCTL = $sce.trustAsHtml(invoiceService.generateInvoice(menu, allCTL));
             };
 
             var _constructJuiceInvoice = function () {
-                var juiceOrders = getOnlyJuicesOrders();
-                $scope.generatedTableForJuices = $sce.trustAsHtml(invoiceService.generateInvoice(menu, juiceOrders));
+                $scope.generatedTableForJuices = $sce.trustAsHtml(invoiceService.generateInvoice(menu, allJuices));
             };
 
+            var _constructFruitInvoice = function () {
+                $scope.generatedTableForFruits = $sce.trustAsHtml(invoiceService.generateInvoice(menu, allFruits));
+            };
             var _constructSummaryInvoice = function () {
                 var summaryOrders;
                 summaryOrders = summary;
-                $scope.generatedTableForSummary = $sce.trustAsHtml(invoiceService.generateInvoice(menu, summaryOrders));
+                $scope.generatedTableForSummary = $sce.trustAsHtml(invoiceService.generateSummaryInvoice(summaryOrders));
             };
 
             var _buildMenu = function (response) {
                 _.each(response.data, function (item) {
                     menu[item.name] = item.cost;
-                    if (item.name.indexOf("CTL") != -1 && menu["Coffee"] == null) {
-                        menu["Coffee"] = item.cost;
-                    }
-                    else if (item.name.toLowerCase() == "tea" == null && menu["Tea"] == null) {
-                        menu["Tea"] = item.cost;
-                    }
-                    else if (item.name.toLowerCase() == "lemon tea" && menu["Lemon Tea"] == null) {
-                        menu["Lemon Tea"] = item.cost;
-                    }
-                    else if (item.name.toLowerCase() == "ginger tea" && menu["Ginger Tea"] == null) {
-                        menu["Ginger Tea"] = item.cost;
-                    }
-                    else if (item.name.toLowerCase() == "almond milk" && menu["Almond Milk"] == null) {
-                        menu["Almond Milk"] = item.cost;
-                    }
-                    else if (item.isFruit == true) {
-                        menu["Fruits"] = item.cost;
-                        menu[item["name"]+" Fruit"] = item.cost;
-
-                    }
-                    else if (item.name.indexOf("Milkshake") != -1 && menu["Milkshakes"] == null) {
-                        menu["Milkshakes"] = item.cost;
-                    }
-                    else {
-                        menu["Juices"] = item.cost;
-                    }
                 })
 
             };
@@ -178,27 +155,4 @@ angular.module('invoiceController', [])
                 return endDate;
             };
 
-            var getOnlyJuicesOrders = function () {
-                delete orders["Tea"];
-                delete orders["Coffee"];
-                delete orders["Almond Milk"];
-                delete orders["Ginger Tea"];
-                delete orders["Lemon Tea"];
-                return orders;
-            };
-
-            var getOnlyCTLOrders = function () {
-                var tea = orders["Tea"]?orders["Tea"]:0;
-                var coffee = orders["Coffee"]?orders["Coffee"]:0;
-                var lemonTea = orders["Lemon Tea"]?orders["Lemon Tea"]:0;
-                var gingerTea = orders["Ginger Tea"]?orders["Ginger Tea"]:0;
-                var almondMilk = orders["Almond Milk"]?orders["Almond Milk"]:0;
-                return {
-                    "Tea": tea,
-                    "Coffee": coffee,
-                    "Lemon Tea": lemonTea,
-                    "Ginger Tea": gingerTea,
-                    "Almond Milk": almondMilk
-                };
-            }
         }]);

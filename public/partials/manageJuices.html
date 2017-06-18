@@ -1,14 +1,16 @@
-
 <div class="gap">
     <div class="left-div col-sm-3 col-sm-offset-4">
         <div class="div-center">
             <div>Juice Name:
-                <input type="text" class="form-control input-lg text-center"  ng-model="name"></div>
+                <input type="text" class="form-control input-lg text-center" ng-model="name"></div>
             <div>Juice Price:
-                <input type="text" class="form-control input-lg text-center"  ng-model="cost"></div>
+                <input type="text" class="form-control input-lg text-center" ng-model="cost"></div>
 
-            <div class="minor-gap">Is a Fruit
-                <input type="checkbox" class="text-center"  ng-model="isFruit"></div>
+            <div>
+                <label class="radio-inline"><input type="radio" value="ctl" ng-model="type">CTL</label>
+                <label class="radio-inline"><input type="radio" value="fruit" ng-model="type">Fruit</label>
+                <label class="radio-inline"><input type="radio" value="juice" ng-model="type">Juice</label>
+
             </div>
             <div class="col-sm-3 col-sm-offset-4">
                 <p class="text-center" ng-show="loading">
@@ -16,9 +18,9 @@
                 </p>
             </div>
 
-        <div class="gap">
+            <div class="gap">
 
-            <button type="submit" class="col-sm-3 col-sm-offset-4" ng-click="updateBeverage()">Add</button>
+                <button type="submit" class="col-sm-3 col-sm-offset-4" ng-click="updateBeverage()">Add</button>
             </div>
         </div>
 
@@ -32,8 +34,7 @@
                 <th>Juice Name</th>
                 <th>Unit Cost</th>
                 <th>Availability</th>
-                <th>Is fruit</th>
-                <th></th>
+                <th>Delete</th>
             </tr>
             <tr ng-repeat="beverage in beverages">
                 <td>{{beverage.name}}</td>
@@ -42,10 +43,8 @@
                     <input type="checkbox" ng-checked="{{beverage.available}}" ng-click="updateAvailability(beverage)">
                 </td>
                 <td>
-                    <input type="checkbox" ng-checked="{{beverage.isFruit}}" onclick="return false" >
-                </td>
-                <td>
-                    <input type="image" src="../images/button_cancel.png" class="cancel-image" ng-click="deleteBeverage(beverage)">
+                    <input type="image" src="../images/button_cancel.png" class="cancel-image"
+                           ng-click="deleteBeverage(beverage)">
                 </td>
             </tr>
         </table>

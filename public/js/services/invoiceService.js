@@ -31,6 +31,23 @@ angular.module("invoiceService", [])
             return html;
         }
 
+        var generateSummaryInvoice = function (orders) {
+            var html = "";
+            html += '<table border="2" style="padding: 10px" class="gridtable"  >';
+            html += '<tr><th>Description</th><th>Quantity</th><th>Line Total</th></tr>';
+            _.each(orders, function (item, drinkType) {
+                var tableRow = "";
+                tableRow += "<tr><td>" + drinkType + "</td>";
+                tableRow += "</td>";
+                tableRow += "<td>" + item.count + "</td>";
+                tableRow += "<td>" + item.totalCost + "</td></tr>";
+                html += tableRow;
+            });
+            html += '</table>';
+            return html;
+        }
+
+
         var _getHeadings = function () {
             return '<tr><th>Description</th><th>Unit Price</th><th>Quantity</th><th>Line Total</th></tr>';
         }
@@ -40,6 +57,7 @@ angular.module("invoiceService", [])
             return 15;
         }
         return {
-            generateInvoice: generateInvoice
+            generateInvoice: generateInvoice,
+            generateSummaryInvoice: generateSummaryInvoice
         }
     })
