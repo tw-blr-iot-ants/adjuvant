@@ -1,4 +1,5 @@
 var Beverage = require("../models/beverage");
+var assert = require("assert");
 
 var compare = function (filter) {
     return function (a, b) {
@@ -108,6 +109,12 @@ module.exports.deleteBeverage = function (req, res) {
     });
 };
 
+function validateBody(body) {
+    assert.ok(body.name!=="");
+    assert.ok(body.cost!==null);
+    assert.ok(body.cost!=="");
+    assert.ok(body.name!==null)
+}
 module.exports.updateWithUpsert = function (req, res) {
     var conditions = {};
     conditions.name = req.body.name;
@@ -116,17 +123,22 @@ module.exports.updateWithUpsert = function (req, res) {
     var today = new Date();
     req.body.relevancy = 0;
     req.body.lastUpdated = today;
-
-    return Beverage.update(conditions, req.body, {"upsert": true}, function (error, beverage) {
-        if (error) {
-            console.log("error", error);
-            res.send(error);
-        }
-        else {
-            getBeverages(res);
-        }
-    })
-}
+    try {
+        validateBody(req.body);
+        return Beverage.update(conditions, req.body, {"upsert": true}, function (error, beverage) {
+            if (error) {
+                console.log("error", error);
+                res.send(error);
+            }
+            else {
+                getBeverages(res);
+            }
+        })
+    }catch (e){
+        console.log("Request is not valid: "+e);
+        res.status(500).send("It seems like something went wrong please try again later");
+    }
+};
 
 module.exports.updateRelevancy = function (drinkName, quantity) {
     var conditions = {};
