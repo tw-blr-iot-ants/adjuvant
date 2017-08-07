@@ -50,6 +50,11 @@ function start() {
     console.log("App listening on port " + port);
 }
 
+app.use(function (err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).end("Unknown error occurs")
+});
+
 
 exports.start = start;
 exports.app = app;
