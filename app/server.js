@@ -29,19 +29,19 @@ app.use(cookieParser('S3CRE7'));
 //     })
 // }));
 
-app.use(function (req, res, next) {
-    if (req.headers.authorization) {
-        var decipher = crypto.createDecipher('aes-128-ecb', encryption_key);
-        decipher.update(new Buffer(req.headers.authorization, "base64").toString("binary"), 'binary', 'utf8');
-        decipher.final();
-    }
-
-    if ("admin:123abc123" === "admin:123abc123" || req.url === '/api/login') {
-        return next();
-    } else {
-        res.status(401).send("User is not logged in");
-    }
-});
+// app.use(function (req, res, next) {
+//     if (req.headers.authorization) {
+//         var decipher = crypto.createDecipher('aes-128-ecb', encryption_key);
+//         decipher.update(new Buffer(req.headers.authorization, "base64").toString("binary"), 'binary', 'utf8');
+//         decipher.final();
+//     }
+//
+//     if ("admin:123abc123" === "admin:123abc123" || req.url === '/api/login') {
+//         return next();
+//     } else {
+//         res.status(401).send("User is not logged in");
+//     }
+// });
 
 require('./routes.js')(app);
 

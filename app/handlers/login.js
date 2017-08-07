@@ -12,8 +12,8 @@ module.exports.loginUser = function(req, res, next) {
         if (!req.body.region) {
             return res.send({message: "Region is not selected"});
         }
-        req.session.password = req.body.password;
-        req.session.region = req.body.region;
+        // req.session.password = req.body.password;
+        // req.session.region = req.body.region;
 
 	    res.status(200).send({redirect: '/#/manageJuices'});
 
