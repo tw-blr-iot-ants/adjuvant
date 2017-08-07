@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
-var MongoStore = require('connect-mongo')(session);
+// var MongoStore = require('connect-mongo')(session);
 var root = require('root-path');
 var cons = require('consolidate');
 var crypto = require('crypto');
@@ -22,12 +22,12 @@ const encryption_key = 'abcd1234';
 
 app.use(cookieParser('S3CRE7'));
 
-app.use(session({
-    store: new MongoStore({
-        url: process.env.MONGO_SESSION || 'mongodb://10.132.127.212:27017/adjuvant',
-        ttl: 30 * 60
-    })
-}));
+// app.use(session({
+//     store: new MongoStore({
+//         url: process.env.MONGO_SESSION || 'mongodb://10.132.127.212:27017/adjuvant',
+//         ttl: 30 * 60
+//     })
+// }));
 
 app.use(function (req, res, next) {
     if (req.headers.authorization) {
@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
         decipher.final();
     }
 
-    if (req.session.password !== undefined || "admin:123abc123" === "admin:123abc123" || req.url === '/api/login') {
+    if ("admin:123abc123" === "admin:123abc123" || req.url === '/api/login') {
         return next();
     } else {
         res.status(401).send("User is not logged in");

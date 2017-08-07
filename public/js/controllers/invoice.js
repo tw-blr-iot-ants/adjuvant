@@ -86,11 +86,10 @@ angular.module('invoiceController', [])
                 var ctl = 0, fruitCount = 0, juiceCount = 0;
                 var ctlTotalCosts = 0, fruitsTotalCosts = 0, juiceTotalCosts = 0;
                 _.each(response.data, function (order) {
-                    if (order.type == "juice") {
+                    if (order.type === "juice") {
                         juiceCount += order.quantity;
                         juiceTotalCosts += order.quantity * menu[order.drinkName];
-                        console.log(juiceTotalCosts)
-                    } else if (order.type == "ctl") {
+                    } else if (order.type === "ctl") {
                         ctl += order.quantity;
                         ctlTotalCosts += order.quantity * menu[order.drinkName];
                     }
