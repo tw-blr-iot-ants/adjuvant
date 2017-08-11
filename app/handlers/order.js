@@ -1,6 +1,8 @@
 var Order = require("../models/order");
 var BeverageHandler = require('../handlers/beverage');
-var _ = require('../../node_modules/underscore/underscore')
+var _ = require('../../node_modules/underscore/underscore');
+var path = require('path');
+var LOGGER = require(path.resolve('app/services/log'));
 
 var _setStartOfDate = function (startDate) {
     startDate.setSeconds(0);
@@ -100,8 +102,11 @@ module.exports.create = function (req, res) {
     })
 
     return Order.create(allDrinksRequest, function (error) {
-        if (error)
+        if (error){
+            LOGGER.error("Error while ordering drink:" + error);
             res.send(error);
+        }
+        LOGGER.info("Order created successfully");
         res.json({"orderStatus": "success"});
     })
 }

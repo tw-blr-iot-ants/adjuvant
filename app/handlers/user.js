@@ -4,6 +4,8 @@ var rmdir = require('rimraf');
 var xlsxj = require('xlsx2json');
 var root = require('root-path');
 var internalCardLength = 5;
+var path = require('path');
+var LOGGER = require(path.resolve('app/services/log'));
 
 var transform = function(internalNumber) {
     while (internalNumber.length < internalCardLength) {
@@ -23,12 +25,12 @@ module.exports.createUsers = function(req, res) {
                         "internalNumber": "D"
                 }}).done(function(jsonArray) {
                  Users.collection.insert(jsonArray, function(err, data) {
-                        if(err) return console.error(err);
+                        if(err) return LOGGER.error(err);
                     });
                 });
 
         rmdir(root('uploads'), function(err) {
-            if(err) return console.error(err);
+            if(err) return LOGGER.error(err);
         });
 
         res.redirect('/#/manageUsers');
@@ -38,10 +40,10 @@ module.exports.createUsers = function(req, res) {
 	module.exports.getAllUsers = function(req, res) {
 	    Users.find().exec(function(err, users) {
             if(err) {
-                console.log("Error in reading users");
+                LOGGER.error("Error in reading users "+err)
                 return;
             }
-            res.send(users == null ? 404 : users);
+            res.send(users === null ? 404 : users);
         });
 	};
 
@@ -51,7 +53,7 @@ module.exports.createUsers = function(req, res) {
                 return res.send(user);
             else {
                 NewUsers.findOne({empId: req.params.empId}).exec(function (err, newUser) {
-                    res.send(newUser == null ? 404 : newUser);
+                    res.send(newUser === null ? 404 : newUser);
                 });
             }
         });
@@ -88,7 +90,7 @@ module.exports.createUsers = function(req, res) {
 
   		Users.findOneAndUpdate({empId: req.params.empId}, req.body).exec(function(err, user) {
   			if(err) {
-  				console.log("Error in updating user", err);
+  				LOGGER.error("Error in updating user "+err);
   				return;
   			}
             res.send(user == null ? 404 : user);

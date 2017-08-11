@@ -1,5 +1,7 @@
 var Beverage = require("../models/beverage");
 var assert = require("assert");
+var path = require('path');
+var LOGGER = require(path.resolve('app/services/log'));
 
 var compare = function (filter) {
     return function (a, b) {
@@ -52,7 +54,7 @@ module.exports.create = function (req, res) {
 
     beverage.save(function (err) {
         if (err) {
-            console.log("Error in saving the beverage", err);
+            LOGGER.error("Error in saving the beverage", err);
             return;
         }
     });
@@ -62,7 +64,7 @@ module.exports.create = function (req, res) {
 module.exports.update = function (req, res) {
     Beverage.findOneAndUpdate({_id: req.params.id}, req.body).exec(function (err, beverage) {
         if (err) {
-            console.log("Error in updating beverage", err);
+            LOGGER.error("Error in updating beverage", err);
             return;
         }
         res.json(beverage);
@@ -72,7 +74,7 @@ module.exports.update = function (req, res) {
 module.exports.findAll = function (req, res) {
     Beverage.find().exec(function (error, beverages) {
         if (error) {
-            console.log("Error in reading beverages");
+            LOGGER.error("Error in reading beverages");
             return;
         }
         res.json(beverages);
@@ -83,7 +85,7 @@ module.exports.findJuices = function (req, res) {
     checkJuicesLastUpdated();
     Beverage.find({name: {$ne: "CTL"}, isFruit: {$eq: false}}).exec(function (error, beverages) {
         if (error) {
-            console.log("Error in reading beverages");
+            LOGGER.error("Error in reading beverages");
             return;
         }
         res.json(sort(beverages).reverse());
@@ -127,7 +129,7 @@ module.exports.updateWithUpsert = function (req, res) {
         validateBody(req.body);
         return Beverage.update(conditions, req.body, {"upsert": true}, function (error, beverage) {
             if (error) {
-                console.log("error", error);
+                LOGGER.error("error", error);
                 res.send(error);
             }
             else {
@@ -135,7 +137,7 @@ module.exports.updateWithUpsert = function (req, res) {
             }
         })
     }catch (e){
-        console.log("Request is not valid: "+e);
+        LOGGER.error("Request is not valid: "+e);
         res.status(500).send("It seems like something went wrong please try again later");
     }
 };
@@ -151,7 +153,7 @@ module.exports.findFruits = function (req, res) {
     checkJuicesLastUpdated();
     Beverage.find({isFruit: {$eq: true}, available: {$eq: true}}).exec(function (error, beverages) {
         if (error) {
-            console.log("Error in reading beverages");
+            LOGGER.error("Error in reading beverages");
             return;
         }
         res.json(sort(beverages).reverse());
