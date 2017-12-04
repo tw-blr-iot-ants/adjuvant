@@ -22,8 +22,8 @@ var compare = function (filter) {
 var getBeverages = function (res) {
     Beverage.find(function (err, beverages) {
         if (err)
-            res.send(err)
-        res.json(beverages);
+            res.send(err);
+        else res.json(beverages);
     });
 };
 
@@ -55,7 +55,6 @@ module.exports.create = function (req, res) {
     beverage.save(function (err) {
         if (err) {
             LOGGER.error("Error in saving the beverage", err);
-            return;
         }
     });
     res.json(beverage);
@@ -74,7 +73,7 @@ module.exports.update = function (req, res) {
 module.exports.findAll = function (req, res) {
     Beverage.find().exec(function (error, beverages) {
         if (error) {
-            LOGGER.error("Error in reading beverages");
+            LOGGER.error("Error in reading beverages", error);
             return;
         }
         res.json(beverages);
@@ -85,7 +84,7 @@ module.exports.findJuices = function (req, res) {
     checkJuicesLastUpdated();
     Beverage.find({name: {$ne: "CTL"}, isFruit: {$eq: false}}).exec(function (error, beverages) {
         if (error) {
-            LOGGER.error("Error in reading beverages");
+            LOGGER.error("Error in reading beverages", error);
             return;
         }
         res.json(sort(beverages).reverse());
@@ -112,11 +111,12 @@ module.exports.deleteBeverage = function (req, res) {
 };
 
 function validateBody(body) {
-    assert.ok(body.name!=="");
-    assert.ok(body.cost!==null);
-    assert.ok(body.cost!=="");
-    assert.ok(body.name!==null)
+    assert.ok(body.name !== "");
+    assert.ok(body.cost !== null);
+    assert.ok(body.cost !== "");
+    assert.ok(body.name !== null)
 }
+
 module.exports.updateWithUpsert = function (req, res) {
     var conditions = {};
     conditions.name = req.body.name;
@@ -136,8 +136,8 @@ module.exports.updateWithUpsert = function (req, res) {
                 getBeverages(res);
             }
         })
-    }catch (e){
-        LOGGER.error("Request is not valid: "+e);
+    } catch (e) {
+        LOGGER.error("Request is not valid: " + e);
         res.status(500).send("It seems like something went wrong please try again later");
     }
 };
