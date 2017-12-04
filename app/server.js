@@ -36,22 +36,21 @@ app.use(session({
 }));
 
 app.use(function (req, res, next) {
-    try {
-        if (req.headers.authorization) {
-            var decipher = crypto.createDecipher('aes-128-ecb', encryption_key);
-            decipher.update(new Buffer(req.headers.authorization, "base64").toString("binary"), 'binary', 'utf8');
-            decipher.final();
-        }
+    var decodedAuth = "";
+    if(req.headers.authorization) {
+        var decipher = crypto.createDecipher('aes-128-ecb', encryption_key);
+        var chunks;
 
-        if (req.session.password !== undefined || "admin:123abc123" === "admin:123abc123" || req.url === '/api/login') {
-            return next();
-        } else {
-            LOGGER.info("User is not logged in");
-            res.sendStatus(401).send("User is not logged in");
-        }
-    }catch (e){
-        LOGGER.info("Unknown error found: "+e);
-        res.sendStatus(500).send("Unknown error found: "+e);
+        chunks = [];
+        chunks.push( decipher.update( new Buffer(req.headers.authorization, "base64").toString("binary")) );
+        chunks.push( decipher.final('binary') );
+        decodedAuth = chunks.join("");
+        decodedAuth = new Buffer(decodedAuth, "binary").toString("utf-8");
+    }
+    if(req.session.password !== undefined || decodedAuth === "admin:123abc123" || req.url === '/api/login') {
+        return next();
+    } else {
+        res.status(401).send("User is not logged in");
     }
 
 });
