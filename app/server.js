@@ -11,6 +11,7 @@ var cons = require('consolidate');
 var crypto = require('crypto');
 var path = require('path');
 var LOGGER = require(path.resolve('app/services/log'));
+var dbConfig = require(path.resolve('app/config/database'));
 
 app.use(express.static(__dirname + '/../public/'));
 app.use(bodyParser.urlencoded({'extended': 'true'}));
@@ -26,7 +27,7 @@ app.use(cookieParser('S3CRE7'));
 
 app.use(session({
     store: new MongoStore({
-        url: process.env.MONGO_SESSION || 'mongodb://localhost:27017/testAdjuvant',
+        url: dbConfig.url || 'mongodb://localhost:27017/testAdjuvant',
         ttl: 30 * 60
     }),
     saveUninitialized: false,
