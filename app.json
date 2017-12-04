@@ -1,0 +1,6 @@
+{
+    "name": "adjuvant-admin",
+    "description": "",
+    "repository": "git@github.com:twlabs/kanjuice.git",
+    "keywords": ["node", "express", "static"]
+}
