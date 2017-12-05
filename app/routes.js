@@ -4,8 +4,25 @@ var userHandler = require("./handlers/user");
 var newUserHandler = require("./handlers/newUser");
 var logHandler = require("./handlers/log");
 var loginHandler = require("./handlers/login");
+var mkdirp = require('mkdirp');
 var multer  = require('multer');
-var upload = multer({ dest: 'uploads/' });
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        mkdirp('uploads/', function(err) {
+            if(err) {
+                console.error(err);
+            }
+            // move cb to here
+            cb(null, 'uploads/');
+        });
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname);
+    }
+});
+
+var upload = multer({ storage: storage });
+
 var passport = require('passport');
 // var expressSession = require('express-session');
 
@@ -21,7 +38,7 @@ module.exports = function(app) {
 	app.get('/api/beverages/fruits', beverageHandler.findFruits);
 	app.get('/api/beverages/:id', beverageHandler.findById);
 	app.delete('/api/beverages/:beverageName', beverageHandler.deleteBeverage);
-	app.post('/api/beverages/updateWithUpsert', beverageHandler.updateWithUpsert)
+	app.post('/api/beverages/updateWithUpsert', beverageHandler.updateWithUpsert);
 
 	app.post('/api/createUsers', upload.single('users'), userHandler.createUsers);
 	app.get('/api/users/', userHandler.getAllUsers);

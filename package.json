@@ -21,6 +21,7 @@
     "fs": "latest",
     "jsonfile": "^3.0.0",
     "method-override": "~2.3.9",
+    "mkdirp": "^0.5.1",
     "moment": "latest",
     "mongoose": "~3.8.13",
     "morgan": "~1.1.1",
@@ -46,6 +47,6 @@
   },
   "engines": {
     "node": "5.4.1",
-    "npm" : "3.3.12"
+    "npm": "3.3.12"
   }
 }
