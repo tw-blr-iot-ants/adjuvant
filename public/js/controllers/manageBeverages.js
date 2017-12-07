@@ -1,6 +1,6 @@
-angular.module('juiceController', [])
-    .controller('juiceController', ['$scope', 'mongooseService',
-        function ($scope, mongooseService) {
+angular.module('juiceController', ['ngMaterial'])
+    .controller('juiceController', ['$scope', 'mongooseService','$mdToast',
+        function ($scope, mongooseService, $mdToast) {
 
             $scope.loading = true;
             mongooseService.getBeverages()
@@ -34,7 +34,13 @@ angular.module('juiceController', [])
             };
 
             var _errorCallBack = function (errorMessage) {
-                console.log(errorMessage)
+                $scope.showToast = function () {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent(errorMessage.data)
+                            .hideDelay(3000)
+                    );
+                }();
             };
 
             var _successCallback = function (response) {
