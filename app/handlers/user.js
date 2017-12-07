@@ -19,6 +19,7 @@ module.exports.createUsers = function (req, res) {
     xlsxj(excelFilePath, {
         dataStartingRow: 2,
         mapping: {
+            "Id" :"A",
             "empId": "B",
             "employeeName": "C",
             "internalNumber": "D"
