@@ -112,17 +112,17 @@ module.exports.deleteBeverage = function (req, res) {
 
 function validateBody(body) {
     var beverageType = ["ctl", "fruit", "juice"];
-    assert.ok(body.name !== "");
-    assert.ok(body.cost !== null);
-    assert.ok(body.cost !== "");
+    assert.ok(body.name.length);
+    assert.ok(typeof body.cost ==='number');
     assert.ok(body.name !== null);
     assert.ok(beverageType.indexOf(body.type)!==-1)
+    assert.ok(typeof body.isFruit==='boolean');
 }
 
 module.exports.updateWithUpsert = function (req, res) {
     var conditions = {};
     conditions.name = req.body.name;
-    conditions.isFruit = req.body.fruit || false;
+    conditions.isFruit = req.body.isFruit || false;
     conditions.type = req.body.type;
     var today = new Date();
     req.body.relevancy = 0;
