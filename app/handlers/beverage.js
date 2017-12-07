@@ -30,17 +30,17 @@ var getBeverages = function (res) {
 var checkJuicesLastUpdated = function () {
     var today = new Date();
     Beverage.findOne(function (err, beverage) {
-        if (beverage.lastUpdated.setHours(0, 0, 0, 0) != today.setHours(0, 0, 0, 0)) {
+        if (beverage!==null && beverage.lastUpdated.setHours(0, 0, 0, 0) != today.setHours(0, 0, 0, 0)) {
             Beverage.update({}, {lastUpdated: today, relevancy: 0}, {multi: true}, function (err, beverages) {
             })
         }
     })
-}
+};
 
 var sort = function (beverages) {
     filter = compare('relevancy');
     return beverages.sort(filter);
-}
+};
 
 module.exports.create = function (req, res) {
     var today = new Date();

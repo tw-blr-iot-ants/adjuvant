@@ -37,20 +37,25 @@ app.use(session({
 
 app.use(function (req, res, next) {
     var decodedAuth = "";
-    if(req.headers.authorization) {
-        var decipher = crypto.createDecipher('aes-128-ecb', encryption_key);
-        var chunks;
+    try {
+        if(req.headers.authorization) {
+            var decipher = crypto.createDecipher('aes-128-ecb', encryption_key);
+            var chunks;
+            chunks = [];
+            chunks.push( decipher.update( new Buffer(req.headers.authorization, "base64").toString("binary")) );
+            chunks.push( decipher.final('binary') );
 
-        chunks = [];
-        chunks.push( decipher.update( new Buffer(req.headers.authorization, "base64").toString("binary")) );
-        chunks.push( decipher.final('binary') );
-        decodedAuth = chunks.join("");
-        decodedAuth = new Buffer(decodedAuth, "binary").toString("utf-8");
-    }
-    if(req.session.password !== undefined || decodedAuth === "admin:123abc123" || req.url === '/api/login') {
-        return next();
-    } else {
-        res.status(401).send("User is not logged in");
+            decodedAuth = chunks.join("");
+            var decodedAuth1 = new Buffer(decodedAuth, "binary").toString("utf-8");
+        }
+
+        if(req.session.password !== undefined || decodedAuth === "admin:123abc123" || req.url === '/api/login') {
+            return next();
+        } else {
+            res.status(401).send("User is not logged in");
+        }
+    } catch (e){
+        throw e
     }
 
 });
