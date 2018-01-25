@@ -60,7 +60,8 @@ module.exports.getUserByEmpId = function (req, res) {
 };
 
 module.exports.getUserByInternalNumber = function (req, res) {
-    var validInternalNumber = transform(req.params.internalNumber)
+    var validInternalNumber = transform(req.params.internalNumber);
+    LOGGER.info("Getting user for "+  validInternalNumber);
     Users.findOne({internalNumber: validInternalNumber}).exec(function (err, user) {
         if (user == null) {
             res.redirect("/api/register/internalNumber/" + validInternalNumber);
