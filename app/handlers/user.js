@@ -7,13 +7,6 @@ var internalCardLength = 5;
 var path = require('path');
 var LOGGER = require(path.resolve('app/services/log'));
 
-var transform = function (internalNumber) {
-    while (internalNumber.length < internalCardLength) {
-        internalNumber = '0' + internalNumber;
-    }
-    return internalNumber;
-};
-
 module.exports.createUsers = function (req, res) {
     var excelFilePath = root(req.file.path);
     xlsxj(excelFilePath, {
@@ -59,9 +52,9 @@ module.exports.getUserByEmpId = function (req, res) {
 };
 
 module.exports.getUserByInternalNumber = function (req, res) {
-    var validInternalNumber = transform(req.params.internalNumber);
-    LOGGER.info("Getting user for "+  validInternalNumber);
-    Users.findOne({internalNumber: validInternalNumber}).exec(function (err, user) {
+    var internalNumber = req.params.internalNumber;
+    LOGGER.info("Getting user for "+  internalNumber);
+    Users.findOne({internalNumber: internalNumber}).exec(function (err, user) {
         if (user == null) {
             res.redirect("/api/register/internalNumber/" + validInternalNumber);
             return;
