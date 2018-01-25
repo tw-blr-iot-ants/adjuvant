@@ -19,10 +19,9 @@ module.exports.createUsers = function (req, res) {
     xlsxj(excelFilePath, {
         dataStartingRow: 2,
         mapping: {
-            "Id" :"A",
-            "empId": "B",
-            "employeeName": "C",
-            "internalNumber": "D"
+            "empId": "A",
+            "employeeName": "B",
+            "internalNumber": "C"
         }
     }).done(function (jsonArray) {
         Users.collection.insert(jsonArray, function (err, data) {
