@@ -8,7 +8,7 @@
 
 HttpClient client;
 
-String url = "http://10.132.127.212:9090/order?type=juice&deviceID=124&cardID=";
+String url = "https://bridge-kanjuice.herokuapp.com/order?type=juice&deviceID=124&cardID=";
 long startMillis = 0;
 long stopMillis = 0;
 long timeCount = 0;
