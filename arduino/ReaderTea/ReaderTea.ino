@@ -8,7 +8,7 @@
 
 HttpClient client;
 
-String url = "https://bridge-kanjuice.herokuapp.com/order?type=juice&deviceID=124&cardID=";
+String url = "http://bridge-kanjuice.herokuapp.com/order?type=juice&deviceID=124&cardID=";
 long startMillis = 0;
 long stopMillis = 0;
 long timeCount = 0;
@@ -64,7 +64,6 @@ void loop() {
   // if we have bits and we the weigand counter went out
   if (bitCount > 0 && flagDone) {
     unsigned char i;
-    //    nodeSerial.println(bitCount);
     if (bitCount == 35) {
       SerialUSB.print(bitCount);
       for (i = 2; i < 14; i++) {
@@ -104,8 +103,8 @@ void loop() {
 
 void printBits() {
   digitalWrite(4, HIGH);
+  SerialUSB.println(cardCode);
   client.get(url + cardCode);
-  SerialUSB.print(cardCode);
   while (client.available()) {
     char c = client.read();
   }
