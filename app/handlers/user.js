@@ -56,7 +56,7 @@ module.exports.getUserByInternalNumber = function (req, res) {
     LOGGER.info("Getting user for "+  internalNumber);
     Users.findOne({internalNumber: internalNumber}).exec(function (err, user) {
         if (user == null) {
-            res.redirect("/api/register/internalNumber/" + validInternalNumber);
+            res.redirect("/api/register/internalNumber/" + internalNumber);
             return;
         }
         res.send(user == null ? 404 : user);
