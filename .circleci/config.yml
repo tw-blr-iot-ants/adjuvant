@@ -1,39 +1,40 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:7.10
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
+  security-checks:
     working_directory: ~/repo
-
+    docker:
+      - image: docker:stable
     steps:
       - checkout
+      - setup_remote_docker
+      - run:
+          command: sh ci/security-checks.sh
+      - store_artifacts:
+          path: /tmp/artifacts/hawkeye_report.json
+  build:
+    docker:
+      - image: docker:stable
+    steps:
+      - run:
+          command: echo "here goes your build steps"
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+  tests:
+    docker:
+      - image: docker:stable
+    steps:
+      - run:
+          command: echo "here goes your tests steps"
 
-      - run: npm install
+  
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-        
-      # run tests!
-      - run: npm test
-
-
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      - security-checks
+      - build:
+          requires:
+            - security-checks
+      - tests:
+          requires:
+            - build
