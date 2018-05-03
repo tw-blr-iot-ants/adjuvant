@@ -21,7 +21,7 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.set('views', root('public/partials/'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-const encryption_key = 'abcd1234';
+const encryption_key = process.env.ENCRYPTION_KEY;
 
 app.use(cookieParser('S3CRE7'));
 
@@ -32,7 +32,7 @@ app.use(session({
     }),
     saveUninitialized: false,
     resave: false,
-    secret: 'mySecretKey'
+    secret: process.env.SECRET_KEY
 }));
 
 app.use(function (req, res, next) {
@@ -49,7 +49,7 @@ app.use(function (req, res, next) {
             var decodedAuth1 = new Buffer(decodedAuth, "binary").toString("utf-8");
         }
 
-        if(req.session.password !== undefined || decodedAuth === "admin:123abc123" || req.url === '/api/login') {
+        if(req.session.password !== undefined || decodedAuth === process.env.AUTH_KEY || req.url === '/api/login') {
             return next();
         } else {
             res.status(401).send("User is not logged in");
