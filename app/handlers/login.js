@@ -3,6 +3,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var jsonfile = require('jsonfile');
 var util = require('util');
 var root = require('root-path');
+var crypto = require('crypto');
 
 
 module.exports.loginUser = function(req, res, next) {
@@ -26,7 +27,12 @@ module.exports.loginUser = function(req, res, next) {
              if(obj.userName !== username) {
                 return done(null, false, {message: 'Incorrect username.'});
              }
-             if(obj.password !== password) {
+
+            const hashedPassword = crypto.createHmac('sha256', password)
+                               .update('I love cupcakes')
+                               .digest('hex');
+
+             if(obj.password !== hashedPassword) {
                 return done(null, false, {message: 'Incorrect password.'})
              }
              return done(null, true, '');
