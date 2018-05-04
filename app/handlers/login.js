@@ -32,6 +32,8 @@ module.exports.loginUser = function(req, res, next) {
                                .update('I love cupcakes')
                                .digest('hex');
 
+            console.log(hashedPassword);
+
              if(obj.password !== hashedPassword) {
                 return done(null, false, {message: 'Incorrect password.'})
              }
