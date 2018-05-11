@@ -7,4 +7,8 @@ git push heroku master
 heroku config:set  MONGODB_URL=mongodb://username:password@ds011810.mlab.com:11810/adjuvant
 heroku config MONGO_SESSION_URL=mongodb://username:password@ds011860.mlab.com:11860/adjuvant-test-app
 
+heroku config:set AUTH_KEY='admin:123abc123'
+heroku config:set ENCRYPTION_KEY='abcd1234'
+heroku config:set SECRET_KEY='mySecretKey'
+
 heroku open
