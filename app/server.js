@@ -50,6 +50,11 @@ app.use(function (req, res, next) {
         }
 
         if(req.session.password !== undefined || decodedAuth === process.env.AUTH_KEY || req.url === '/api/login') {
+            res.header('X-Frame-Options','DENY');
+            res.header('Cache-Control', "no-cache, no-store, must-revalidate");
+            res.header('Pragma', "no-cache");
+            res.header('X-Content-Type-Options','nosniff');
+            res.header('x-xss-protection','1');
             return next();
         } else {
             res.status(401).send("User is not logged in");
