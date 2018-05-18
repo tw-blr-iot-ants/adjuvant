@@ -35,6 +35,7 @@
                 <th>Unit Cost</th>
                 <th>Availability</th>
                 <th>Delete</th>
+                <th>Type</th>
             </tr>
             <tr ng-repeat="beverage in beverages">
                 <td>{{beverage.name}}</td>
@@ -46,6 +47,7 @@
                     <input type="image" src="../images/button_cancel.png" class="cancel-image"
                            ng-click="deleteBeverage(beverage)">
                 </td>
+                <td>{{beverage.type}}</td>
             </tr>
         </table>
     </div>

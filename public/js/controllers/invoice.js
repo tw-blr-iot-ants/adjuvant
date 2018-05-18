@@ -23,26 +23,26 @@ angular.module('invoiceController', [])
                 $scope.generatedTableForJuices = "";
                 $scope.generatedTableForSummary = "";
 
-                var promise = _getJuiceMenu().then(_buildMenu);
-
-                return promise.then(mongooseService.getOrdersForSelection({
+                return _getJuiceMenu()
+                    .then(_buildMenu)
+                    .then(mongooseService.getOrdersForSelection({
                     "startDate": _setStartOfDate($scope.selectedDate),
                     "endDate": _setEndOfDate(new Date($scope.selectedDate))
-                }).then(_extractRegisterOrders)
-                    .then(_constructInvoice))
+                }).then(_extractRegisterOrders))
+                    .then(_constructInvoice)
 
             };
 
             $scope.getInvoiceWithInRange = function () {
                 $scope.generatedTableForCTL = "";
                 $scope.generatedTableForJuices = "";
-                var promise = _getJuiceMenu().then(_buildMenu);
-                return promise.then(mongooseService.getOrdersForSelection({
+                return _getJuiceMenu()
+                    .then(_buildMenu)
+                    .then(mongooseService.getOrdersForSelection({
                     "startDate": _setStartOfDate($scope.startDate),
                     "endDate": _setEndOfDate($scope.endDate)
-                }).then(_extractRegisterOrders)
-                    .then(_getJuiceMenu)
-                    .then(_constructInvoice))
+                }).then(_extractRegisterOrders))
+                    .then(_constructInvoice)
 
             };
 

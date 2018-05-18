@@ -7,22 +7,14 @@ var internalCardLength = 5;
 var path = require('path');
 var LOGGER = require(path.resolve('app/services/log'));
 
-var transform = function (internalNumber) {
-    while (internalNumber.length < internalCardLength) {
-        internalNumber = '0' + internalNumber;
-    }
-    return internalNumber;
-};
-
 module.exports.createUsers = function (req, res) {
     var excelFilePath = root(req.file.path);
     xlsxj(excelFilePath, {
         dataStartingRow: 2,
         mapping: {
-            "Id" :"A",
-            "empId": "B",
-            "employeeName": "C",
-            "internalNumber": "D"
+            "empId": "A",
+            "employeeName": "B",
+            "internalNumber": "C"
         }
     }).done(function (jsonArray) {
         Users.collection.insert(jsonArray, function (err, data) {
@@ -60,10 +52,11 @@ module.exports.getUserByEmpId = function (req, res) {
 };
 
 module.exports.getUserByInternalNumber = function (req, res) {
-    var validInternalNumber = transform(req.params.internalNumber)
-    Users.findOne({internalNumber: validInternalNumber}).exec(function (err, user) {
+    var internalNumber = req.params.internalNumber;
+    LOGGER.info("Getting user for "+  internalNumber);
+    Users.findOne({internalNumber: internalNumber}).exec(function (err, user) {
         if (user == null) {
-            res.redirect("/api/register/internalNumber/" + validInternalNumber);
+            res.redirect("/api/register/internalNumber/" + internalNumber);
             return;
         }
         res.send(user == null ? 404 : user);
