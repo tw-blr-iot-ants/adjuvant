@@ -12,6 +12,7 @@ var crypto = require('crypto');
 var path = require('path');
 var LOGGER = require(path.resolve('app/services/log'));
 var dbConfig = require(path.resolve('app/config/database'));
+var helmet = require('helmet');
 
 app.use(express.static(__dirname + '/../public/'));
 app.use(bodyParser.urlencoded({'extended': 'true'}));
@@ -21,6 +22,7 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.set('views', root('public/partials/'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
+app.use(helmet());
 
 app.use(function(req, res, next) {
     res.header('X-Frame-Options','DENY');
