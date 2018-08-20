@@ -23,49 +23,49 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-var passport = require('passport');
-// var expressSession = require('express-session');
+function isLoggedIn(req, res, next) {
+    if (req.session.authenticate)
+        return next();
+    res.status(401).send('Invalid request');
+}
 
 module.exports = function(app) {
     // app.use(expressSession({secret: 'mySecretKey',saveUninitialized: false,resave:false}));
-    app.use(passport.initialize());
-    app.use(passport.session());
 
-	app.post('/api/beverages/', beverageHandler.create);
-	app.put('/api/beverages/:id', beverageHandler.update);
-	app.get('/api/beverages/', beverageHandler.findAll);
-	app.get('/api/beverages/juices', beverageHandler.findJuices);
-	app.get('/api/beverages/fruits', beverageHandler.findFruits);
-	app.get('/api/beverages/:id', beverageHandler.findById);
-	app.delete('/api/beverages/:beverageName', beverageHandler.deleteBeverage);
-	app.post('/api/beverages/updateWithUpsert', beverageHandler.updateWithUpsert);
+	app.post('/api/beverages/', isLoggedIn, beverageHandler.create);
+	app.put('/api/beverages/:id', isLoggedIn, beverageHandler.update);
+	app.get('/api/beverages/',isLoggedIn, beverageHandler.findAll);
+	app.get('/api/beverages/juices',isLoggedIn, beverageHandler.findJuices);
+	app.get('/api/beverages/fruits', isLoggedIn,beverageHandler.findFruits);
+	app.get('/api/beverages/:id', isLoggedIn, beverageHandler.findById);
+	app.delete('/api/beverages/:beverageName', isLoggedIn, beverageHandler.deleteBeverage);
+	app.post('/api/beverages/updateWithUpsert', isLoggedIn, beverageHandler.updateWithUpsert);
 
-	app.post('/api/createUsers', upload.single('users'), userHandler.createUsers);
-	app.get('/api/users/', userHandler.getAllUsers);
-	app.get('/api/users/empId/:empId', userHandler.getUserByEmpId);
-    app.get('/api/users/internalNumber/:internalNumber', userHandler.getUserByInternalNumber);
-	app.delete('/api/users/:empId/', userHandler.deleteUser);
-    app.post('/api/users/', userHandler.addUser);
-    app.put('/api/users/:empId/', userHandler.updateUser);
+	app.post('/api/createUsers', isLoggedIn, upload.single('users'), userHandler.createUsers);
+	app.get('/api/users/', isLoggedIn, userHandler.getAllUsers);
+	app.get('/api/users/empId/:empId',isLoggedIn,  userHandler.getUserByEmpId);
+    app.get('/api/users/internalNumber/:internalNumber', isLoggedIn, userHandler.getUserByInternalNumber);
+	app.delete('/api/users/:empId/', isLoggedIn, userHandler.deleteUser);
+    app.post('/api/users/', isLoggedIn, userHandler.addUser);
+    app.put('/api/users/:empId/', isLoggedIn,userHandler.updateUser);
 
-	app.post('/api/orders', orderHandler.create);
-	app.get('/api/orders', orderHandler.allOrders);
-	app.get('/api/orders/recentOrders', orderHandler.lastTenOrders);
-	app.get('/api/orders/summary', orderHandler.todayOrders);
-	app.get('/api/orders/:startDate/:endDate', orderHandler.ordersForSelectPeriod);
+	app.post('/api/orders', isLoggedIn, orderHandler.create);
+	app.get('/api/orders', isLoggedIn, orderHandler.allOrders);
+	app.get('/api/orders/recentOrders', isLoggedIn, orderHandler.lastTenOrders);
+	app.get('/api/orders/summary', isLoggedIn, orderHandler.todayOrders);
+	app.get('/api/orders/:startDate/:endDate', isLoggedIn, orderHandler.ordersForSelectPeriod);
 
-	app.delete('/api/orders/:id/', orderHandler.deleteOrder);
+	app.delete('/api/orders/:id/', isLoggedIn, orderHandler.deleteOrder);
 
-	app.post('/api/register/', newUserHandler.register);
-	app.get('/api/register/', newUserHandler.getAllUsers);
-	app.get('/api/register/internalNumber/:internalNumber', newUserHandler.getUserByInternalNumber);
-	app.put('/api/register/', newUserHandler.approve);
-	app.delete('/api/register/:empId', newUserHandler.delete);
+	app.post('/api/register/', isLoggedIn, newUserHandler.register);
+	app.get('/api/register/', isLoggedIn, newUserHandler.getAllUsers);
+	app.get('/api/register/internalNumber/:internalNumber', isLoggedIn, newUserHandler.getUserByInternalNumber);
+	app.put('/api/register/', isLoggedIn, newUserHandler.approve);
+	app.delete('/api/register/:empId', isLoggedIn, newUserHandler.delete);
 
-	app.post('/api/log/', logHandler.store);
+	app.post('/api/log/', isLoggedIn, logHandler.store);
 
 	app.post('/api/login', loginHandler.loginUser);
 	app.delete('/api/login', loginHandler.destroyLoginSession);
 
 };
-

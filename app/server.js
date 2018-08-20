@@ -12,8 +12,15 @@ var crypto = require('crypto');
 var path = require('path');
 var LOGGER = require(path.resolve('app/services/log'));
 var dbConfig = require(path.resolve('app/config/database'));
-var helmet = require('helmet');
+const helmet = require('helmet')
 
+app.use(helmet());
+app.use(helmet.noCache());
+app.use(helmet.frameguard());
+app.use((req, res, next) => {
+    res.set('X-XSS-Protection', '1; mode=block');
+    next();
+})
 app.use(express.static(__dirname + '/../public/'));
 app.use(bodyParser.urlencoded({'extended': 'true'}));
 app.use(bodyParser.json());
@@ -22,18 +29,7 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.set('views', root('public/partials/'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-app.use(helmet());
-
-app.use(function(req, res, next) {
-    res.header('X-Frame-Options','DENY');
-    res.header('Cache-Control', "no-cache, no-store, must-revalidate");
-    res.header('Pragma', "no-cache");
-    res.header('X-Content-Type-Options','nosniff');
-    res.header('x-xss-protection','1');
-    next();
-});
-
-const encryption_key = process.env.ENCRYPTION_KEY;
+const encryption_key = 'abcd1234';
 
 app.use(cookieParser('S3CRE7'));
 
@@ -44,7 +40,7 @@ app.use(session({
     }),
     saveUninitialized: false,
     resave: false,
-    secret: process.env.SECRET_KEY
+    secret: 'mySecretKey'
 }));
 
 app.use(function (req, res, next) {
@@ -54,19 +50,14 @@ app.use(function (req, res, next) {
             var decipher = crypto.createDecipher('aes-128-ecb', encryption_key);
             var chunks;
             chunks = [];
-            chunks.push( decipher.update( new Buffer(req.headers.authorization, "base64").toString("binary")) );
-            chunks.push( decipher.final('binary') );
+            chunks.push( decipher.update( new Buffer(req.headers.authorization, "base64").toString("binary"), 'binary') );
+            chunks.push( decipher.final("binary") );
 
             decodedAuth = chunks.join("");
             var decodedAuth1 = new Buffer(decodedAuth, "binary").toString("utf-8");
         }
 
-        if(req.session.password !== undefined || decodedAuth === process.env.AUTH_KEY || req.url === '/api/login') {
-            res.header('X-Frame-Options','DENY');
-            res.header('Cache-Control', "no-cache, no-store, must-revalidate");
-            res.header('Pragma', "no-cache");
-            res.header('X-Content-Type-Options','nosniff');
-            res.header('x-xss-protection','1');
+        if(req.session.password !== undefined || decodedAuth === "admin:123abc123" || req.url === '/api/login') {
             return next();
         } else {
             res.status(401).send("User is not logged in");

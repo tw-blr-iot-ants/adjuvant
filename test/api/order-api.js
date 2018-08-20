@@ -5,12 +5,25 @@ var mongoose = require('mongoose');
 var Order = require('../../app/models/order');
 var server = require('../../app/server').app;
 
-var request = require('supertest')(server);
 require("../../app/testDatabase");
+
+var request = require('supertest');
+var authUser = request.agent(server);
+
+before((done) => {
+  authUser
+      .post('/api/login')
+      .set('Accept', 'application/json')
+      .send({"username":"admin","password":"d+Lp:dBT8**zKSd","region":"Bangalore"})
+      .end(function(err, res){
+        assert.equal(res.statusCode,200);
+        done();
+  });
+});
 
 beforeEach(function(done) {
     for (var i in mongoose.connection.collections) {
-      mongoose.connection.collections[i].drop( function(err) {
+      mongoose.connection.collections[i].remove( function(err) {
       });
     }
     return done();
@@ -41,7 +54,7 @@ describe("GET /api/orders", function() {
         Order.create(firstOrder);
         Order.create(secondOrder);
 
-        request
+        authUser
         .get('/api/orders')
         .set('Accept', 'application/json')
         .expect(200)
@@ -58,7 +71,7 @@ describe("POST /api/orders", function() {
     var req = {employeeId: "15558", employeeName: "Ravi", drinks: [{name: "apple",quantity: 5}, {name: "orange", quantity: 7}], isSwipe: false, region: "Bangalore"};
 
     it("should place an order", function(done) {
-        request
+        authUser
         .post('/api/orders')
         .send(req)
         .set('Accept', 'application/json')
@@ -80,7 +93,7 @@ describe("POST /api/orders", function() {
 
 afterEach(function(done) {
   for (var i in mongoose.connection.collections) {
-    mongoose.connection.collections[i].drop( function(err) {
+    mongoose.connection.collections[i].remove( function(err) {
     });
   }
   return done();
