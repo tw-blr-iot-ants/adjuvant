@@ -1,4 +1,6 @@
 var Order = require("../models/order");
+var User = require("../models/user");
+var NewUser = require("../models/newUser");
 var BeverageHandler = require('../handlers/beverage');
 var _ = require('../../node_modules/underscore/underscore');
 var path = require('path');
@@ -9,25 +11,26 @@ var _setStartOfDate = function (startDate) {
     startDate.setHours(0);
     startDate.setMinutes(0);
     return startDate;
-}
+};
 
 var _setEndOfDate = function (endDate) {
     endDate.setHours(23);
     endDate.setMinutes(59);
     endDate.setSeconds(59);
     return endDate;
-}
+};
 
 var _extractRegisterOrders = function (orders) {
-    var totalJuiceCount = 0, totalCoffeeTeaCount = 0;
+    var totalJuiceCount = 0,
+        totalCoffeeTeaCount = 0;
     var summary = [];
     var juiceChoice = [];
     _.each(orders, function (order) {
         var drinkName = order.drinkName;
         _.times(order.quantity, function () {
             juiceChoice.push(drinkName)
-        })
-    })
+        });
+    });
     orders = _.countBy(juiceChoice, _.identity);
 
     _.each(orders, function (value, key) {
@@ -37,9 +40,12 @@ var _extractRegisterOrders = function (orders) {
         if (key != "CTL") totalJuiceCount += value;
         summary.push(eachOrder);
     })
-    summary.push({name: "Total Juice", count: totalJuiceCount});
+    summary.push({
+        name: "Total Juice",
+        count: totalJuiceCount
+    });
     return summary;
-}
+};
 
 module.exports.allOrders = function (req, res) {
     return Order.find({}).exec(function (error, orders) {
@@ -50,7 +56,12 @@ module.exports.allOrders = function (req, res) {
 }
 
 module.exports.ordersForSelectPeriod = function (req, res) {
-    return Order.find({"date": {$gte: new Date(req.params.startDate), $lt: new Date(req.params.endDate)}})
+    return Order.find({
+            "date": {
+                $gte: new Date(req.params.startDate),
+                $lt: new Date(req.params.endDate)
+            }
+        })
         .exec(function (error, orders) {
             if (error)
                 res.send(error);
@@ -59,7 +70,13 @@ module.exports.ordersForSelectPeriod = function (req, res) {
 };
 
 module.exports.lastTenOrders = function (req, res) {
-    return Order.find({"drinkName": {$ne: "CTL"}}).sort({date: -1}).limit(10).exec(function (error, orders) {
+    return Order.find({
+        "drinkName": {
+            $ne: "CTL"
+        }
+    }).sort({
+        date: -1
+    }).limit(10).exec(function (error, orders) {
         if (error)
             res.send(error);
         res.send(orders.reverse());
@@ -84,35 +101,59 @@ module.exports.create = function (req, res) {
     var allDrinksRequest = [];
     var eachDrinkRequest;
 
-    req.body.drinks.forEach(function (drink) {
-        eachDrinkRequest = {
-            date: new Date(),
-            employeeId: req.body.employeeId,
-            employeeName: req.body.employeeName,
-            drinkName: drink.name,
-            quantity: drink.quantity,
-            isSwipe: req.body.isSwipe,
-            isSugarless: drink.isSugarless,
-            region: req.body.region,
-            isFruit: drink.isFruit,
-            type: drink.type
-        };
-        BeverageHandler.updateRelevancy(drink.name, drink.quantity);
-        allDrinksRequest.push(eachDrinkRequest);
-    })
+    var selector = {
+        empId: req.body.employeeId
+    };
 
-    return Order.create(allDrinksRequest, function (error) {
-        if (error){
-            LOGGER.error("Error while ordering drink:" + error);
-            res.send(error);
+    Promise.all([
+        User.find(selector),
+        NewUser.find(selector)
+    ]).then(function (response) {
+        if (response.map(function (res) {
+                return res.length;
+            }).some(function (value) {
+                return !!value;
+            })) {
+            req.body.drinks.forEach(function (drink) {
+                eachDrinkRequest = {
+                    date: new Date(),
+                    employeeId: req.body.employeeId,
+                    employeeName: req.body.employeeName,
+                    drinkName: drink.name,
+                    quantity: drink.quantity,
+                    isSwipe: req.body.isSwipe,
+                    isSugarless: drink.isSugarless,
+                    region: req.body.region,
+                    isFruit: drink.isFruit,
+                    type: drink.type
+                };
+                BeverageHandler.updateRelevancy(drink.name, drink.quantity);
+                allDrinksRequest.push(eachDrinkRequest);
+            });
+            Order.create(allDrinksRequest, function (error) {
+                if (error) {
+                    LOGGER.error("Error while ordering drink:" + error);
+                    res.send(error);
+                    return;
+                }
+                LOGGER.info("Order created successfully");
+                res.status(200).json({
+                    orderStatus: "success"
+                });
+            });
+        } else {
+            res.status(403).json({
+                orderStatus: 'No such user'
+            });
         }
-        LOGGER.info("Order created successfully");
-        res.json({"orderStatus": "success"});
-    })
-}
+
+    });
+};
 
 module.exports.deleteOrder = function (req, res) {
-    Order.findOneAndRemove({_id: req.params.id}).exec(function (err, order) {
+    Order.findOneAndRemove({
+        _id: req.params.id
+    }).exec(function (err, order) {
         res.send(order == null ? 404 : "success");
     });
 };

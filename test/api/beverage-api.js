@@ -63,7 +63,7 @@ describe('GET /api/beverages/', function() {
         if (err) return done(err);
 
         var response = res.body;
-        assert.equal(response[0].name, "Tea");
+        assert.isTrue(response.map(function(res) {return res.name;}).includes("Tea"));
         assert.equal(response.length, 2);
 
         done();
