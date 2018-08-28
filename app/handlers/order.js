@@ -17,7 +17,7 @@ import {
     times,
     countBy,
     identity
-} from '../../node_modules/underscore/underscore';
+} from 'underscore';
 import {
     resolve
 } from 'path';
