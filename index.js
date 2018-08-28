@@ -1,3 +1,4 @@
+require('@babel/register')
 require('./app/database.js');
 var dbConfig = require('./app/config/database');
 

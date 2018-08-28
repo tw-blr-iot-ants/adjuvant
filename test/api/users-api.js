@@ -1,4 +1,4 @@
-var express = require('express');
+require('@babel/register')
 var assert = require('chai').assert;
 var mongoose = require('mongoose');
 var Users = require('../../app/models/user');

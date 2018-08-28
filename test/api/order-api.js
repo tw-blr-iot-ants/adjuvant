@@ -1,4 +1,4 @@
-var express = require("express");
+require('@babel/register')
 var assert = require("chai").assert;
 var mongoose = require("mongoose");
 var Order = require("../../app/models/order");
@@ -115,6 +115,7 @@ describe("POST /api/orders", function () {
 afterEach(function (done) {
     for (var i in mongoose.connection.collections) {
         Users.collection.remove();
+        Order.collection.remove();
         mongoose.connection.collections[i].remove(function (err) {});
     }
     return done();

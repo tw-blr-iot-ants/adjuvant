@@ -3,7 +3,6 @@ var NewUsers = require('../models/newUser');
 var rmdir = require('rimraf');
 var xlsxj = require('xlsx2json');
 var root = require('root-path');
-var internalCardLength = 5;
 var path = require('path');
 var LOGGER = require(path.resolve('app/services/log'));
 
@@ -35,7 +34,11 @@ module.exports.getAllUsers = function (req, res) {
             LOGGER.error("Error in reading users " + err)
             return;
         }
-        res.send(users === null ? 404 : users);
+        if (users === null) {
+            res.sendStatus(404)
+        } else {
+            res.send(users);
+        }
     });
 };
 
@@ -45,7 +48,11 @@ module.exports.getUserByEmpId = function (req, res) {
             return res.send(user);
         else {
             NewUsers.findOne({empId: req.params.empId}).exec(function (err, newUser) {
-                res.send(newUser === null ? 404 : newUser);
+                if (newUser === null) {
+                    res.sendStatus(404)
+                } else {
+                    res.send(newUser);
+                }
             });
         }
     });
@@ -59,13 +66,21 @@ module.exports.getUserByInternalNumber = function (req, res) {
             res.redirect("/api/register/internalNumber/" + internalNumber);
             return;
         }
-        res.send(user == null ? 404 : user);
+        if (user === null) {
+            res.sendStatus(404)
+        } else {
+            res.send(user);
+        }
     });
 };
 
 module.exports.deleteUser = function (req, res) {
     Users.findOneAndRemove({empId: req.params.empId}).exec(function (err, user) {
-        res.send(user == null ? 404 : "success");
+        if (user === null) {
+            res.sendStatus(404)
+        } else {
+            res.send('success');
+        }
     });
 };
 
@@ -86,6 +101,10 @@ module.exports.updateUser = function (req, res) {
             LOGGER.error("Error in updating user " + err);
             return;
         }
-        res.send(user == null ? 404 : user);
+        if (user === null) {
+            res.sendStatus(404)
+        } else {
+            res.send(user);
+        }
     });
 };

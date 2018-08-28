@@ -1,10 +1,28 @@
-var Order = require("../models/order");
-var User = require("../models/user");
-var NewUser = require("../models/newUser");
-var BeverageHandler = require('../handlers/beverage');
-var _ = require('../../node_modules/underscore/underscore');
-var path = require('path');
-var LOGGER = require(path.resolve('app/services/log'));
+import {
+    find,
+    findOneAndRemove,
+    default as Order
+} from "../models/order";
+import {
+    default as User
+} from "../models/user";
+import {
+    default as NewUser
+} from "../models/newUser";
+import {
+    default as BeverageHandler
+} from '../handlers/beverage';
+import {
+    each,
+    times,
+    countBy,
+    identity
+} from '../../node_modules/underscore/underscore';
+import {
+    resolve
+} from 'path';
+
+var LOGGER = require(resolve('app/services/log'));
 
 var _setStartOfDate = function (startDate) {
     startDate.setSeconds(0);
@@ -21,19 +39,18 @@ var _setEndOfDate = function (endDate) {
 };
 
 var _extractRegisterOrders = function (orders) {
-    var totalJuiceCount = 0,
-        totalCoffeeTeaCount = 0;
+    var totalJuiceCount = 0
     var summary = [];
     var juiceChoice = [];
-    _.each(orders, function (order) {
+    each(orders, function (order) {
         var drinkName = order.drinkName;
-        _.times(order.quantity, function () {
+        times(order.quantity, function () {
             juiceChoice.push(drinkName)
         });
     });
-    orders = _.countBy(juiceChoice, _.identity);
+    orders = countBy(juiceChoice, identity);
 
-    _.each(orders, function (value, key) {
+    each(orders, function (value, key) {
         var eachOrder = {};
         eachOrder.name = key;
         eachOrder.count = value;
@@ -55,8 +72,8 @@ module.exports.allOrders = function (req, res) {
     })
 }
 
-module.exports.ordersForSelectPeriod = function (req, res) {
-    return Order.find({
+export function ordersForSelectPeriod(req, res) {
+    return find({
             "date": {
                 $gte: new Date(req.params.startDate),
                 $lt: new Date(req.params.endDate)
@@ -67,10 +84,10 @@ module.exports.ordersForSelectPeriod = function (req, res) {
                 res.send(error);
             res.json(orders);
         })
-};
+}
 
-module.exports.lastTenOrders = function (req, res) {
-    return Order.find({
+export function lastTenOrders(req, res) {
+    return find({
         "drinkName": {
             $ne: "CTL"
         }
@@ -83,9 +100,9 @@ module.exports.lastTenOrders = function (req, res) {
     });
 }
 
-module.exports.todayOrders = function (req, res) {
+export function todayOrders(req, res) {
     var today = new Date();
-    return Order.find({
+    return find({
         "date": {
             $gte: new Date(_setStartOfDate(today)),
             $lt: new Date(_setEndOfDate(today))
@@ -97,7 +114,7 @@ module.exports.todayOrders = function (req, res) {
     })
 }
 
-module.exports.create = function (req, res) {
+export function create(req, res) {
     var allDrinksRequest = [];
     var eachDrinkRequest;
 
@@ -148,12 +165,12 @@ module.exports.create = function (req, res) {
         }
 
     });
-};
+}
 
-module.exports.deleteOrder = function (req, res) {
-    Order.findOneAndRemove({
+export function deleteOrder(req, res) {
+    findOneAndRemove({
         _id: req.params.id
     }).exec(function (err, order) {
         res.send(order == null ? 404 : "success");
     });
-};
+}

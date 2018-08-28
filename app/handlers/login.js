@@ -46,5 +46,4 @@ passport.use(new LocalStrategy(
 
 module.exports.destroyLoginSession = function (req, res) {
   req.session.destroy();
-
 }
