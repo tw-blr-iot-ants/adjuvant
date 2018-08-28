@@ -1,23 +1,28 @@
+# Adjuvant
+
 [![Build Status](https://snap-ci.com/tw-blr-iot-ants/adjuvant/branch/master/build_image)](https://snap-ci.com/tw-blr-iot-ants/adjuvant/branch/master)
 
-# Adjuvant
-### Steps to start the app.
-
+## Steps to start the app
 
 ```sh
-$ node index.js
+$ npm start
+
+> adjuvant-admin@1.0.0 start
+> node index.js
+
+********************************************
+Mongo db url mongodb://localhost:27017/adjuvant
+App listening on port 8083
+Mongo connection successful mongodb://localhost:27017/adjuvant
 ```
 
-## Steps for running Javascript Unit Tests
+## Running tests
 
 ```sh
-$ cd public
-$  ./node_modules/karma/bin/karma start --single-run
-```
+$  npm test
 
-## Steps for running APi Tests
+> adjuvant-admin@1.0.0 test
+> nodemon -x 'mocha --recursive'
 
-
-```sh
-$ ./node_modules/.bin/mocha
+--- Test output ---
 ```
