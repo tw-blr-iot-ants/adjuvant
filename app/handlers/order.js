@@ -1,6 +1,4 @@
 import {
-    find,
-    findOneAndRemove,
     default as Order
 } from "../models/order";
 import {
@@ -73,7 +71,7 @@ module.exports.allOrders = function (req, res) {
 }
 
 export function ordersForSelectPeriod(req, res) {
-    return find({
+    return Order.find({
             "date": {
                 $gte: new Date(req.params.startDate),
                 $lt: new Date(req.params.endDate)
@@ -87,7 +85,7 @@ export function ordersForSelectPeriod(req, res) {
 }
 
 export function lastTenOrders(req, res) {
-    return find({
+    return Order.find({
         "drinkName": {
             $ne: "CTL"
         }
@@ -168,7 +166,7 @@ export function create(req, res) {
 }
 
 export function deleteOrder(req, res) {
-    findOneAndRemove({
+    Order.findOneAndRemove({
         _id: req.params.id
     }).exec(function (err, order) {
         res.send(order == null ? 404 : "success");
