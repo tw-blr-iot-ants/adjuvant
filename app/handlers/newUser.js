@@ -11,7 +11,7 @@ var transform = function(internalNumber) {
 }
 
 module.exports.register = function(req, res) {
-       req.body["date"] = new Date();
+       req.body.date = new Date();
        req.body.internalNumber = transform(req.body.internalNumber);
 	   return NewUser.create(req.body , function(error) {
              				if(error) {
