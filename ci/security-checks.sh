@@ -13,7 +13,7 @@ function create_container_with_code() {
 }
 
 function run_hawkeye_on_container_code() {
-  docker run --volumes-from target-code --name hawkeye stono/hawkeye:latest scan /target --json ${ISSUES_REPORT_FILE}
+  docker run --volumes-from target-code --name hawkeye stono/hawkeye:1.0.5 scan /target --json ${ISSUES_REPORT_FILE}
   hawkeye_return=$?
 }
 
