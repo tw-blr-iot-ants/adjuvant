@@ -86,7 +86,7 @@ describe("POST /api/orders", function () {
     };
 
     it("should place an order", function (done) {
-        Users.collection.insert({
+        Users.collection.insertOne({
             empId: "15558",
             internalNumber: "00222",
             employeeName: "Ravi"
