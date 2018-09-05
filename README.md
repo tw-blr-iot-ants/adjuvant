@@ -1,5 +1,7 @@
 # Adjuvant
 
+[![CircleCI](https://circleci.com/gh/twlabs/kanjuice/tree/master.svg?style=svg&circle-token=87a3cf0ef964e8a31e89fc49e0c93675ad79a660)](https://circleci.com/gh/twlabs/kanjuice/tree/master)
+
 ## Steps to start the app
 
 ```sh
