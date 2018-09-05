@@ -43,11 +43,15 @@ module.exports.getAllUsers = function (req, res) {
 };
 
 module.exports.getUserByEmpId = function (req, res) {
-    Users.findOne({empId: req.params.empId}).exec(function (err, user) {
+    Users.findOne({
+        empId: req.params.empId
+    }).exec(function (err, user) {
         if (user)
             return res.send(user);
         else {
-            NewUsers.findOne({empId: req.params.empId}).exec(function (err, newUser) {
+            NewUsers.findOne({
+                empId: req.params.empId
+            }).exec(function (err, newUser) {
                 if (newUser === null) {
                     res.sendStatus(404)
                 } else {
@@ -59,23 +63,26 @@ module.exports.getUserByEmpId = function (req, res) {
 };
 
 module.exports.getUserByInternalNumber = function (req, res) {
-    var internalNumber = req.params.internalNumber;
-    LOGGER.info("Getting user for "+  internalNumber);
-    Users.findOne({internalNumber: internalNumber}).exec(function (err, user) {
-        if (user == null) {
-            res.redirect("/api/register/internalNumber/" + internalNumber);
-            return;
-        }
+    const internalNumber = req.params.internalNumber;
+    LOGGER.info("Getting user for " + internalNumber);
+    Promise.all([Users.findOne({
+        internalNumber: internalNumber
+    }), NewUsers.findOne({
+        internalNumber: internalNumber
+    })]).then(function (array) {
+        const user = array[0] || array[1];
         if (user === null) {
             res.sendStatus(404)
         } else {
             res.send(user);
         }
     });
-};
+}
 
 module.exports.deleteUser = function (req, res) {
-    Users.findOneAndRemove({empId: req.params.empId}).exec(function (err, user) {
+    Users.findOneAndRemove({
+        empId: req.params.empId
+    }).exec(function (err, user) {
         if (user === null) {
             res.sendStatus(404)
         } else {
@@ -95,8 +102,9 @@ module.exports.addUser = function (req, res) {
 };
 
 module.exports.updateUser = function (req, res) {
-
-    Users.findOneAndUpdate({empId: req.params.empId}, req.body).exec(function (err, user) {
+    Users.findOneAndUpdate({
+        empId: req.params.empId
+    }, req.body).exec(function (err, user) {
         if (err) {
             LOGGER.error("Error in updating user " + err);
             return;

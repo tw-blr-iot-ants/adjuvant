@@ -143,7 +143,7 @@ describe('GET /api/users/internalNumber/:internalNumber from newUsers', function
     authUser
             .get('/api/users/internalNumber/' + userNotInMasterDB.internalNumber)
             .set('Accept', 'application/json')
-            .expect(302, done) //redirection to newUserDB
+            .expect(200, done) //redirection to newUserDB
     })
 });
 describe('PUT /api/users/:empId', function() {
