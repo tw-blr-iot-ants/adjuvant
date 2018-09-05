@@ -16,7 +16,7 @@ module.exports.createUsers = function (req, res) {
             "internalNumber": "C"
         }
     }).done(function (jsonArray) {
-        Users.collection.insert(jsonArray, function (err, data) {
+        Users.collection.insertMany(jsonArray, function (err, data) {
             rmdir(root('uploads'), function (err) {
                 if (err) return LOGGER.error(err);
             });
