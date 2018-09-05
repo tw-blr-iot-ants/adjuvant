@@ -2,3 +2,4 @@ change.log
 public/js/controllers/login.js
 app/resources/credentials.json
 package.json
+test/api/api-credentials.json

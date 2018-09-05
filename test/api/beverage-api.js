@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Beverage = require('../../app/models/beverage');
 var server = require('../../app/server').app;
 require("../../app/testDatabase");
+const credentials = require('./api-credentials.json')
 
 var beverage, testBeverage;
 var request = require('supertest');
@@ -13,7 +14,7 @@ before((done) => {
   authUser
       .post('/api/login')
       .set('Accept', 'application/json')
-      .send({"username":"admin","password":"d+Lp:dBT8**zKSd","region":"Bangalore"})
+      .send({"username": credentials.username,"password":credentials.password,"region":"Bangalore"})
       .end(function(err, res){
         assert.equal(res.statusCode,200);
         done();

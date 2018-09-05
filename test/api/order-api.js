@@ -1,4 +1,5 @@
 require('@babel/register')
+import credentials from './api-credentials'
 var assert = require("chai").assert;
 var mongoose = require("mongoose");
 var Order = require("../../app/models/order");
@@ -15,8 +16,8 @@ before(function (done) {
         .post("/api/login")
         .set("Accept", "application/json")
         .send({
-            username: "admin",
-            password: "d+Lp:dBT8**zKSd",
+            username: credentials.username,
+            password: credentials.password,
             region: "Bangalore"
         })
         .end(function (err, res) {
