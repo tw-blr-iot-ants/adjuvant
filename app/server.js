@@ -7,7 +7,6 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var MongoStore = require('connect-mongo')(session);
 var root = require('root-path');
-var cons = require('consolidate');
 var crypto = require('crypto');
 var path = require('path');
 var LOGGER = require(path.resolve('app/services/log'));
@@ -35,7 +34,7 @@ app.use(cookieParser('S3CRE7'));
 
 app.use(session({
     store: new MongoStore({
-        url: dbConfig.url || 'mongodb://localhost:27017/testAdjuvant',
+        url: process.env.TEST ? dbConfig.testUrl : dbConfig.url,
         ttl: 30 * 60
     }),
     saveUninitialized: false,
@@ -52,17 +51,14 @@ app.use(function (req, res, next) {
             chunks = [];
             chunks.push( decipher.update( new Buffer(req.headers.authorization, "base64").toString("binary"), 'binary') );
             chunks.push( decipher.final("binary") );
-
             decodedAuth = chunks.join("");
-            var decodedAuth1 = new Buffer(decodedAuth, "binary").toString("utf-8");
         }
-
         if(req.session.password !== undefined || decodedAuth === "admin:123abc123" || req.url === '/api/login') {
             return next();
         } else {
             res.status(401).send("User is not logged in");
         }
-    } catch (e){
+    } catch (e) {
         throw e
     }
 
@@ -71,7 +67,7 @@ app.use(function (req, res, next) {
 require('./routes.js')(app);
 
 function start() {
-    var server = app.listen(port);
+    app.listen(port);
     console.log("App listening on port " + port);
 }
 

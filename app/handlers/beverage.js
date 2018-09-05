@@ -5,9 +5,8 @@ var LOGGER = require(path.resolve('app/services/log'));
 
 var compare = function (filter) {
     return function (a, b) {
-        var a = a[filter],
-            b = b[filter];
-
+        a = a[filter]
+        b = b[filter]
         if (a < b) {
             return -1;
         } else if (a > b) {
@@ -17,7 +16,6 @@ var compare = function (filter) {
         }
     };
 };
-
 
 var getBeverages = function (res) {
     Beverage.find(function (err, beverages) {
