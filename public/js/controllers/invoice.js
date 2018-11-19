@@ -16,11 +16,13 @@ angular.module('invoiceController', [])
             var allJuices = {};
             var allCTL = {};
             var allFruits = {};
+            var allBeverages = [];
             var menu = {};
             var summary = {};
             $scope.getInvoiceForSingleDate = function () {
                 $scope.generatedTableForCTL = "";
                 $scope.generatedTableForJuices = "";
+                $scope.generatedDetailedTable = "";
                 $scope.generatedTableForSummary = "";
 
                 return _getJuiceMenu()
@@ -28,10 +30,10 @@ angular.module('invoiceController', [])
                     .then(mongooseService.getOrdersForSelection({
                     "startDate": _setStartOfDate($scope.selectedDate),
                     "endDate": _setEndOfDate(new Date($scope.selectedDate))
-                }).then(_extractRegisterOrders))
-                    .then(_constructInvoice)
-
-            };
+                }).then((res) => {
+                    _extractRegisterOrders(res);
+                    _constructInvoice();
+                }))};
 
             $scope.getInvoiceWithInRange = function () {
                 $scope.generatedTableForCTL = "";
@@ -41,8 +43,10 @@ angular.module('invoiceController', [])
                     .then(mongooseService.getOrdersForSelection({
                     "startDate": _setStartOfDate($scope.startDate),
                     "endDate": _setEndOfDate($scope.endDate)
-                }).then(_extractRegisterOrders))
-                    .then(_constructInvoice)
+                }).then((res) => {
+                    _extractRegisterOrders(res);
+                    _constructInvoice();
+                }));
 
             };
 
@@ -79,6 +83,7 @@ angular.module('invoiceController', [])
                 allJuices = _.countBy(juiceChoice, _.identity);
                 allCTL = _.countBy(ctl, _.identity);
                 allFruits = _.countBy(fruits, _.identity);
+                allBeverages = [allJuices, allCTL, allFruits];
                 getSummary(response);
             };
 
@@ -109,24 +114,15 @@ angular.module('invoiceController', [])
             };
 
             var _constructInvoice = function () {
-                _constructCTLInvoice();
-                _constructJuiceInvoice();
-                _constructFruitInvoice();
+                _constructDetailedInvoice();
                 _constructSummaryInvoice();
                 $scope.invoiceReady = true;
             };
 
-            var _constructCTLInvoice = function () {
-                $scope.generatedTableForCTL = $sce.trustAsHtml(invoiceService.generateInvoice(menu, allCTL));
-            };
+            var _constructDetailedInvoice = function () {
+                $scope.generatedDetailedTable = $sce.trustAsHtml(invoiceService.generateDetailedInvoice(menu, allBeverages));
+            }
 
-            var _constructJuiceInvoice = function () {
-                $scope.generatedTableForJuices = $sce.trustAsHtml(invoiceService.generateInvoice(menu, allJuices));
-            };
-
-            var _constructFruitInvoice = function () {
-                $scope.generatedTableForFruits = $sce.trustAsHtml(invoiceService.generateInvoice(menu, allFruits));
-            };
             var _constructSummaryInvoice = function () {
                 var summaryOrders;
                 summaryOrders = summary;

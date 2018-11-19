@@ -3,30 +3,32 @@ angular.module("invoiceService", [])
 
         var isDefaultPrice = false;
 
-        var generateInvoice = function (menu, orders) {
+        var generateDetailedInvoice = function (menu, categories) {
             var html = "";
             html += '<table border="2" style="padding: 10px" class="gridtable"  >';
             var sum = 0;
             var totalCount = 0;
-            html += _getHeadings();
-            _.each(orders, function (quantity, item) {
-                var unitPrice = menu[item] ? menu[item] : _setDefaultPrice();
-                var individualCost = unitPrice * quantity;
-                var tableRow = ""
-                tableRow += "<tr><td>" + item + "</td>";
-                tableRow += "<td>" + unitPrice;
-                if (isDefaultPrice) {
-                    tableRow += "*"
-                }
-                tableRow += "</td>";
-                tableRow += "<td>" + quantity + "</td>";
-                tableRow += "<td>" + individualCost.toString() + "</td></tr>";
-                sum += individualCost;
-                totalCount += quantity;
-                html += tableRow;
-                isDefaultPrice = false;
+            html += _getInvoiceHeaders();
+            _.each(categories, function (order) {
+                _.each(order, function (quantity, itemName) {
+                    var basePrice = menu[quantity] ? menu[quantity] : _setDefaultPrice();
+                    var individualCost = basePrice * quantity;
+                    var tableRow = ""
+                    tableRow += "<tr><td>" + itemName + "</td>";
+                    tableRow += "<td>" + basePrice;
+                    if (isDefaultPrice) {
+                        tableRow += "*"
+                    }
+                    tableRow += "</td>";
+                    tableRow += "<td>" + quantity + "</td>";
+                    tableRow += "<td>" + individualCost.toString() + "</td></tr>";
+                    sum += individualCost;
+                    totalCount += quantity;
+                    html += tableRow;
+                    isDefaultPrice = false;
+                })
             })
-            html += '<tr><th colspan="2">Summary</th><td>' + totalCount + '</td><td>' + "&#8377; " + sum + '</td></tr>'
+            html += '<tr><th colspan="2">Total</th><td>' + totalCount + '</td><td>' + "&#8377; " + sum + '</td></tr>'
             html += '</table>';
             return html;
         }
@@ -34,13 +36,12 @@ angular.module("invoiceService", [])
         var generateSummaryInvoice = function (orders) {
             var html = "";
             html += '<table border="2" style="padding: 10px" class="gridtable"  >';
-            html += '<tr><th>Description</th><th>Quantity</th><th>Line Total</th></tr>';
+            html += '<tr><th>Category</th><th>Quantity Sold</th></tr>';
             _.each(orders, function (item, drinkType) {
                 var tableRow = "";
                 tableRow += "<tr><td>" + drinkType + "</td>";
                 tableRow += "</td>";
-                tableRow += "<td>" + item.count + "</td>";
-                tableRow += "<td>" + item.totalCost + "</td></tr>";
+                tableRow += "<td>" + item.count + "</td></tr>";
                 html += tableRow;
             });
             html += '</table>';
@@ -48,8 +49,8 @@ angular.module("invoiceService", [])
         }
 
 
-        var _getHeadings = function () {
-            return '<tr><th>Description</th><th>Unit Price</th><th>Quantity</th><th>Line Total</th></tr>';
+        var _getInvoiceHeaders = function () {
+            return '<tr><th>Item</th><th>Base Price</th><th>Quantity</th><th>Amount</th></tr>';
         }
 
         var _setDefaultPrice = function () {
@@ -57,7 +58,7 @@ angular.module("invoiceService", [])
             return 15;
         }
         return {
-            generateInvoice: generateInvoice,
-            generateSummaryInvoice: generateSummaryInvoice
+            generateSummaryInvoice: generateSummaryInvoice,
+            generateDetailedInvoice: generateDetailedInvoice
         }
     })

@@ -53,3 +53,7 @@
 input[type="submit"] {
     margin-top: 10px;
 }
+
+th, td {
+    padding: 5px;
+}
