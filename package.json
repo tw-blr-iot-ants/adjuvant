@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node index.js",
-    "test": "TEST=true nodemon -x 'mocha --recursive'",
+    "test:watch": "TEST=true nodemon -x 'mocha --recursive'",
+    "test": "TEST=true mocha --recursive",
     "e2e": "nodemon -x 'mocha test/api --recursive'",
     "heroku-prebuild": "cd public && npm install"
   },
