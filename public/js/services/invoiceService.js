@@ -11,7 +11,7 @@ angular.module("invoiceService", [])
             html += _getInvoiceHeaders();
             _.each(categories, function (order) {
                 _.each(order, function (quantity, itemName) {
-                    var basePrice = menu[quantity] ? menu[quantity] : _setDefaultPrice();
+                    var basePrice = menu[itemName] ? menu[itemName] : _setDefaultPrice();
                     var individualCost = basePrice * quantity;
                     var tableRow = ""
                     tableRow += "<tr><td>" + itemName + "</td>";

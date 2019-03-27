@@ -103,5 +103,20 @@ describe("invoiceControllerTest", function() {
          expect(scope.invoiceReady).to.be.false;
     })
 
+    it("should set variables for invoice category selection for CTL", function() {
+
+        scope.setInvoiceCategoryToCTL();
+        expect(scope.invoiceForCTL).to.be.true;
+        expect(scope.invoiceForJuiceAndFruits).to.be.false;
+    })
+
+    it("should set variables for invoice category selection for Fruit and juice", function() {
+
+        scope.setInvoiceCategoryToJuiceAndFruits();
+        expect(scope.invoiceForCTL).to.be.false;
+        expect(scope.invoiceForJuiceAndFruits).to.be.true;
+    })
+
+
 
 })

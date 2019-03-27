@@ -38,6 +38,7 @@ angular.module('invoiceController', [])
             $scope.getInvoiceWithInRange = function () {
                 $scope.generatedTableForCTL = "";
                 $scope.generatedTableForJuices = "";
+
                 return _getJuiceMenu()
                     .then(_buildMenu)
                     .then(mongooseService.getOrdersForSelection({
@@ -49,6 +50,16 @@ angular.module('invoiceController', [])
                 }));
 
             };
+
+            $scope.setInvoiceCategoryToCTL = function () {
+                $scope.invoiceForCTL = true;
+                $scope.invoiceForJuiceAndFruits = false;
+            }
+
+            $scope.setInvoiceCategoryToJuiceAndFruits = function () {
+                $scope.invoiceForCTL = false;
+                $scope.invoiceForJuiceAndFruits = true;
+            }
 
             $scope.setInvoiceForDate = function () {
                 $scope.generatedTable = "";
@@ -68,6 +79,7 @@ angular.module('invoiceController', [])
                 var juiceChoice = [];
                 var ctl = [];
                 var fruits = [];
+                allBeverages = [];
                 _.each(response.data, function (order) {
                     var drinkName = order.drinkName;
                     _.times(order.quantity, function () {
@@ -80,14 +92,21 @@ angular.module('invoiceController', [])
                         }
                     })
                 });
-                allJuices = _.countBy(juiceChoice, _.identity);
-                allCTL = _.countBy(ctl, _.identity);
-                allFruits = _.countBy(fruits, _.identity);
-                allBeverages = [allJuices, allCTL, allFruits];
+                if($scope.invoiceForJuiceAndFruits){
+                    allJuices = _.countBy(juiceChoice, _.identity);
+                    allFruits = _.countBy(fruits, _.identity);
+                    allBeverages = [allJuices, allFruits];
+
+                }
+                else{
+                    allCTL = _.countBy(ctl, _.identity);
+                    allBeverages = [allCTL];
+                }
                 getSummary(response);
             };
 
             var getSummary = function (response) {
+                summary = {};
                 var ctl = 0, fruitCount = 0, juiceCount = 0;
                 var ctlTotalCosts = 0, fruitsTotalCosts = 0, juiceTotalCosts = 0;
                 _.each(response.data, function (order) {
@@ -104,9 +123,13 @@ angular.module('invoiceController', [])
                     }
                 });
 
-                summary['CTL'] = {'count': ctl, 'totalCost': ctlTotalCosts};
-                summary['Fruits'] = {'count': fruitCount, 'totalCost': fruitsTotalCosts};
-                summary["Juices"] = {'count': juiceCount, 'totalCost': juiceTotalCosts};
+                if($scope.invoiceForJuiceAndFruits){
+                    summary['Fruits'] = {'count': fruitCount, 'totalCost': fruitsTotalCosts};
+                    summary["Juices"] = {'count': juiceCount, 'totalCost': juiceTotalCosts};
+                }
+                else{
+                    summary['CTL'] = {'count': ctl, 'totalCost': ctlTotalCosts};
+                }
             };
 
             var _getJuiceMenu = function () {

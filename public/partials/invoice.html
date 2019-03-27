@@ -8,8 +8,18 @@
 
 
     <div ng-show="invoiceForDate">
+        <br/>
         <input type="date" ng-model="selectedDate">
-        <button type="submit" class="generate-invoice" ng-click="getInvoiceForSingleDate()">Generate Invoice</button>
+        <br/>
+        <label>
+            <input type="radio" ng-checked="invoiceForCTL" ng-click="setInvoiceCategoryToCTL()"> CTL
+        </label>
+        <label style="{display: inline-block}">
+            <input type="radio" ng-checked="invoiceForJuiceAndFruits" ng-click="setInvoiceCategoryToJuiceAndFruits()"> Juice & Fruits
+        </label>
+        <div>
+            <button type="submit" class="generate-invoice" ng-click="getInvoiceForSingleDate()">Generate Invoice</button>
+        </div>
         <h3 class="gap" ng-if="invoiceReady" >Detailed Invoice</h3>
         <div ng-if="invoiceReady" ng-bind-html="generatedDetailedTable"></div>
         <h3 class="gap" ng-if="invoiceReady">Summary</h3>
@@ -21,10 +31,19 @@
     </div>
 
     <div ng-show="invoiceForPeriod">
+        <br/>
         <input type="date" ng-model="startDate">
         <input type="date" ng-model="endDate">
-        <button type="submit" class="generate-invoice" ng-click="getInvoiceWithInRange()">Generate Invoice</button>
-
+        <br/>
+        <label>
+            <input type="radio" ng-checked="invoiceForCTL" ng-click="setInvoiceCategoryToCTL()"> CTL
+        </label>
+        <label style="{display: inline-block}">
+            <input type="radio" ng-checked="invoiceForJuiceAndFruits" ng-click="setInvoiceCategoryToJuiceAndFruits()"> Juice & Fruits
+        </label>
+        <div>
+            <button type="submit" class="generate-invoice" ng-click="getInvoiceWithInRange()">Generate Invoice</button>
+        </div>
         <div id="printable">
             <h3 class="gap" ng-if="invoiceReady" >Detailed Invoice</h3>
             <div ng-if="invoiceReady" ng-bind-html="generatedDetailedTable"></div>
@@ -36,7 +55,6 @@
         </div>
         <div ng-if="!invoiceReady" class="bar"></div>
     </div>
-
     <button ng-if="invoiceReady" ng-click="printDiv('printable');">Print Table</button>
 
 </div>
