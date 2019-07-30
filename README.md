@@ -3,7 +3,13 @@
 # Adjuvant
 ### Steps to start the app.
 
+##### Start mongodb locally
 
+```
+docker-compose -f docker-compose-dev.yml up
+```
+
+##### Start node server locally
 ```sh
 $ node index.js
 ```
