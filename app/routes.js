@@ -24,7 +24,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 function isLoggedIn(req, res, next) {
-    if (req.session.authenticate)
+    if (req.session.authenticate || req.session.basicAuthenticated)
         return next();
     res.status(401).send('Invalid request');
 }
