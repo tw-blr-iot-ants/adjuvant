@@ -36,8 +36,7 @@ var checkJuicesLastUpdated = function () {
 };
 
 var sort = function (beverages) {
-    filter = compare('relevancy');
-    return beverages.sort(filter);
+    return beverages.sort(compare('relevancy'));
 };
 
 module.exports.create = function (req, res) {
