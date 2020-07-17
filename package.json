@@ -27,7 +27,7 @@
     "fs": "latest",
     "helmet": "^3.13.0",
     "jsonfile": "^5.0.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "method-override": "^3.0.0",
     "mkdirp": "^0.5.1",
     "moment": "latest",
